@@ -71,6 +71,22 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textView2" />
 
+        <!-- Display Name Error Message -->
+        <TextView
+            android:id="@+id/displayNameErrorText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:textColor="#F34D4D"
+            android:textSize="13sp"
+            android:visibility="gone"
+            android:text="  Invalid Display Name"
+            app:layout_constraintWidth_percent="0.7"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editTextDisplayName"/>
+
         <!-- Username Field -->
         <EditText
             android:id="@+id/editTextUsername"
@@ -122,6 +138,22 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/usernameErrorText" />
+
+        <!-- Email Error Message -->
+        <TextView
+            android:id="@+id/emailErrorText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:textColor="#F34D4D"
+            android:textSize="13sp"
+            android:visibility="gone"
+            android:text="  Invalid Email"
+            app:layout_constraintWidth_percent="0.7"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editTextEmail"/>
 
         <!-- Password Field -->
         <EditText

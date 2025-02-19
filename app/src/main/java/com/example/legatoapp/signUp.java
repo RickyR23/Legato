@@ -11,8 +11,14 @@ import android.widget.TextView;
 import android.widget.Button;
 import android.widget.EditText;
 import java.util.regex.Pattern;
+import android.util.Patterns;
+
 
 public class signUp extends AppCompatActivity {
+
+    private EditText passwordInput, verifyPasswordInput, usernameInput, displayNameInput, emailInput;
+    private TextView passwordErrorMsg, passwordMismatchMsg, usernameErrorMsg, displayNameErrorMsg, emailErrorMsg;
+    private Button createAccountButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,16 +27,44 @@ public class signUp extends AppCompatActivity {
 
         // UI Elements
         ImageButton backToLogInButton = findViewById(R.id.backToLogInButton);
-        EditText passwordInput = findViewById(R.id.editTextPassword);
-        EditText verifyPasswordInput = findViewById(R.id.editTextVerifyPassword);
-        EditText usernameInput = findViewById(R.id.editTextUsername);
-        TextView passwordErrorMsg = findViewById(R.id.passwordErrorText);
-        TextView passwordMismatchMsg = findViewById(R.id.passwordMismatchText);
-        TextView usernameErrorMsg = findViewById(R.id.usernameErrorText);
-        Button createAccountButton = findViewById(R.id.buttonCreateAccount);
+        passwordInput = findViewById(R.id.editTextPassword);
+        verifyPasswordInput = findViewById(R.id.editTextVerifyPassword);
+        usernameInput = findViewById(R.id.editTextUsername);
+        displayNameInput = findViewById(R.id.editTextDisplayName);
+        emailInput = findViewById(R.id.editTextEmail);
+        passwordErrorMsg = findViewById(R.id.passwordErrorText);
+        passwordMismatchMsg = findViewById(R.id.passwordMismatchText);
+        usernameErrorMsg = findViewById(R.id.usernameErrorText);
+        displayNameErrorMsg = findViewById(R.id.displayNameErrorText);
+        emailErrorMsg = findViewById(R.id.emailErrorText);
+        createAccountButton = findViewById(R.id.buttonCreateAccount);
 
         // Initially disable 'Create Account' button
         createAccountButton.setEnabled(false);
+
+        // FocusChange to validate display name
+        displayNameInput.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus) { // Validate when user moves to another field
+                String displayName = displayNameInput.getText().toString().trim();
+                if (isValidDisplayName(displayName)) {
+                    displayNameErrorMsg.setVisibility(View.GONE);
+                } else {
+                    displayNameErrorMsg.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
+        // FocusChange to validate email
+        emailInput.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus) { // Validate when user moves to another field
+                String email = emailInput.getText().toString().trim();
+                if (isValidEmail(email)) {
+                    emailErrorMsg.setVisibility(View.GONE);
+                } else {
+                    emailErrorMsg.setVisibility(View.VISIBLE);
+                }
+            }
+        });
 
         // TextWatcher to validate username
         usernameInput.addTextChangedListener(new TextWatcher() {
@@ -55,7 +89,7 @@ public class signUp extends AppCompatActivity {
         });
 
 
-        // TextWatcher used to validate password and match
+        // TextWatcher used to validate password and verifyPassword
         TextWatcher passwordWatcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -92,6 +126,7 @@ public class signUp extends AppCompatActivity {
         passwordInput.addTextChangedListener(passwordWatcher);
         verifyPasswordInput.addTextChangedListener(passwordWatcher);
 
+        // ClickListener to go back to login screen
         backToLogInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,9 +135,9 @@ public class signUp extends AppCompatActivity {
                 finish();
             }
         });
-    }
+    } // End of onCreate
 
-
+    /*-----------VALIDATION METHODS-----------*/
     // Username validation function
     private boolean isValidUsername(String username) {
         /* Regex pattern is used to check username criteria is met
@@ -124,5 +159,16 @@ public class signUp extends AppCompatActivity {
          */
         String passwordPattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{5,16}$";
         return Pattern.matches(passwordPattern, password);
+    }
+
+    // Display Name validation function
+    private boolean isValidDisplayName(String displayName) {
+        // True if displayName is not empty and between 4-25 in length
+        return !displayName.isEmpty() && displayName.length() >= 4 && displayName.length() <= 25;
+    }
+
+    // Email validation function
+    private boolean isValidEmail(String email) {
+        return Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 }
