@@ -125,6 +125,22 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/editTextEmail" />
 
+        <!-- Password Error Message -->
+        <TextView
+            android:id="@+id/passwordErrorText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="7dp"
+            android:textColor="@color/white"
+            android:textSize="13sp"
+            android:visibility="gone"
+            android:text="Password must be 5-16 characters containing:\n 1 Uppercase\n 1 Lowercase\n 1 Number\n 1 Special Character\n No spaces"
+            app:layout_constraintWidth_percent="0.7"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editTextPassword"/>
+
         <!-- Verify Password Field -->
         <EditText
             android:id="@+id/editTextVerifyPassword"
@@ -141,7 +157,23 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/editTextPassword" />
+            app:layout_constraintTop_toBottomOf="@id/passwordErrorText" />
+
+        <!-- Password Mismatch Error Message -->
+        <TextView
+            android:id="@+id/passwordMismatchText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="7dp"
+            android:textColor="#F34D4D"
+            android:textSize="13sp"
+            android:visibility="gone"
+            android:text="Passwords do not match"
+            app:layout_constraintWidth_percent="0.7"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editTextVerifyPassword"/>
 
         <!-- Connect to Spotify Button -->
         <Button
@@ -157,7 +189,7 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/editTextVerifyPassword" />
+            app:layout_constraintTop_toBottomOf="@id/passwordMismatchText" />
 
         <!-- Create Account Button -->
         <Button
