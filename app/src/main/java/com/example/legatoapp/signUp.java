@@ -23,12 +23,37 @@ public class signUp extends AppCompatActivity {
         ImageButton backToLogInButton = findViewById(R.id.backToLogInButton);
         EditText passwordInput = findViewById(R.id.editTextPassword);
         EditText verifyPasswordInput = findViewById(R.id.editTextVerifyPassword);
+        EditText usernameInput = findViewById(R.id.editTextUsername);
         TextView passwordErrorMsg = findViewById(R.id.passwordErrorText);
         TextView passwordMismatchMsg = findViewById(R.id.passwordMismatchText);
+        TextView usernameErrorMsg = findViewById(R.id.usernameErrorText);
         Button createAccountButton = findViewById(R.id.buttonCreateAccount);
 
         // Initially disable 'Create Account' button
         createAccountButton.setEnabled(false);
+
+        // TextWatcher to validate username
+        usernameInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // Trim the username to remove extra spaces before or after it is entered
+                String username = usernameInput.getText().toString().trim();
+
+                // Check if username meets criteria, otherwise display message
+                if (isValidUsername(username)) {
+                    usernameErrorMsg.setVisibility(View.GONE);
+                } else {
+                    usernameErrorMsg.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
+
 
         // TextWatcher used to validate password and match
         TextWatcher passwordWatcher = new TextWatcher() {
@@ -37,8 +62,9 @@ public class signUp extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String password = passwordInput.getText().toString();
-                String verifyPassword = verifyPasswordInput.getText().toString();
+                // Trim the password and verifypassword to remove extra spaces before or after it is entered
+                String password = passwordInput.getText().toString().trim();
+                String verifyPassword = verifyPasswordInput.getText().toString().trim();
 
                 // Validate if password meets criteria otherwise display message
                 if (isValidPassword(password)) {
@@ -66,7 +92,6 @@ public class signUp extends AppCompatActivity {
         passwordInput.addTextChangedListener(passwordWatcher);
         verifyPasswordInput.addTextChangedListener(passwordWatcher);
 
-
         backToLogInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,6 +100,17 @@ public class signUp extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+
+    // Username validation function
+    private boolean isValidUsername(String username) {
+        /* Regex pattern is used to check username criteria is met
+            [a-zA-Z0-9] - Just numbers and letters (lowercase and/or uppercase)
+            {4-10} - Length between 4 and 10 characters
+         */
+        String usernamePattern = "^[a-zA-Z0-9]{4,10}$";
+        return Pattern.matches(usernamePattern, username);
     }
 
     // Password validation function
