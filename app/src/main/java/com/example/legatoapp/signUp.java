@@ -3,6 +3,7 @@ package com.example.legatoapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Base64;
@@ -124,11 +125,16 @@ public class signUp extends AppCompatActivity {
     // TODO: instead of having a method to store tokens to sharedPreferences in each individual class, create a utilitiy sharedPreferenceClass that can be extended to store
     //  the data where ever that method is inhereted from
     private void storeSpotifyTokens(String accessToken, String refreshToken){
-        getSharedPreferences("spotify_prefs", MODE_PRIVATE)
+        getSharedPreferences("LegatoPrefs", MODE_PRIVATE)
                 .edit()
                 .putString("spotify_access_token", accessToken)
                 .putString("spotify_refresh_token", refreshToken)
                 .apply();
+
+        SharedPreferences sharedPreferences = getSharedPreferences("LegatoPrefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean("isSpotifyTokenReceived", true);
+        editor.apply();
     }
 
 
