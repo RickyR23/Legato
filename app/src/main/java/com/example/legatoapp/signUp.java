@@ -62,8 +62,35 @@ public class signUp extends AppCompatActivity {
         emailErrorMsg = findViewById(R.id.emailErrorText);
         createAccountButton = findViewById(R.id.buttonCreateAccount);
 
-        // Initially disable 'Create Account' button
-        createAccountButton.setEnabled(false);
+        createAccountButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Get input values
+                String username = usernameInput.getText().toString().trim();
+                String displayName = displayNameInput.getText().toString().trim();
+                String email = emailInput.getText().toString().trim();
+                String password = passwordInput.getText().toString().trim();
+                String verifyPassword = verifyPasswordInput.getText().toString().trim();
+
+                // Validate inputs
+                if (!isValidUsername(username) || !isValidPassword(password) || !password.equals(verifyPassword)
+                        || !isValidEmail(email) || !isValidDisplayName(displayName)) {
+                    return;
+                }
+
+                // Save login state in SharedPreferences
+                SharedPreferences sharedPreferences = getSharedPreferences("LegatoPrefs", MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putBoolean("isLoggedIn", true);
+                editor.apply();
+
+                // Navigate to Home Activity
+                Intent intent = new Intent(signUp.this, userHome.class);
+                startActivity(intent);
+                finish(); // Prevent user from going back to Sign Up
+            }
+        });
+
 
         // FocusChange to validate display name
         displayNameInput.setOnFocusChangeListener((v, hasFocus) -> {
