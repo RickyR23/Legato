@@ -36,8 +36,16 @@
             android:windowSoftInputMode="adjustResize" /> <!-- This prevents the keyboard from covering input fields on smaller screens -->
         <activity
             android:name=".signUp"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize" /> <!-- This prevents the keyboard from covering input fields on smaller screens -->
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize"> <!-- This prevents the keyboard from covering input fields on smaller screens -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="com.example.legatoapp" android:host="callback" />
+            </intent-filter>
+        </activity>
+
     </application>
 
 </manifest>
