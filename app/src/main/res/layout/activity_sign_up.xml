@@ -71,12 +71,28 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textView2" />
 
+        <!-- Display Name Error Message -->
+        <TextView
+            android:id="@+id/displayNameErrorText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:textColor="#F34D4D"
+            android:textSize="13sp"
+            android:visibility="gone"
+            android:text="  Invalid Display Name"
+            app:layout_constraintWidth_percent="0.7"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editTextDisplayName"/>
+
         <!-- Username Field -->
         <EditText
             android:id="@+id/editTextUsername"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="20dp"
             android:hint="Username"
             android:backgroundTint="@android:color/white"
             android:textColor="@android:color/white"
@@ -89,12 +105,28 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/editTextDisplayName" />
 
+        <!-- Username Error Message -->
+        <TextView
+            android:id="@+id/usernameErrorText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="7dp"
+            android:textColor="@color/white"
+            android:textSize="13sp"
+            android:visibility="gone"
+            android:text="Username must be 4-10 characters and contain only letters and numbers"
+            app:layout_constraintWidth_percent="0.7"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editTextUsername" />
+
         <!-- Email Address Field -->
         <EditText
             android:id="@+id/editTextEmail"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="20dp"
             android:hint="Email Address"
             android:backgroundTint="@android:color/white"
             android:textColor="@android:color/white"
@@ -105,14 +137,30 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/editTextUsername" />
+            app:layout_constraintTop_toBottomOf="@id/usernameErrorText" />
+
+        <!-- Email Error Message -->
+        <TextView
+            android:id="@+id/emailErrorText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:textColor="#F34D4D"
+            android:textSize="13sp"
+            android:visibility="gone"
+            android:text="  Invalid Email"
+            app:layout_constraintWidth_percent="0.7"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editTextEmail"/>
 
         <!-- Password Field -->
         <EditText
             android:id="@+id/editTextPassword"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="20dp"
             android:backgroundTint="@android:color/white"
             android:hint="Password"
             android:textColor="@android:color/white"
@@ -125,12 +173,28 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/editTextEmail" />
 
+        <!-- Password Error Message -->
+        <TextView
+            android:id="@+id/passwordErrorText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="7dp"
+            android:textColor="@color/white"
+            android:textSize="13sp"
+            android:visibility="gone"
+            android:text="Password must be 5-16 characters containing:\n 1 Uppercase\n 1 Lowercase\n 1 Number\n 1 Special Character\n No spaces"
+            app:layout_constraintWidth_percent="0.7"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editTextPassword"/>
+
         <!-- Verify Password Field -->
         <EditText
             android:id="@+id/editTextVerifyPassword"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="20dp"
             android:backgroundTint="@android:color/white"
             android:hint="Verify Password"
             android:textColor="@android:color/white"
@@ -141,14 +205,30 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/editTextPassword" />
+            app:layout_constraintTop_toBottomOf="@id/passwordErrorText" />
+
+        <!-- Password Mismatch Error Message -->
+        <TextView
+            android:id="@+id/passwordMismatchText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="7dp"
+            android:textColor="#F34D4D"
+            android:textSize="13sp"
+            android:visibility="gone"
+            android:text="Passwords do not match"
+            app:layout_constraintWidth_percent="0.7"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editTextVerifyPassword"/>
 
         <!-- Connect to Spotify Button -->
         <Button
             android:id="@+id/buttonConnectSpotify"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="40dp"
             android:backgroundTint="@color/white"
             android:text="Connect to Spotify"
             android:textColor="@color/black"
@@ -157,7 +237,7 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/editTextVerifyPassword" />
+            app:layout_constraintTop_toBottomOf="@id/passwordMismatchText" />
 
         <!-- Create Account Button -->
         <Button
