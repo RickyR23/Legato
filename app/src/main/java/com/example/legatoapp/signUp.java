@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -41,7 +43,8 @@ public class signUp extends AppCompatActivity {
     private static final String CLIENT_SECRET = ""; //Always Delete these values prior to pushing to online repo
     private static final String REDIRECT_URI = "com.example.legatoapp://callback";
     private static final String SCOPES = "user-read-playback-state user-read-currently-playing";
-
+    boolean isPasswordVisible = false;
+    boolean isVerifyPasswordVisible = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +64,39 @@ public class signUp extends AppCompatActivity {
         displayNameErrorMsg = findViewById(R.id.displayNameErrorText);
         emailErrorMsg = findViewById(R.id.emailErrorText);
         createAccountButton = findViewById(R.id.buttonCreateAccount);
+
+// UI Elements for toggling password visibility
+        ImageView togglePasswordVisibility = findViewById(R.id.togglePasswordVisibility);
+        ImageView toggleVerifyPasswordVisibility = findViewById(R.id.toggleVerifyPasswordVisibility);
+
+// Toggle Password Visibility
+        togglePasswordVisibility.setOnClickListener(v -> {
+            int cursorPosition = passwordInput.getSelectionStart();
+            if (isPasswordVisible) {
+                passwordInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                togglePasswordVisibility.setImageResource(R.drawable.eye_fill);
+            } else {
+                passwordInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                togglePasswordVisibility.setImageResource(R.drawable.eye_slash);
+            }
+            passwordInput.setSelection(cursorPosition);
+            isPasswordVisible = !isPasswordVisible;
+        });
+
+// Toggle Verify Password Visibility
+        toggleVerifyPasswordVisibility.setOnClickListener(v -> {
+            int cursorPosition = verifyPasswordInput.getSelectionStart();
+            if (isVerifyPasswordVisible) {
+                verifyPasswordInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                toggleVerifyPasswordVisibility.setImageResource(R.drawable.eye_fill);
+            } else {
+                verifyPasswordInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                toggleVerifyPasswordVisibility.setImageResource(R.drawable.eye_slash);
+            }
+            verifyPasswordInput.setSelection(cursorPosition);
+            isVerifyPasswordVisible = !isVerifyPasswordVisible;
+        });
+
 
         createAccountButton.setOnClickListener(new View.OnClickListener() {
             @Override
