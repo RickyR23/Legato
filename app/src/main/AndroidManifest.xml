@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -33,10 +32,12 @@
         <activity
             android:name=".userLoginActivity"
             android:exported="true"
-            android:theme="@style/Theme.LegatoApp" /> <!-- Signup Activity -->
+            android:theme="@style/Theme.LegatoApp"
+            android:windowSoftInputMode="adjustResize" /> <!-- This prevents the keyboard from covering input fields on smaller screens -->
         <activity
             android:name=".signUp"
-            android:exported="true">
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize"> <!-- This prevents the keyboard from covering input fields on smaller screens -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
