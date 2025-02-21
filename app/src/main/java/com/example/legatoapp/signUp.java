@@ -267,6 +267,10 @@ public class signUp extends AppCompatActivity {
                     createAccountButton.setAlpha(0.5f); // Semi-transparent
                     createAccountButton.setEnabled(false);
                 }
+                if (checkSpotifyTokenReceived()) {
+                    connectSpotifyButton.setAlpha(0.5f);
+                    connectSpotifyButton.setEnabled(false);
+                }
             }
 
             @Override
