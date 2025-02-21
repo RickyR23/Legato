@@ -152,9 +152,9 @@
 
         <ImageView
             android:id="@+id/togglePassword"
-            android:layout_width="32dp"
-            android:layout_height="37dp"
-            android:layout_marginTop="464dp"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:layout_marginTop="460dp"
             android:layout_marginEnd="22dp"
             android:width="24dp"
             android:height="24dp"
