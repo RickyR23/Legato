@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputType;
@@ -72,6 +73,7 @@ public class signUp extends AppCompatActivity {
 // Toggle Password Visibility
         togglePasswordVisibility.setOnClickListener(v -> {
             int cursorPosition = passwordInput.getSelectionStart();
+            Typeface typeface = passwordInput.getTypeface();
             if (isPasswordVisible) {
                 passwordInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
                 togglePasswordVisibility.setImageResource(R.drawable.eye_fill);
@@ -79,6 +81,7 @@ public class signUp extends AppCompatActivity {
                 passwordInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
                 togglePasswordVisibility.setImageResource(R.drawable.eye_slash);
             }
+            passwordInput.setTypeface(typeface);
             passwordInput.setSelection(cursorPosition);
             isPasswordVisible = !isPasswordVisible;
         });
@@ -86,6 +89,7 @@ public class signUp extends AppCompatActivity {
 // Toggle Verify Password Visibility
         toggleVerifyPasswordVisibility.setOnClickListener(v -> {
             int cursorPosition = verifyPasswordInput.getSelectionStart();
+            Typeface typeface = verifyPasswordInput.getTypeface();
             if (isVerifyPasswordVisible) {
                 verifyPasswordInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
                 toggleVerifyPasswordVisibility.setImageResource(R.drawable.eye_fill);
@@ -93,6 +97,7 @@ public class signUp extends AppCompatActivity {
                 verifyPasswordInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
                 toggleVerifyPasswordVisibility.setImageResource(R.drawable.eye_slash);
             }
+            verifyPasswordInput.setTypeface(typeface);
             verifyPasswordInput.setSelection(cursorPosition);
             isVerifyPasswordVisible = !isVerifyPasswordVisible;
         });
