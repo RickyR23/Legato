@@ -39,8 +39,8 @@ public class signUp extends AppCompatActivity {
     private TextView passwordErrorMsg, passwordMismatchMsg, usernameErrorMsg, displayNameErrorMsg, emailErrorMsg;
     private Button createAccountButton;
 
-    private static final String CLIENT_ID = ""; //Always Delete these values prior to pushing to online repo
-    private static final String CLIENT_SECRET = ""; //Always Delete these values prior to pushing to online repo
+    private static final String CLIENT_ID = "6ab0c337f1154a2fb117d38b9f0d291f"; //Always Delete these values prior to pushing to online repo
+    private static final String CLIENT_SECRET = "913c6182df414f95b71a776fb0e18125"; //Always Delete these values prior to pushing to online repo
     private static final String REDIRECT_URI = "com.example.legatoapp://callback";
     private static final String SCOPES = "user-read-playback-state user-read-currently-playing";
     boolean isPasswordVisible = false;
@@ -228,8 +228,62 @@ public class signUp extends AppCompatActivity {
                 launchSpotifyAuthSession();
             }
         });
-    }
 
+
+        // Inside onCreate()
+        createAccountButton.setAlpha(0.5f); // Set transparency at the start
+        createAccountButton.setEnabled(false); // Disable initially
+
+        TextWatcher formWatcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // Get input values
+                String username = usernameInput.getText().toString().trim();
+                String displayName = displayNameInput.getText().toString().trim();
+                String email = emailInput.getText().toString().trim();
+                String password = passwordInput.getText().toString().trim();
+                String verifyPassword = verifyPasswordInput.getText().toString().trim();
+
+                // Check if all fields are valid
+                boolean isValidForm = isValidUsername(username) &&
+                        isValidDisplayName(displayName) &&
+                        isValidEmail(email) &&
+                        isValidPassword(password) &&
+                        password.equals(verifyPassword);
+
+                // Check if Spotify tokens are received
+                boolean isSpotifyTokenReceived = checkSpotifyTokenReceived();
+
+                // Enable button only when both conditions are met
+                if (isValidForm && isSpotifyTokenReceived) {
+                    createAccountButton.setAlpha(1.0f); // Fully visible
+                    createAccountButton.setEnabled(true);
+                } else {
+                    createAccountButton.setAlpha(0.5f); // Semi-transparent
+                    createAccountButton.setEnabled(false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        };
+
+// Attach watcher to form fields
+        usernameInput.addTextChangedListener(formWatcher);
+        displayNameInput.addTextChangedListener(formWatcher);
+        emailInput.addTextChangedListener(formWatcher);
+        passwordInput.addTextChangedListener(formWatcher);
+        verifyPasswordInput.addTextChangedListener(formWatcher);
+
+
+    }
+    private boolean checkSpotifyTokenReceived() {
+        SharedPreferences sharedPreferences = getSharedPreferences("LegatoPrefs", MODE_PRIVATE);
+        return sharedPreferences.getBoolean("isSpotifyTokenReceived", false);
+    }
     @Override
     protected void onResume() {
         super.onResume();

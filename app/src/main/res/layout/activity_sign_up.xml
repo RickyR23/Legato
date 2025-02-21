@@ -249,6 +249,8 @@
             android:padding="10dp"
             android:text="Create Account"
             android:textColor="@color/black"
+            android:alpha="0.5"
+            android:enabled="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
