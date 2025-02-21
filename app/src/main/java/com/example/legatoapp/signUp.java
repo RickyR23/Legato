@@ -291,6 +291,27 @@ public class signUp extends AppCompatActivity {
         return sharedPreferences.getBoolean("isSpotifyTokenReceived", false);
     }
 
+    // onSaveInstanceState used to save data entered in input fields before being redirected to Spotify
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("displayName", displayNameInput.getText().toString().trim());
+        outState.putString("username", usernameInput.getText().toString().trim());
+        outState.putString("email", emailInput.getText().toString().trim());
+        outState.putString("password", passwordInput.getText().toString().trim());
+        outState.putString("verifyPassword", verifyPasswordInput.getText().toString().trim());
+    }
+
+    // onRestoreInstanceState used to restore data entered previously after returning from Spotify
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        displayNameInput.setText(savedInstanceState.getString("displayName"));
+        usernameInput.setText(savedInstanceState.getString("username"));
+        emailInput.setText(savedInstanceState.getString("email"));
+        passwordInput.setText(savedInstanceState.getString("password"));
+        verifyPasswordInput.setText(savedInstanceState.getString("verifyPassword"));
+    }
 
     @Override
     protected void onResume() {

@@ -229,7 +229,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
-            android:backgroundTint="@color/white"
+            android:backgroundTint="@color/spotify2"
             android:padding="10dp"
             android:text="Connect to Spotify"
             android:textColor="@color/black"
