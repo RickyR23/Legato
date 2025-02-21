@@ -236,12 +236,18 @@ public class signUp extends AppCompatActivity {
         createAccountButton.setAlpha(0.5f); // Set transparency at the start
         createAccountButton.setEnabled(false); // Disable initially
 
+
         TextWatcher formWatcher = new TextWatcher() {
             @Override
+
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (checkSpotifyTokenReceived()) {
+                    connectSpotifyButton.setAlpha(0.5f);
+                    connectSpotifyButton.setEnabled(false);
+                }
                 // Get input values
                 String username = usernameInput.getText().toString().trim();
                 String displayName = displayNameInput.getText().toString().trim();
@@ -267,10 +273,7 @@ public class signUp extends AppCompatActivity {
                     createAccountButton.setAlpha(0.5f); // Semi-transparent
                     createAccountButton.setEnabled(false);
                 }
-                if (checkSpotifyTokenReceived()) {
-                    connectSpotifyButton.setAlpha(0.5f);
-                    connectSpotifyButton.setEnabled(false);
-                }
+
             }
 
             @Override
