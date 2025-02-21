@@ -1,6 +1,7 @@
 package com.example.legatoapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 
@@ -12,20 +13,26 @@ public class splashScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Hide the ActionBar programmatically
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
 
         setContentView(R.layout.activity_splashscreen);
 
-        // Delay for the splash screen (3 seconds) before transitioning to the login screen
         new Handler().postDelayed(() -> {
-            Intent intent = new Intent(splashScreen.this, userLoginActivity.class);
+            SharedPreferences sharedPreferences = getSharedPreferences("LegatoPrefs", MODE_PRIVATE);
+            boolean isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false);
+
+            Intent intent;
+            if (isLoggedIn) {
+                intent = new Intent(splashScreen.this, userHome.class);
+            } else {
+                intent = new Intent(splashScreen.this, userLoginActivity.class);
+            }
+
             startActivity(intent);
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-            finish(); // Finish splash activity to remove it from back stack
-        }, 2000); // 2000 milliseconds = 2 seconds
+            finish();
+        }, 2000);
     }
-
 }

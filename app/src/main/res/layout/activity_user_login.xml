@@ -2,14 +2,14 @@
 <!--ScrollView enables scrolling when screen size is too small-->
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
     android:background="@drawable/background">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="38dp"
@@ -51,11 +51,14 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <!-- Username Field -->
+
+        <!-- Password Field -->
+
         <EditText
             android:id="@+id/username"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="80dp"
+            android:layout_marginTop="52dp"
             android:backgroundTint="@android:color/white"
             android:hint="@string/login_username"
             android:importantForAccessibility="yes"
@@ -66,17 +69,21 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/loginAppName"
-            app:layout_constraintWidth_percent="0.75" />
+            app:layout_constraintWidth_percent="0.70" />
 
-        <!-- Password Field -->
+        <!-- Forgot Password -->
+
+        <!-- Login Button -->
+
+        <!-- "New here?" Text -->
         <EditText
             android:id="@+id/loginPassword"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="36dp"
             android:backgroundTint="@android:color/white"
-            android:importantForAccessibility="yes"
             android:hint="@string/login_password"
+            android:importantForAccessibility="yes"
             android:inputType="textPassword"
             android:padding="12dp"
             android:textColor="@android:color/white"
@@ -84,14 +91,13 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/username"
-            app:layout_constraintWidth_percent="0.75" />
+            app:layout_constraintWidth_percent="0.70" />
 
-        <!-- Forgot Password -->
         <TextView
             android:id="@+id/forgotPasswordText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="28dp"
             android:clickable="true"
             android:focusable="true"
             android:text="@string/forgot_password"
@@ -102,14 +108,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/loginPassword" />
 
-        <!-- Login Button -->
         <Button
             android:id="@+id/launch_tohomepage"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="80dp"
-            android:minHeight="48dp"
+            android:layout_marginTop="24dp"
             android:contentDescription="@string/contextDescriptionLoginButton"
+            android:minHeight="48dp"
             android:padding="12dp"
             android:text="@string/login"
             android:textColor="@android:color/white"
@@ -118,7 +123,6 @@
             app:layout_constraintTop_toBottomOf="@id/forgotPasswordText"
             app:layout_constraintWidth_percent="0.4" />
 
-        <!-- "New here?" Text -->
         <TextView
             android:id="@+id/newHereText"
             android:layout_width="wrap_content"
@@ -145,6 +149,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/newHereText"
             app:layout_constraintWidth_percent="0.3" />
+
+        <ImageView
+            android:id="@+id/togglePassword"
+            android:layout_width="32dp"
+            android:layout_height="37dp"
+            android:layout_marginTop="464dp"
+            android:layout_marginEnd="22dp"
+            android:width="24dp"
+            android:height="24dp"
+            android:src="@drawable/eye_fill"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

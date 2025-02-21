@@ -1,145 +1,260 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<!--ScrollView enables scrolling when screen size is too small-->
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".signUp"
+    android:fillViewport="true"
     android:background="@drawable/background">
 
-    <!-- Back Button -->
-    <ImageButton
-        android:id="@+id/backToLogInButton"
-        android:layout_width="81dp"
-        android:layout_height="70dp"
-        android:layout_marginTop="16dp"
-        android:contentDescription="Back to Login"
-        android:scaleType="fitCenter"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.048"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/back_button"
-        android:background="@android:color/transparent" />
-
-    <!-- Title -->
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:text="Sign Up"
-        android:textColor="@color/white"
-        android:textSize="30sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:paddingBottom="45dp"
+        android:fitsSystemWindows="true"
+        tools:context=".signUp">
 
-    <!-- Display Name Field -->
-    <EditText
-        android:id="@+id/editTextDisplayName"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:backgroundTint="@android:color/white"
-        android:hint="Display Name"
-        android:textColor="@android:color/white"
-        android:textColorHint="@android:color/white"
-        android:inputType="text"
-        android:padding="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView2" />
+        <!-- Guideline for Centering -->
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
 
-    <!-- Username Field -->
-    <EditText
-        android:id="@+id/editTextUsername"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:backgroundTint="@android:color/white"
-        android:hint="Username"
-        android:textColor="@android:color/white"
-        android:textColorHint="@android:color/white"
-        android:inputType="text"
-        android:padding="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editTextDisplayName" />
+        <!-- Back Button -->
+        <ImageButton
+            android:id="@+id/backToLogInButton"
+            android:layout_width="81dp"
+            android:layout_height="70dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:contentDescription="Back to Login"
+            android:scaleType="fitCenter"
+            android:background="@android:color/transparent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/back_button"/>
 
-    <!-- Email Address Field -->
-    <EditText
-        android:id="@+id/editTextEmail"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:backgroundTint="@android:color/white"
-        android:hint="Email Address"
-        android:textColor="@android:color/white"
-        android:textColorHint="@android:color/white"
-        android:inputType="textEmailAddress"
-        android:padding="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editTextUsername" />
+        <!-- Title -->
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="110dp"
+            android:text="Sign Up"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="35sp"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Password Field -->
-    <EditText
-        android:id="@+id/editTextPassword"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:backgroundTint="@android:color/white"
-        android:hint="Password"
-        android:textColor="@android:color/white"
-        android:textColorHint="@android:color/white"
-        android:inputType="textPassword"
-        android:padding="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editTextEmail" />
+        <!-- Display Name Field -->
+        <EditText
+            android:id="@+id/editTextDisplayName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="56dp"
+            android:backgroundTint="@android:color/white"
+            android:hint="Display Name"
+            android:inputType="text"
+            android:padding="12dp"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/white"
+            app:layout_constraintWidth_percent="0.7"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView2" />
 
-    <!-- Verify Password Field -->
-    <EditText
-        android:id="@+id/editTextVerifyPassword"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:backgroundTint="@android:color/white"
-        android:hint="Verify Password"
-        android:textColor="@android:color/white"
-        android:textColorHint="@android:color/white"
-        android:inputType="textPassword"
-        android:padding="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editTextPassword" />
+        <!-- Display Name Error Message -->
+        <TextView
+            android:id="@+id/displayNameErrorText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:textColor="#F34D4D"
+            android:textSize="13sp"
+            android:visibility="gone"
+            android:text="  Invalid Display Name"
+            app:layout_constraintWidth_percent="0.7"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editTextDisplayName"/>
 
-    <!-- Connect to Spotify Button -->
-    <Button
-        android:id="@+id/buttonConnectSpotify"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:backgroundTint="@color/button_color"
-        android:text="Connect to Spotify"
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editTextVerifyPassword" />
+        <!-- Username Field -->
+        <EditText
+            android:id="@+id/editTextUsername"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:hint="Username"
+            android:backgroundTint="@android:color/white"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/white"
+            android:inputType="text"
+            android:padding="12dp"
+            app:layout_constraintWidth_percent="0.7"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editTextDisplayName" />
 
-    <!-- Create Account Button -->
-    <Button
-        android:id="@+id/buttonCreateAccount"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:backgroundTint="@color/button_color"
-        android:text="Create Account"
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/buttonConnectSpotify" />
+        <!-- Username Error Message -->
+        <TextView
+            android:id="@+id/usernameErrorText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="7dp"
+            android:textColor="@color/white"
+            android:textSize="13sp"
+            android:visibility="gone"
+            android:text="Username must be 4-10 characters and contain only letters and numbers"
+            app:layout_constraintWidth_percent="0.7"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editTextUsername" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <!-- Email Address Field -->
+        <EditText
+            android:id="@+id/editTextEmail"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:hint="Email Address"
+            android:backgroundTint="@android:color/white"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/white"
+            android:inputType="textEmailAddress"
+            android:padding="12dp"
+            app:layout_constraintWidth_percent="0.7"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/usernameErrorText" />
+
+        <!-- Email Error Message -->
+        <TextView
+            android:id="@+id/emailErrorText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:textColor="#F34D4D"
+            android:textSize="13sp"
+            android:visibility="gone"
+            android:text="  Invalid Email"
+            app:layout_constraintWidth_percent="0.7"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editTextEmail"/>
+
+        <!-- Password Field -->
+        <EditText
+            android:id="@+id/editTextPassword"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@android:color/white"
+            android:hint="Password"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/white"
+            android:inputType="textPassword"
+            android:padding="12dp"
+            app:layout_constraintWidth_percent="0.7"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editTextEmail" />
+
+        <!-- Password Error Message -->
+        <TextView
+            android:id="@+id/passwordErrorText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="7dp"
+            android:textColor="@color/white"
+            android:textSize="13sp"
+            android:visibility="gone"
+            android:text="Password must be 5-16 characters containing:\n 1 Uppercase\n 1 Lowercase\n 1 Number\n 1 Special Character\n No spaces"
+            app:layout_constraintWidth_percent="0.7"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editTextPassword"/>
+
+        <!-- Verify Password Field -->
+        <EditText
+            android:id="@+id/editTextVerifyPassword"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@android:color/white"
+            android:hint="Verify Password"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/white"
+            android:inputType="textPassword"
+            android:padding="12dp"
+            app:layout_constraintWidth_percent="0.7"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/passwordErrorText" />
+
+        <!-- Password Mismatch Error Message -->
+        <TextView
+            android:id="@+id/passwordMismatchText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="7dp"
+            android:textColor="#F34D4D"
+            android:textSize="13sp"
+            android:visibility="gone"
+            android:text="Passwords do not match"
+            app:layout_constraintWidth_percent="0.7"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editTextVerifyPassword"/>
+
+        <!-- Connect to Spotify Button -->
+        <Button
+            android:id="@+id/buttonConnectSpotify"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:backgroundTint="@color/white"
+            android:text="Connect to Spotify"
+            android:textColor="@color/black"
+            android:padding="10dp"
+            app:layout_constraintWidth_percent="0.5"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/passwordMismatchText" />
+
+        <!-- Create Account Button -->
+        <Button
+            android:id="@+id/buttonCreateAccount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:backgroundTint="@color/white"
+            android:text="Create Account"
+            android:textColor="@color/black"
+            android:padding="10dp"
+            app:layout_constraintWidth_percent="0.7"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/buttonConnectSpotify" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
