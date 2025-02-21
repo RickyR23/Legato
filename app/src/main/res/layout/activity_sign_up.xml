@@ -245,12 +245,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
+            android:alpha="0.5"
             android:backgroundTint="@color/white"
+            android:enabled="false"
             android:padding="10dp"
             android:text="Create Account"
             android:textColor="@color/black"
-            android:alpha="0.5"
-            android:enabled="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -267,21 +267,22 @@
             android:contentDescription="Toggle Password Visibility"
             android:src="@drawable/eye_fill"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/editTextPassword"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editTextEmail"
+            />
 
         <ImageView
             android:id="@+id/toggleVerifyPasswordVisibility"
             android:layout_width="34dp"
             android:layout_height="37dp"
-            android:layout_marginStart="9dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="232dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="28dp"
             android:contentDescription="Toggle Verify Password Visibility"
             android:src="@drawable/eye_fill"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/editTextVerifyPassword" />
+            app:layout_constraintStart_toEndOf="@+id/editTextVerifyPassword"
+            app:layout_constraintTop_toBottomOf="@id/passwordErrorText" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

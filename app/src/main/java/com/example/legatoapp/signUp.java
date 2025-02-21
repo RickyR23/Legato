@@ -39,8 +39,8 @@ public class signUp extends AppCompatActivity {
     private TextView passwordErrorMsg, passwordMismatchMsg, usernameErrorMsg, displayNameErrorMsg, emailErrorMsg;
     private Button createAccountButton;
 
-    private static final String CLIENT_ID = "6ab0c337f1154a2fb117d38b9f0d291f"; //Always Delete these values prior to pushing to online repo
-    private static final String CLIENT_SECRET = "913c6182df414f95b71a776fb0e18125"; //Always Delete these values prior to pushing to online repo
+    private static final String CLIENT_ID = ""; //Always Delete these values prior to pushing to online repo
+    private static final String CLIENT_SECRET = ""; //Always Delete these values prior to pushing to online repo
     private static final String REDIRECT_URI = "com.example.legatoapp://callback";
     private static final String SCOPES = "user-read-playback-state user-read-currently-playing";
     boolean isPasswordVisible = false;
@@ -392,6 +392,7 @@ public class signUp extends AppCompatActivity {
                 runOnUiThread(() -> {
                     Button connectSpotifyButton = findViewById(R.id.buttonConnectSpotify);
                     connectSpotifyButton.setAlpha(0.5f);
+                    connectSpotifyButton.setText(R.string.Spotify_Conncted);
                     connectSpotifyButton.setEnabled(false);
                 });
             }
