@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -13,6 +15,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -41,7 +44,8 @@ public class signUp extends AppCompatActivity {
     private static final String CLIENT_SECRET = ""; //Always Delete these values prior to pushing to online repo
     private static final String REDIRECT_URI = "com.example.legatoapp://callback";
     private static final String SCOPES = "user-read-playback-state user-read-currently-playing";
-
+    boolean isPasswordVisible = false;
+    boolean isVerifyPasswordVisible = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,8 +66,72 @@ public class signUp extends AppCompatActivity {
         emailErrorMsg = findViewById(R.id.emailErrorText);
         createAccountButton = findViewById(R.id.buttonCreateAccount);
 
-        // Initially disable 'Create Account' button
-        createAccountButton.setEnabled(false);
+// UI Elements for toggling password visibility
+        ImageView togglePasswordVisibility = findViewById(R.id.togglePasswordVisibility);
+        ImageView toggleVerifyPasswordVisibility = findViewById(R.id.toggleVerifyPasswordVisibility);
+
+// Toggle Password Visibility
+        togglePasswordVisibility.setOnClickListener(v -> {
+            int cursorPosition = passwordInput.getSelectionStart();
+            Typeface typeface = passwordInput.getTypeface();
+            if (isPasswordVisible) {
+                passwordInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                togglePasswordVisibility.setImageResource(R.drawable.eye_fill);
+            } else {
+                passwordInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                togglePasswordVisibility.setImageResource(R.drawable.eye_slash);
+            }
+            passwordInput.setTypeface(typeface);
+            passwordInput.setSelection(cursorPosition);
+            isPasswordVisible = !isPasswordVisible;
+        });
+
+// Toggle Verify Password Visibility
+        toggleVerifyPasswordVisibility.setOnClickListener(v -> {
+            int cursorPosition = verifyPasswordInput.getSelectionStart();
+            Typeface typeface = verifyPasswordInput.getTypeface();
+            if (isVerifyPasswordVisible) {
+                verifyPasswordInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                toggleVerifyPasswordVisibility.setImageResource(R.drawable.eye_fill);
+            } else {
+                verifyPasswordInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                toggleVerifyPasswordVisibility.setImageResource(R.drawable.eye_slash);
+            }
+            verifyPasswordInput.setTypeface(typeface);
+            verifyPasswordInput.setSelection(cursorPosition);
+            isVerifyPasswordVisible = !isVerifyPasswordVisible;
+        });
+
+
+        createAccountButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Get input values
+                String username = usernameInput.getText().toString().trim();
+                String displayName = displayNameInput.getText().toString().trim();
+                String email = emailInput.getText().toString().trim();
+                String password = passwordInput.getText().toString().trim();
+                String verifyPassword = verifyPasswordInput.getText().toString().trim();
+
+                // Validate inputs
+                if (!isValidUsername(username) || !isValidPassword(password) || !password.equals(verifyPassword)
+                        || !isValidEmail(email) || !isValidDisplayName(displayName)) {
+                    return;
+                }
+
+                // Save login state in SharedPreferences
+                SharedPreferences sharedPreferences = getSharedPreferences("LegatoPrefs", MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putBoolean("isLoggedIn", true);
+                editor.apply();
+
+                // Navigate to Home Activity
+                Intent intent = new Intent(signUp.this, userHome.class);
+                startActivity(intent);
+                finish(); // Prevent user from going back to Sign Up
+            }
+        });
+
 
         // FocusChange to validate display name
         displayNameInput.setOnFocusChangeListener((v, hasFocus) -> {
@@ -158,6 +226,8 @@ public class signUp extends AppCompatActivity {
                 finish();
             }
         });
+
+
         Button connectSpotifyButton = findViewById(R.id.buttonConnectSpotify);
         connectSpotifyButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -165,21 +235,84 @@ public class signUp extends AppCompatActivity {
                 launchSpotifyAuthSession();
             }
         });
+
+
+        // Inside onCreate()
+        createAccountButton.setAlpha(0.5f); // Set transparency at the start
+        createAccountButton.setEnabled(false); // Disable initially
+
+
+        TextWatcher formWatcher = new TextWatcher() {
+            @Override
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                // Get input values
+                String username = usernameInput.getText().toString().trim();
+                String displayName = displayNameInput.getText().toString().trim();
+                String email = emailInput.getText().toString().trim();
+                String password = passwordInput.getText().toString().trim();
+                String verifyPassword = verifyPasswordInput.getText().toString().trim();
+
+                // Check if all fields are valid
+                boolean isValidForm = isValidUsername(username) &&
+                        isValidDisplayName(displayName) &&
+                        isValidEmail(email) &&
+                        isValidPassword(password) &&
+                        password.equals(verifyPassword);
+
+                // Check if Spotify tokens are received
+                boolean isSpotifyTokenReceived = checkSpotifyTokenReceived();
+
+                // Enable button only when both conditions are met
+                if (isValidForm && isSpotifyTokenReceived) {
+                    createAccountButton.setAlpha(1.0f); // Fully visible
+                    createAccountButton.setEnabled(true);
+                } else {
+                    createAccountButton.setAlpha(0.5f); // Semi-transparent
+                    createAccountButton.setEnabled(false);
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        };
+
+// Attach watcher to form fields
+        usernameInput.addTextChangedListener(formWatcher);
+        displayNameInput.addTextChangedListener(formWatcher);
+        emailInput.addTextChangedListener(formWatcher);
+        passwordInput.addTextChangedListener(formWatcher);
+        verifyPasswordInput.addTextChangedListener(formWatcher);
+
+
     }
+    private boolean checkSpotifyTokenReceived() {
+        SharedPreferences sharedPreferences = getSharedPreferences("LegatoPrefs", MODE_PRIVATE);
+        return sharedPreferences.getBoolean("isSpotifyTokenReceived", false);
+    }
+
+
 
     @Override
     protected void onResume() {
         super.onResume();
-        Uri receivedUri = getIntent().getData();
 
-        if(receivedUri != null && receivedUri.toString().startsWith(REDIRECT_URI)){
+        // Check if we received the Spotify authentication response
+        Uri receivedUri = getIntent().getData();
+        if (receivedUri != null && receivedUri.toString().startsWith(REDIRECT_URI)) {
             String authCode = receivedUri.getQueryParameter("code");
-            if(authCode != null){
+            if (authCode != null) {
                 exchangeAuthorizationForToken(authCode);
             }
         }
 
-    } // End of onCreate
+    }
+    // End of onCreate
 
     /*-----------VALIDATION METHODS-----------*/
     // Username validation function
@@ -262,6 +395,12 @@ public class signUp extends AppCompatActivity {
 
                     Log.d("SpotifyAuthService", "Spotify has received token response: \n Access Token: " + retrievedAccessToken + "\n refreshToken: " + retrievedRefreshToken);
                 }
+                runOnUiThread(() -> {
+                    Button connectSpotifyButton = findViewById(R.id.buttonConnectSpotify);
+                    connectSpotifyButton.setAlpha(0.5f);
+                    connectSpotifyButton.setText(R.string.Spotify_Conncted);
+                    connectSpotifyButton.setEnabled(false);
+                });
             }
 
             @Override
