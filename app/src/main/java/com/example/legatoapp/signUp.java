@@ -39,8 +39,8 @@ public class signUp extends AppCompatActivity {
     private TextView passwordErrorMsg, passwordMismatchMsg, usernameErrorMsg, displayNameErrorMsg, emailErrorMsg;
     private Button createAccountButton;
 
-    private static final String CLIENT_ID = ""; //Always Delete these values prior to pushing to online repo
-    private static final String CLIENT_SECRET = ""; //Always Delete these values prior to pushing to online repo
+    private static final String CLIENT_ID = "6ab0c337f1154a2fb117d38b9f0d291f"; //Always Delete these values prior to pushing to online repo
+    private static final String CLIENT_SECRET = "913c6182df414f95b71a776fb0e18125"; //Always Delete these values prior to pushing to online repo
     private static final String REDIRECT_URI = "com.example.legatoapp://callback";
     private static final String SCOPES = "user-read-playback-state user-read-currently-playing";
     boolean isPasswordVisible = false;
@@ -244,10 +244,7 @@ public class signUp extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (checkSpotifyTokenReceived()) {
-                    connectSpotifyButton.setAlpha(0.5f);
-                    connectSpotifyButton.setEnabled(false);
-                }
+
                 // Get input values
                 String username = usernameInput.getText().toString().trim();
                 String displayName = displayNameInput.getText().toString().trim();
@@ -293,19 +290,23 @@ public class signUp extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("LegatoPrefs", MODE_PRIVATE);
         return sharedPreferences.getBoolean("isSpotifyTokenReceived", false);
     }
+
+
     @Override
     protected void onResume() {
         super.onResume();
-        Uri receivedUri = getIntent().getData();
 
-        if(receivedUri != null && receivedUri.toString().startsWith(REDIRECT_URI)){
+        // Check if we received the Spotify authentication response
+        Uri receivedUri = getIntent().getData();
+        if (receivedUri != null && receivedUri.toString().startsWith(REDIRECT_URI)) {
             String authCode = receivedUri.getQueryParameter("code");
-            if(authCode != null){
+            if (authCode != null) {
                 exchangeAuthorizationForToken(authCode);
             }
         }
 
-    } // End of onCreate
+    }
+    // End of onCreate
 
     /*-----------VALIDATION METHODS-----------*/
     // Username validation function
@@ -388,6 +389,11 @@ public class signUp extends AppCompatActivity {
 
                     Log.d("SpotifyAuthService", "Spotify has received token response: \n Access Token: " + retrievedAccessToken + "\n refreshToken: " + retrievedRefreshToken);
                 }
+                runOnUiThread(() -> {
+                    Button connectSpotifyButton = findViewById(R.id.buttonConnectSpotify);
+                    connectSpotifyButton.setAlpha(0.5f);
+                    connectSpotifyButton.setEnabled(false);
+                });
             }
 
             @Override
