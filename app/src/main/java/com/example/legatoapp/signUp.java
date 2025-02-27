@@ -17,16 +17,13 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Button;
 import android.widget.EditText;
 import java.util.regex.Pattern;
 import android.util.Patterns;
 
 
 import com.example.legatoapp.Services.AuthService;
-import com.example.legatoapp.models.SpotifyAccessTokenResponse;
-
-import java.net.URI;
+import com.example.legatoapp.models.response.SpotifyAccessTokenResponse;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -43,7 +40,7 @@ public class signUp extends AppCompatActivity {
     private static final String CLIENT_ID = ""; //Always Delete these values prior to pushing to online repo
     private static final String CLIENT_SECRET = ""; //Always Delete these values prior to pushing to online repo
     private static final String REDIRECT_URI = "com.example.legatoapp://callback";
-    private static final String SCOPES = "user-read-playback-state user-read-currently-playing";
+    private static final String SCOPES = "user-read-playback-state user-read-currently-playing user-read-private user-read-recently-played user-read-email";
     boolean isPasswordVisible = false;
     boolean isVerifyPasswordVisible = false;
 

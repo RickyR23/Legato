@@ -1,4 +1,4 @@
-package com.example.legatoapp.models;
+package com.example.legatoapp.models.response;
 
 import android.media.Image;
 
