@@ -1,16 +1,19 @@
 package com.example.legatoapp.Services;
 
-import com.example.legatoapp.models.SpotifyAccessTokenResponse;
+import com.example.legatoapp.models.response.SpotifyAccessTokenResponse;
+import com.example.legatoapp.models.response.SpotifyUserProfileResponse;
 
 import io.reactivex.rxjava3.core.Observable;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 
 public interface AuthService {
 
+    // Spotify Auth Tokens --------------
     @FormUrlEncoded
     @POST("api/token")
     Observable<SpotifyAccessTokenResponse> getAccessToken(
@@ -27,4 +30,15 @@ public interface AuthService {
             @Field("refresh_token") String refreshToken,
             @Header("Authorization") String authorizationHeader
     );
+
+
+    // Spotify User Data
+    @GET("v1/me")
+    Call<SpotifyUserProfileResponse> getUserProfile(@Header("Authorization")
+                                                    String accessToken);
+
+    @GET("v1/me")
+    Call<SpotifyUserProfileResponse> getUserRecentlyPlayedTracks(@Header("Authorization")
+                                                                 String accessToken);
+
 }

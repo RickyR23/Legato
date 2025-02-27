@@ -24,9 +24,7 @@ import android.util.Patterns;
 
 
 import com.example.legatoapp.Services.AuthService;
-import com.example.legatoapp.models.SpotifyAccessTokenResponse;
-
-import java.net.URI;
+import com.example.legatoapp.models.response.SpotifyAccessTokenResponse;
 
 import retrofit2.Call;
 import retrofit2.Callback;

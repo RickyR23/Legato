@@ -1,4 +1,4 @@
-package com.example.legatoapp.models;
+package com.example.legatoapp.models.response;
 
 public class SpotifyAccessTokenResponse {
     private String access_token;
