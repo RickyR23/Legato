@@ -39,11 +39,6 @@ public class signUp extends AppCompatActivity {
     private EditText passwordInput, verifyPasswordInput, usernameInput, displayNameInput, emailInput;
     private TextView passwordErrorMsg, passwordMismatchMsg, usernameErrorMsg, displayNameErrorMsg, emailErrorMsg;
     private Button createAccountButton;
-
-    private static final String CLIENT_ID = ""; //Always Delete these values prior to pushing to online repo
-    private static final String CLIENT_SECRET = ""; //Always Delete these values prior to pushing to online repo
-    private static final String REDIRECT_URI = "com.example.legatoapp://callback";
-    private static final String SCOPES = "user-read-playback-state user-read-currently-playing";
     boolean isPasswordVisible = false;
     boolean isVerifyPasswordVisible = false;
 
@@ -371,12 +366,6 @@ public class signUp extends AppCompatActivity {
     }
 
     private void exchangeAuthorizationForToken(String code){
-        Retrofit retrofitInstance = new Retrofit.Builder()
-                .baseUrl("https://accounts.spotify.com/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        AuthService authenticationService = retrofitInstance.create(AuthService.class);
 
         String credentials = CLIENT_ID + ":" + CLIENT_SECRET;
         String authHeader = "Basic " + Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);
@@ -411,20 +400,7 @@ public class signUp extends AppCompatActivity {
 
     }
 
-    // TODO: instead of having a method to store tokens to sharedPreferences in each individual class, create a utilitiy sharedPreferenceClass that can be extended to store
-    //  the data where ever that method is inhereted from
-    private void storeSpotifyTokens(String accessToken, String refreshToken){
-        getSharedPreferences("LegatoPrefs", MODE_PRIVATE)
-                .edit()
-                .putString("spotify_access_token", accessToken)
-                .putString("spotify_refresh_token", refreshToken)
-                .apply();
 
-        SharedPreferences sharedPreferences = getSharedPreferences("LegatoPrefs", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean("isSpotifyTokenReceived", true);
-        editor.apply();
-    }
 
 
 
