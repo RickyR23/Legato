@@ -30,4 +30,15 @@ public interface AuthService {
             @Field("refresh_token") String refreshToken,
             @Header("Authorization") String authorizationHeader
     );
+
+
+    // Spotify User Data
+    @GET("v1/me")
+    Call<SpotifyUserProfileResponse> getUserProfile(@Header("Authorization")
+                                                    String accessToken);
+
+    @GET("v1/me")
+    Call<SpotifyUserProfileResponse> getUserRecentlyPlayedTracks(@Header("Authorization")
+                                                                 String accessToken);
+
 }
