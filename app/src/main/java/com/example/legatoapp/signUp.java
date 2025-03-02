@@ -2,13 +2,13 @@ package com.example.legatoapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputType;
-import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -17,20 +17,18 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Button;
 import android.widget.EditText;
 import java.util.regex.Pattern;
 import android.util.Patterns;
 
 
-import com.example.legatoapp.Services.AuthService;
-import com.example.legatoapp.models.response.SpotifyAccessTokenResponse;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import com.example.legatoapp.Services.helper.SpotifyAuthHelper;
+
+
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.disposables.Disposable;
+
 
 public class signUp extends AppCompatActivity {
 
@@ -39,6 +37,8 @@ public class signUp extends AppCompatActivity {
     private Button createAccountButton;
     boolean isPasswordVisible = false;
     boolean isVerifyPasswordVisible = false;
+    private CompositeDisposable compositeDisposable = new CompositeDisposable();
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -297,7 +297,7 @@ public class signUp extends AppCompatActivity {
 
         // Check if we received the Spotify authentication response
         Uri receivedUri = getIntent().getData();
-        if (receivedUri != null && receivedUri.toString().startsWith(REDIRECT_URI)) {
+        if (receivedUri != null && receivedUri.toString().startsWith(context.getString(R.string.REDIRECT_URI))) {
             String authCode = receivedUri.getQueryParameter("code");
             if (authCode != null) {
                 exchangeAuthorizationForToken(authCode);
@@ -345,6 +345,7 @@ public class signUp extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        compositeDisposable.clear();
     }
 
 
@@ -353,10 +354,10 @@ public class signUp extends AppCompatActivity {
                 .scheme("https")
                 .authority("accounts.spotify.com")
                 .appendPath("authorize")
-                .appendQueryParameter("client_id",CLIENT_ID)
+                .appendQueryParameter("client_id",context.getString(R.string.CLIENT_ID))
                 .appendQueryParameter("response_type", "code")
-                .appendQueryParameter("redirect_uri", REDIRECT_URI)
-                .appendQueryParameter("scope", SCOPES)
+                .appendQueryParameter("redirect_uri", context.getString(R.string.REDIRECT_URI))
+                .appendQueryParameter("scope", context.getString(R.string.SPOTIFY_SCOPES))
                 .build();
 
         Intent intent = new Intent(Intent.ACTION_VIEW, authenticationURI);
@@ -364,38 +365,19 @@ public class signUp extends AppCompatActivity {
     }
 
     private void exchangeAuthorizationForToken(String code){
+        Disposable disposable = SpotifyAuthHelper.fetchAccessToken(context, code)
+                .subscribe(response -> {
+                    SpotifyAuthHelper.storeSpotifyTokens(this, response.getAccess_token(), response.getRefresh_token());
+                    Log.d("SpotifyAuthService", "Spotify has received token response: \n Access Token: " + response.getAccess_token() + "\n refreshToken: " + response.getRefresh_token());
+                }, error -> Log.e("SpotifyAuthService", "Error has occured . . . : " + error.getMessage()));
+        compositeDisposable.add(disposable);
 
-        String credentials = CLIENT_ID + ":" + CLIENT_SECRET;
-        String authHeader = "Basic " + Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);
-
-        Call<SpotifyAccessTokenResponse> call = authenticationService.getAccessToken(
-                "authorization_code", code, REDIRECT_URI, authHeader
-        );
-
-        call.enqueue(new Callback<SpotifyAccessTokenResponse>() {
-            @Override
-            public void onResponse(Call<SpotifyAccessTokenResponse> call, Response<SpotifyAccessTokenResponse> response) {
-                if(response.isSuccessful() && response.body() != null){
-                    String retrievedAccessToken = response.body().getAccess_token();
-                    String retrievedRefreshToken = response.body().getRefresh_token();
-                    storeSpotifyTokens(retrievedAccessToken, retrievedRefreshToken);
-
-                    Log.d("SpotifyAuthService", "Spotify has received token response: \n Access Token: " + retrievedAccessToken + "\n refreshToken: " + retrievedRefreshToken);
-                }
-                runOnUiThread(() -> {
-                    Button connectSpotifyButton = findViewById(R.id.buttonConnectSpotify);
-                    connectSpotifyButton.setAlpha(0.5f);
-                    connectSpotifyButton.setText(R.string.Spotify_Conncted);
-                    connectSpotifyButton.setEnabled(false);
-                });
-            }
-
-            @Override
-            public void onFailure(Call<SpotifyAccessTokenResponse> call, Throwable t) {
-                Log.d("SpotifyAuthService", "Spotify AuthService failed to obtain tokens with retrieved error: \n" + t.getMessage());
-            }
+        runOnUiThread(() -> {
+            Button connectSpotifyButton = findViewById(R.id.buttonConnectSpotify);
+            connectSpotifyButton.setAlpha(0.5f);
+            connectSpotifyButton.setText(R.string.Spotify_Conncted);
+            connectSpotifyButton.setEnabled(false);
         });
-
     }
 
 

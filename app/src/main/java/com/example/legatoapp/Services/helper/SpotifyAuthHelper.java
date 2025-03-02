@@ -1,12 +1,17 @@
 package com.example.legatoapp.Services.helper;
 
+
+import static android.content.Context.MODE_PRIVATE;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Base64;
 import android.util.Log;
 
+
+import com.example.legatoapp.R;
 import com.example.legatoapp.Services.AuthService;
-import com.example.legatoapp.models.SpotifyAccessTokenResponse;
+import com.example.legatoapp.models.response.SpotifyAccessTokenResponse;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;
@@ -17,20 +22,18 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SpotifyAuthHelper {
 
-    private static final String CLIENT_ID = ""; //Always Delete these values prior to pushing to online repo
-    private static final String CLIENT_SECRET = ""; //Always Delete these values prior to pushing to online repo
-    private static final String REDIRECT_URI = "com.example.legatoapp://callback";
-    private static final String SCOPES = "user-read-playback-state user-read-currently-playing";
-    private static final String BASE_URL = "https://accounts.spotify.com/";
-
     private static AuthService authService;
 
+    //TODO: Update Documentation
 
-
-    private static AuthService getAuthService(){
+    /**
+     * This obtains the authentication URI for a users Spotify Account
+     * @return AuthService object that contains the spotify account link
+     */
+    private static AuthService getAuthService(Context context){
         if(authService == null){
             Retrofit retrofitInstance = new Retrofit.Builder()
-                    .baseUrl(BASE_URL)
+                    .baseUrl(context.getString(R.string.BASE_URL))
                     .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(RxJava3CallAdapterFactory.create()) // Add RxJava support
                     .build();
@@ -39,18 +42,27 @@ public class SpotifyAuthHelper {
         return authService;
     }
 
-    public static Observable<SpotifyAccessTokenResponse> fetchAccessToken(String authToken){
-        String credentials = CLIENT_ID + ":" + CLIENT_SECRET;
+    /**
+     * This helps fetch an authorized spotify access token using our projects CLIENT ID and CLIENT secret
+     * @return . . .
+     */
+    public static Observable<SpotifyAccessTokenResponse> fetchAccessToken(Context context, String authToken){
+        String credentials = context.getString(R.string.CLIENT_ID) + ":" + context.getString(R.string.CLIENT_SECRET);
         String authHeader = "Basic " + Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);
 
-        return getAuthService()
-                .getAccessToken("authorization_code", authToken, REDIRECT_URI, authHeader)
+        return getAuthService(context)
+                .getAccessToken("authorization_code", authToken, context.getString(R.string.REDIRECT_URI), authHeader)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
+    /**
+     * In the instance
+     * @param context
+     * @return . . .
+     */
     public static Observable<SpotifyAccessTokenResponse> refreshAccessToken(Context context){
-        SharedPreferences prefs = context.getSharedPreferences("spotify_prefs", Context.MODE_PRIVATE);
+        SharedPreferences prefs = context.getSharedPreferences("spotify_prefs", MODE_PRIVATE);
         String refreshToken = prefs.getString("refresh_token", null);
 
         if(refreshToken == null){
@@ -58,10 +70,10 @@ public class SpotifyAuthHelper {
             return Observable.error(new Throwable("No refresh token stored. . ."));
         }
 
-        String credentials = CLIENT_ID + ":" + CLIENT_SECRET;
+        String credentials = context.getString(R.string.CLIENT_ID) + ":" + context.getString(R.string.CLIENT_SECRET);
         String authHeader = "Basic " + Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);
 
-        return getAuthService()
+        return getAuthService(context)
                 .refreshAccessToken("refresh_token", refreshToken, authHeader)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
@@ -70,14 +82,14 @@ public class SpotifyAuthHelper {
 
     // TODO: instead of having a method to store tokens to sharedPreferences in each individual class, create a utilitiy sharedPreferenceClass that can be extended to store
     //  the data where ever that method is inhereted from
-    private void storeSpotifyTokens(String accessToken, String refreshToken){
-        getSharedPreferences("LegatoPrefs", MODE_PRIVATE)
-                .edit()
-                .putString("spotify_access_token", accessToken)
-                .putString("spotify_refresh_token", refreshToken)
-                .apply();
+    public static void storeSpotifyTokens(Context context, String accessToken, String refreshToken){
 
-        SharedPreferences sharedPreferences = getSharedPreferences("LegatoPrefs", MODE_PRIVATE);
+        SharedPreferences preferences = context.getSharedPreferences("LegatoPrefs", MODE_PRIVATE);
+        SharedPreferences.Editor editorPref = preferences.edit();
+        editorPref.putString("spotify_access_token", accessToken);
+        editorPref.putString("spotify_refresh_token", refreshToken);
+
+        SharedPreferences sharedPreferences = context.getSharedPreferences("LegatoPrefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean("isSpotifyTokenReceived", true);
         editor.apply();
