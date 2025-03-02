@@ -32,13 +32,4 @@ public interface AuthService {
     );
 
 
-    // Spotify User Data
-    @GET("v1/me")
-    Call<SpotifyUserProfileResponse> getUserProfile(@Header("Authorization")
-                                                    String accessToken);
-
-    @GET("v1/me")
-    Call<SpotifyUserProfileResponse> getUserRecentlyPlayedTracks(@Header("Authorization")
-                                                                 String accessToken);
-
 }
