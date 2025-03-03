@@ -1,5 +1,7 @@
 package com.example.legatoapp;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,6 +9,13 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
+
+import com.example.legatoapp.Services.helper.SpotifyProfileDataHelper;
+
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.disposables.Disposable;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,6 +32,9 @@ public class ProfileFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private CompositeDisposable compositeDisposable = new CompositeDisposable();
+    private Button spotifyButton;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -58,7 +70,30 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+        View view = inflater.inflate(R.layout.fragment_profile, container, false);
+        spotifyButton = view.findViewById(R.id.buttonProfileSpotify);
+        fetchProfile();
+        return view;
+    }
+
+    private void fetchProfile(){
+        Disposable disposable = SpotifyProfileDataHelper.fetchSpotifyUserProfile(requireContext())
+                .subscribe(profile -> {
+                    String spotifyProfileUrl = profile.getSpotify();
+                    if (spotifyProfileUrl != null) {
+                        spotifyButton.setOnClickListener(view -> {
+                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(spotifyProfileUrl));
+                            startActivity(intent);
+                        });
+                    }
+                    else {
+                        spotifyButton.setEnabled(false);
+                        // fallback if for some reason the spotify URL retrieval isnt successful, we wont show the button to end-user
+                    }
+                }, error -> {
+                    error.printStackTrace();
+                });
+
+        compositeDisposable.add(disposable);
     }
 }
