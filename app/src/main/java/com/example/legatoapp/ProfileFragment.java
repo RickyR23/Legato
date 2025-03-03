@@ -81,8 +81,10 @@ public class ProfileFragment extends Fragment {
         currentlyPlayingArtist = view.findViewById(R.id.textViewCurrentlyPlayingArtist);
         currentlyPlayingSong = view.findViewById(R.id.textViewCurrentlyPlayingSong);
         spotifyButton = view.findViewById(R.id.buttonProfileSpotify);
-        fetchLastSong();
-        fetchProfile();
+        new android.os.Handler().postDelayed(() -> {
+            fetchLastSong();
+            fetchProfile();
+        }, 1000);
         return view;
     }
 

@@ -84,12 +84,13 @@ public class SpotifyAuthHelper {
     //  the data where ever that method is inhereted from
     public static void storeSpotifyTokens(Context context, String accessToken, String refreshToken){
 
-        SharedPreferences preferences = context.getSharedPreferences("LegatoPrefs", MODE_PRIVATE);
+        SharedPreferences preferences = context.getSharedPreferences("LegatoPrefs", Context.MODE_PRIVATE);
         SharedPreferences.Editor editorPref = preferences.edit();
         editorPref.putString("spotify_access_token", accessToken);
         editorPref.putString("spotify_refresh_token", refreshToken);
+        editorPref.apply();
 
-        SharedPreferences sharedPreferences = context.getSharedPreferences("LegatoPrefs", MODE_PRIVATE);
+        SharedPreferences sharedPreferences = context.getSharedPreferences("LegatoPrefs", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean("isSpotifyTokenReceived", true);
         editor.apply();

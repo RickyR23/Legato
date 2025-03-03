@@ -22,7 +22,7 @@ public class SpotifyProfileDataHelper {
     private static UserInfoService getSpotifyAuthentication(Context context){
         if(userInfoService == null){
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(context.getString(R.string.BASE_URL))
+                    .baseUrl(context.getString(R.string.SPOTIFY_DATA_RETRIEVAL_URL))
                     .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
                     .build();

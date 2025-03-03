@@ -1,5 +1,7 @@
 package com.example.legatoapp;
 
+import static androidx.core.content.ContentProviderCompat.requireContext;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -297,7 +299,7 @@ public class signUp extends AppCompatActivity {
 
         // Check if we received the Spotify authentication response
         Uri receivedUri = getIntent().getData();
-        if (receivedUri != null && receivedUri.toString().startsWith(context.getString(R.string.REDIRECT_URI))) {
+        if (receivedUri != null && receivedUri.toString().startsWith(getString(R.string.REDIRECT_URI))) {
             String authCode = receivedUri.getQueryParameter("code");
             if (authCode != null) {
                 exchangeAuthorizationForToken(authCode);
@@ -354,10 +356,10 @@ public class signUp extends AppCompatActivity {
                 .scheme("https")
                 .authority("accounts.spotify.com")
                 .appendPath("authorize")
-                .appendQueryParameter("client_id",context.getString(R.string.CLIENT_ID))
+                .appendQueryParameter("client_id", getString(R.string.CLIENT_ID))
                 .appendQueryParameter("response_type", "code")
-                .appendQueryParameter("redirect_uri", context.getString(R.string.REDIRECT_URI))
-                .appendQueryParameter("scope", context.getString(R.string.SPOTIFY_SCOPES))
+                .appendQueryParameter("redirect_uri", getString(R.string.REDIRECT_URI))
+                .appendQueryParameter("scope", getString(R.string.SPOTIFY_SCOPES))
                 .build();
 
         Intent intent = new Intent(Intent.ACTION_VIEW, authenticationURI);
@@ -365,7 +367,7 @@ public class signUp extends AppCompatActivity {
     }
 
     private void exchangeAuthorizationForToken(String code){
-        Disposable disposable = SpotifyAuthHelper.fetchAccessToken(context, code)
+        Disposable disposable = SpotifyAuthHelper.fetchAccessToken(this, code)
                 .subscribe(response -> {
                     SpotifyAuthHelper.storeSpotifyTokens(this, response.getAccess_token(), response.getRefresh_token());
                     Log.d("SpotifyAuthService", "Spotify has received token response: \n Access Token: " + response.getAccess_token() + "\n refreshToken: " + response.getRefresh_token());

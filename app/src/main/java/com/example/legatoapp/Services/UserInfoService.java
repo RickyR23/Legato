@@ -16,7 +16,7 @@ public interface UserInfoService {
     Observable<SpotifyUserProfileResponse> getUserProfileData(@Header("Authorization")
                                                     String accessToken);
 
-    @GET("v1/me")
+    @GET("v1/me/player/recently-played?limit=1")
     Observable<SpotifyUserCurrentTrackResponse> getUserRecentlyPlayedTracks(@Header("Authorization")
                                                                  String accessToken);
 }
