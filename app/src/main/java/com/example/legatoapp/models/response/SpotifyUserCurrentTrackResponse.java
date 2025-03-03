@@ -1,15 +1,19 @@
 package com.example.legatoapp.models.response;
+
 import java.util.List;
 
 public class SpotifyUserCurrentTrackResponse {
     private List<Item> items;
 
-    public List<Item> getItems(){
+    public List<Item> getItems() {
         return items;
     }
 
-    // To hold the response items with proper getters
-    public static class Item{
+    public Item getLastPlayedTrack() {
+        return (items != null && !items.isEmpty()) ? items.get(0) : null;
+    }
+
+    public static class Item {
         private Track track;
 
         public Track getTrack() {
@@ -17,7 +21,7 @@ public class SpotifyUserCurrentTrackResponse {
         }
     }
 
-    public static class Track{
+    public static class Track {
         private String name;
         private List<Artist> artists;
         private Album album;
@@ -33,9 +37,13 @@ public class SpotifyUserCurrentTrackResponse {
         public Album getAlbum() {
             return album;
         }
+
+        public String getFirstArtist() {
+            return (artists != null && !artists.isEmpty()) ? artists.get(0).getName() : "Unknown Artist";
+        }
     }
 
-    public static class Artist{
+    public static class Artist {
         private String name;
 
         public String getName() {
@@ -43,7 +51,7 @@ public class SpotifyUserCurrentTrackResponse {
         }
     }
 
-    public static class Album{
+    public static class Album {
         private String name;
         private List<Image> images;
 
@@ -54,9 +62,13 @@ public class SpotifyUserCurrentTrackResponse {
         public List<Image> getImages() {
             return images;
         }
+
+        public String getAlbumImage() {
+            return (images != null && !images.isEmpty()) ? images.get(0).getUrl() : null;
+        }
     }
 
-    public static class Image{
+    public static class Image {
         private String url;
 
         public String getUrl() {

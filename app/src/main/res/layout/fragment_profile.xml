@@ -212,10 +212,17 @@
                     android:textColor="@android:color/white"/>
 
                 <TextView
-                    android:id="@+id/textViewCurrentlyPlaying"
+                    android:id="@+id/textViewCurrentlyPlayingArtist"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
-                    android:text="Title\nArtist"
+                    android:text="Artist"
+                    android:textSize="14sp"
+                    android:textColor="@android:color/white"/>
+                <TextView
+                    android:id="@+id/textViewCurrentlyPlayingSong"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:text="Song"
                     android:textSize="14sp"
                     android:textColor="@android:color/white"/>
             </LinearLayout>
