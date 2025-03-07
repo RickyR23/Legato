@@ -42,6 +42,8 @@ public class signUp extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        context = this;
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
@@ -122,6 +124,8 @@ public class signUp extends AppCompatActivity {
                 Intent intent = new Intent(signUp.this, userHome.class);
                 startActivity(intent);
                 finish(); // Prevent user from going back to Sign Up
+
+                clearFormData();
             }
         });
 
@@ -295,6 +299,8 @@ public class signUp extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+        restoreFormData(); // Restore user input if sign-up is incomplete
+
         // Check if we received the Spotify authentication response
         Uri receivedUri = getIntent().getData();
         if (receivedUri != null && receivedUri.toString().startsWith(context.getString(R.string.REDIRECT_URI))) {
@@ -350,6 +356,8 @@ public class signUp extends AppCompatActivity {
 
 
     private void launchSpotifyAuthSession(){
+        saveFormData(); // Save user input before leaving
+
         Uri authenticationURI = new Uri.Builder()
                 .scheme("https")
                 .authority("accounts.spotify.com")
@@ -379,9 +387,36 @@ public class signUp extends AppCompatActivity {
             connectSpotifyButton.setEnabled(false);
         });
     }
+    private void saveFormData() {
+        SharedPreferences sharedPreferences = getSharedPreferences("LegatoPrefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
 
+        editor.putString("saved_username", usernameInput.getText().toString().trim());
+        editor.putString("saved_display_name", displayNameInput.getText().toString().trim());
+        editor.putString("saved_email", emailInput.getText().toString().trim());
+        editor.putString("saved_password", passwordInput.getText().toString().trim());
+        editor.putString("saved_verify_password", verifyPasswordInput.getText().toString().trim());
 
+        editor.apply(); // Save the data
+    }
 
+    private void restoreFormData() {
+        SharedPreferences sharedPreferences = getSharedPreferences("LegatoPrefs", MODE_PRIVATE);
+
+        usernameInput.setText(sharedPreferences.getString("saved_username", ""));
+        displayNameInput.setText(sharedPreferences.getString("saved_display_name", ""));
+        emailInput.setText(sharedPreferences.getString("saved_email", ""));
+        passwordInput.setText(sharedPreferences.getString("saved_password", ""));
+        verifyPasswordInput.setText(sharedPreferences.getString("saved_verify_password", ""));
+    }
+
+    private void clearFormData() {
+        usernameInput.setText("");
+        displayNameInput.setText("");
+        emailInput.setText("");
+        passwordInput.setText("");
+        verifyPasswordInput.setText("");
+    }
 
 
 }
