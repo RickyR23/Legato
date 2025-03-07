@@ -184,7 +184,7 @@
                 android:id="@+id/songOfTheDayAlbumCover"
                 android:layout_width="55dp"
                 android:layout_height="55dp"
-                android:src="@drawable/songOfTheDayExample"
+                android:src="@drawable/song_example"
                 android:layout_gravity="center_vertical"
                 android:layout_marginRight="20dp"/>
         </LinearLayout>
@@ -240,7 +240,7 @@
                 android:id="@+id/currentlyPlayingAlbumCover"
                 android:layout_width="55dp"
                 android:layout_height="55dp"
-                android:src="@drawable/currentlyExample"
+                android:src="@drawable/currently_example"
                 android:layout_gravity="center_vertical"
                 android:layout_marginRight="20dp"/>
         </LinearLayout>
