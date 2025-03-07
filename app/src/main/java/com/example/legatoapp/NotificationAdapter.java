@@ -32,10 +32,32 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         holder.message.setText(notification.getMessage());
         holder.timestamp.setText(notification.getTimestamp());
 
-        // Customize UI based on notification type
-        if ("commentNotif".equals(notification.getNotificationType())) {
-            holder.message.setText(notification.getUsername() + " has left a comment on your daily post!");
+        // Set notification icon based on type
+        int iconRes = 0;
+        switch (notification.getNotificationType()) {
+            case "likeNotif":
+                iconRes = R.drawable.ic_heart;
+                break;
+            case "commentNotif":
+                iconRes = R.drawable.ic_comment;
+                break;
+            case "followNotif":
+                iconRes = R.drawable.ic_follow;
+                break;
+            case "postNotif":
+                iconRes = R.drawable.ic_music_note;
+                break;
+            case "systemNotif":
+                iconRes = R.drawable.notifications_settings;
+                break;
+            default:
+                holder.notificationIcon.setVisibility(View.GONE);
+                return; // Exit early if no valid icon is found
         }
+
+        // Apply the icon and make it visible
+        holder.notificationIcon.setImageResource(iconRes);
+        holder.notificationIcon.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -44,7 +66,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     }
 
     static class NotificationViewHolder extends RecyclerView.ViewHolder {
-        ImageView profileImage;
+        ImageView profileImage, notificationIcon;
         TextView username, message, timestamp;
 
         public NotificationViewHolder(@NonNull View itemView) {
@@ -53,6 +75,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             username = itemView.findViewById(R.id.username);
             message = itemView.findViewById(R.id.notificationMessage);
             timestamp = itemView.findViewById(R.id.timestamp);
+            notificationIcon = itemView.findViewById(R.id.notificationIcon);
         }
     }
 }

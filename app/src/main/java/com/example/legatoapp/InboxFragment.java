@@ -17,7 +17,7 @@ public class InboxFragment extends Fragment {
     private List<NotificationItem> notificationList;
 
     public InboxFragment() {
-        // Required empty public constructor
+
     }
 
     @Override
@@ -27,13 +27,13 @@ public class InboxFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerViewNotifications);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        // Sample notifications with commentNotif
+        // Sample notifications
         notificationList = new ArrayList<>();
-        notificationList.add(new NotificationItem(R.drawable.ic_user, "Alex", "has followed you.", "2h ago", "followNotif"));
-        notificationList.add(new NotificationItem(R.drawable.ic_user, "Jordan", "has liked your daily post!", "1h ago", "likeNotif"));
-        notificationList.add(new NotificationItem(R.drawable.ic_user, "Emily", "has left a comment on your daily post!", "30m ago", "commentNotif"));
-        notificationList.add(new NotificationItem(R.drawable.ic_user, "Chris", "has posted their daily song!", "5m ago", "postNotif"));
-        notificationList.add(new NotificationItem(R.drawable.ic_settings, "Legato System", "System maintenance update", "1d ago", "systemNotif"));
+        notificationList.add(new NotificationItem(R.drawable.notifcation_pfp, "Angel", "has followed you.", "5m ago", "followNotif"));
+        notificationList.add(new NotificationItem(R.drawable.angelespfp, "Angeles", "has liked your daily post!", "30m ago", "likeNotif"));
+        notificationList.add(new NotificationItem(R.drawable.snoopypfp, "Snoopy", "has left a comment on your daily post!", "2h ago", "commentNotif"));
+        notificationList.add(new NotificationItem(R.drawable.rickypfp, "Ricky", "has posted their daily song!", "5h ago", "postNotif"));
+        notificationList.add(new NotificationItem(R.drawable.legato_logo, "Legato System", "System maintenance update", "10h ago", "systemNotif"));
 
         adapter = new NotificationAdapter(notificationList);
         recyclerView.setAdapter(adapter);
