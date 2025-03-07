@@ -69,6 +69,7 @@ public class userHome extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("LegatoPrefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean("isLoggedIn", false);
+        editor.clear();  // This will remove all stored data in SharedPreferences
         editor.apply();
 
         Intent intent = new Intent(userHome.this, userLoginActivity.class);
