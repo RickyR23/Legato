@@ -37,7 +37,7 @@
             android:layout_height="110dp"
             android:layout_marginTop="80dp"
             android:contentDescription="Profile Picture"
-            android:src="@drawable/profile_pic_placeholder"
+            android:src="@drawable/profile_pic_example"
             app:civ_border_color="@color/white"
             app:civ_border_width="3dp"
             app:layout_constraintHorizontal_bias="0.5"
@@ -94,7 +94,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Username"
+            android:text="bella"
             android:textSize="22sp"
             android:textStyle="bold"
             android:textColor="@android:color/white"
@@ -108,7 +108,7 @@
             android:id="@+id/textViewBio"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Bio goes here"
+            android:text="let know how many songs you steal from me(:"
             android:textSize="12sp"
             android:textColor="@android:color/white"
             android:gravity="center"
@@ -162,10 +162,18 @@
                     android:textColor="@android:color/white"/>
 
                 <TextView
-                    android:id="@+id/textViewSongOfTheDay"
+                    android:id="@+id/textViewSongOfTheDayArtist"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
-                    android:text="Title\nArtist"
+                    android:text="Mac Miller"
+                    android:textSize="14sp"
+                    android:textColor="@android:color/white"
+                    android:gravity="center"/>
+                <TextView
+                    android:id="@+id/textViewSongOfTheDaySong"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:text="Jet Fuel"
                     android:textSize="14sp"
                     android:textColor="@android:color/white"
                     android:gravity="center"/>
@@ -176,7 +184,7 @@
                 android:id="@+id/songOfTheDayAlbumCover"
                 android:layout_width="55dp"
                 android:layout_height="55dp"
-                android:src="@drawable/album_cover_placeholder"
+                android:src="@drawable/song_example"
                 android:layout_gravity="center_vertical"
                 android:layout_marginRight="20dp"/>
         </LinearLayout>
@@ -215,14 +223,14 @@
                     android:id="@+id/textViewCurrentlyPlayingArtist"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
-                    android:text="Artist"
+                    android:text="Feid"
                     android:textSize="14sp"
                     android:textColor="@android:color/white"/>
                 <TextView
                     android:id="@+id/textViewCurrentlyPlayingSong"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
-                    android:text="Song"
+                    android:text="FELIZ CUMPLEAÑOS FERXXO"
                     android:textSize="14sp"
                     android:textColor="@android:color/white"/>
             </LinearLayout>
@@ -232,7 +240,7 @@
                 android:id="@+id/currentlyPlayingAlbumCover"
                 android:layout_width="55dp"
                 android:layout_height="55dp"
-                android:src="@drawable/album_cover_placeholder"
+                android:src="@drawable/currently_example"
                 android:layout_gravity="center_vertical"
                 android:layout_marginRight="20dp"/>
         </LinearLayout>
@@ -278,21 +286,23 @@
                         android:id="@+id/song1Title"
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
-                        android:text="Song Title"
+                        android:text="Hate CD"
+                        android:textStyle="bold"
                         android:textSize="16sp"
                         android:textColor="@android:color/white"/>
                     <TextView
                         android:id="@+id/song1Album"
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
-                        android:text="Album"
+                        android:text="Apolo XXI"
+                        android:textStyle="italic"
                         android:textSize="14sp"
                         android:textColor="@android:color/white"/>
                     <TextView
                         android:id="@+id/song1Artist"
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
-                        android:text="Artist"
+                        android:text="Steve Lacy"
                         android:textSize="14sp"
                         android:textColor="@android:color/white"/>
                 </LinearLayout>
@@ -310,21 +320,23 @@
                         android:id="@+id/song2Title"
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
-                        android:text="Song Title"
+                        android:text="PRIDE."
+                        android:textStyle="bold"
                         android:textSize="16sp"
                         android:textColor="@android:color/white"/>
                     <TextView
                         android:id="@+id/song2Album"
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
-                        android:text="Album"
+                        android:text="DAMN."
+                        android:textStyle="italic"
                         android:textSize="14sp"
                         android:textColor="@android:color/white"/>
                     <TextView
                         android:id="@+id/song2Artist"
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
-                        android:text="Artist"
+                        android:text="Kendrick Lamar"
                         android:textSize="14sp"
                         android:textColor="@android:color/white"/>
                 </LinearLayout>
@@ -342,21 +354,23 @@
                         android:id="@+id/song3Title"
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
-                        android:text="Song Title"
+                        android:text="Face to Face"
+                        android:textStyle="bold"
                         android:textSize="16sp"
                         android:textColor="@android:color/white"/>
                     <TextView
                         android:id="@+id/song3Album"
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
-                        android:text="Album"
+                        android:text="Discovery"
+                        android:textStyle="italic"
                         android:textSize="14sp"
                         android:textColor="@android:color/white"/>
                     <TextView
                         android:id="@+id/song3Artist"
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
-                        android:text="Artist"
+                        android:text="Daft Punk"
                         android:textSize="14sp"
                         android:textColor="@android:color/white"/>
                 </LinearLayout>
@@ -395,7 +409,7 @@
                         android:id="@+id/artist1Pic"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:src="@drawable/profile_pic_placeholder"
+                        android:src="@drawable/artist1"
                         app:civ_border_color="@android:color/white"
                         app:civ_border_width="2dp"/>
 
@@ -404,7 +418,7 @@
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
                         android:layout_marginStart="12dp"
-                        android:text="Artist Name"
+                        android:text="Tyler, The Creator"
                         android:textSize="14sp"
                         android:textColor="@android:color/white"
                         android:gravity="center_vertical"/>
@@ -425,7 +439,7 @@
                         android:id="@+id/artist2Pic"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:src="@drawable/profile_pic_placeholder"
+                        android:src="@drawable/artist2"
                         app:civ_border_color="@android:color/white"
                         app:civ_border_width="2dp"/>
 
@@ -434,7 +448,7 @@
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
                         android:layout_marginStart="12dp"
-                        android:text="Artist Name"
+                        android:text="The Killers"
                         android:textSize="14sp"
                         android:textColor="@android:color/white"
                         android:gravity="center_vertical"/>
@@ -455,7 +469,7 @@
                         android:id="@+id/artist3Pic"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:src="@drawable/profile_pic_placeholder"
+                        android:src="@drawable/artist3"
                         app:civ_border_color="@android:color/white"
                         app:civ_border_width="2dp"/>
 
@@ -464,7 +478,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="12dp"
-                        android:text="Artist Name"
+                        android:text="Clairo"
                         android:textSize="14sp"
                         android:textColor="@android:color/white"
                         android:gravity="center_vertical"/>
