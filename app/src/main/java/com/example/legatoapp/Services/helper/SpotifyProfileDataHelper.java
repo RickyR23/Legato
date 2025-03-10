@@ -39,7 +39,7 @@ public class SpotifyProfileDataHelper {
         String accessToken = preferences.getString("spotify_access_token", null);
 
         if(accessToken == null){
-            returnErrorMessage();
+            return Observable.error(new Throwable("Missing Spotify access token"));
         }
 
         String authHeader = "Bearer " + accessToken;
@@ -55,7 +55,7 @@ public class SpotifyProfileDataHelper {
         String accessToken = preferences.getString("spotify_access_token", null);
 
         if(accessToken == null){
-            returnErrorMessage();
+            return Observable.error(new Throwable("Missing Spotify access token"));
         }
 
         String authHeader = "Bearer " + accessToken;
@@ -64,10 +64,5 @@ public class SpotifyProfileDataHelper {
                 .getUserRecentlyPlayedTracks(authHeader)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
-    }
-
-    private static Observable<Error> returnErrorMessage(){
-        Log.e("SpotifyProfileDataHelper", "No access token has been saved . . .");
-        return  Observable.error(new Throwable("Missing spotify access token"));
     }
 }

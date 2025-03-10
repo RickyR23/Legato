@@ -1,7 +1,5 @@
 package com.example.legatoapp.models.response;
 
-import android.media.Image;
-
 import java.util.List;
 import java.util.Map;
 
@@ -23,6 +21,10 @@ public class SpotifyUserProfileResponse {
         return external_urls;
     }
 
+    public String getSpotify() {
+        return external_urls != null ? external_urls.get("spotify") : null;
+    }
+
     public List<Image> getImages() {
         return images;
     }
@@ -34,5 +36,4 @@ public class SpotifyUserProfileResponse {
             return url;
         }
     }
-
 }
