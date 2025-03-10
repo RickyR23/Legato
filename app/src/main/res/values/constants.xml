@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="CLIENT_ID">6ab0c337f1154a2fb117d38b9f0d291f</string>
-    <string name="CLIENT_SECRET">913c6182df414f95b71a776fb0e18125</string>
+    <string name="CLIENT_ID"></string>
+    <string name="CLIENT_SECRET"></string>
     <string name="REDIRECT_URI">com.example.legatoapp://callback</string>
     <string name="SPOTIFY_SCOPES">user-read-playback-state user-read-currently-playing user-read-private user-read-email user-read-recently-played</string>
     <string name="BASE_URL">https://accounts.spotify.com/</string>
