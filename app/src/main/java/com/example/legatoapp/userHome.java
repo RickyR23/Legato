@@ -25,14 +25,6 @@ public class userHome extends AppCompatActivity {
         // Set Home Fragment by Default
         replaceFragment(new HomeFragment());
 
-        // Logout Button Logic
-        Button logoutButton = findViewById(R.id.logout_button);
-        logoutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                logoutUser();
-            }
-        });
 
         // Bottom Navigation Click Listener (Fixed if-else)
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
@@ -64,16 +56,5 @@ public class userHome extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
-    // Logout User
-    private void logoutUser() {
-        SharedPreferences sharedPreferences = getSharedPreferences("LegatoPrefs", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean("isLoggedIn", false);
-        editor.clear();  // This will remove all stored data in SharedPreferences
-        editor.apply();
 
-        Intent intent = new Intent(userHome.this, userLoginActivity.class);
-        startActivity(intent);
-        finish();
-    }
 }
