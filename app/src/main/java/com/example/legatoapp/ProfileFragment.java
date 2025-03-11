@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -81,6 +82,20 @@ public class ProfileFragment extends Fragment {
         currentlyPlayingArtist = view.findViewById(R.id.textViewCurrentlyPlayingArtist);
         currentlyPlayingSong = view.findViewById(R.id.textViewCurrentlyPlayingSong);
         spotifyButton = view.findViewById(R.id.buttonProfileSpotify);
+
+        // Find the settings button by its ID
+        ImageButton settingsButton = view.findViewById(R.id.settingsButton);
+
+        // Set the OnClickListener for the settings button
+        settingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Create an Intent to navigate to SettingsActivity
+                Intent intent = new Intent(getActivity(), SettingsActivity.class);
+                startActivity(intent);
+            }
+        });
+
         fetchLastSong();
         fetchProfile();
         return view;

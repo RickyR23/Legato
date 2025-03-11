@@ -47,6 +47,14 @@
                 <data android:scheme="com.example.legatoapp" android:host="callback" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".SettingsActivity"
+            android:exported="false"
+            android:theme="@style/Theme.LegatoApp" />
+        <activity
+            android:name=".EditProfileActivity"
+            android:exported="false"
+            android:theme="@style/Theme.LegatoApp" />
 
     </application>
 
