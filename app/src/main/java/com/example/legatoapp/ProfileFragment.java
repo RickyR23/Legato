@@ -96,6 +96,18 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+        // Find the edit profile button by its ID
+        ImageButton editProfileButton = view.findViewById(R.id.editProfileButton);
+
+        editProfileButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Create an Intent to navigate to EditProfileActivity
+                Intent intent = new Intent(getActivity(), EditProfileActivity.class);
+                startActivity(intent);
+            }
+        });
+
         fetchLastSong();
         fetchProfile();
         return view;
