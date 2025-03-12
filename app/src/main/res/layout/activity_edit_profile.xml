@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
         android:paddingBottom="45dp"
-        tools:context=".signUp">
+        tools:context=".EditProfileActivity">
 
         <!-- Guideline for Centering -->
         <androidx.constraintlayout.widget.Guideline
@@ -72,6 +72,101 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editProfilePicImageView" />
+
+        <!-- Edit Display Name Section -->
+        <LinearLayout
+            android:id="@+id/editDisplayNameSection"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/uploadProfilePicButton"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="40dp">
+
+            <!--Display Name Label-->
+            <TextView
+                android:id="@+id/editDisplayNameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Display Name:"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:padding="10dp"
+/>
+
+            <!-- Change Display Name -->
+            <EditText
+                android:id="@+id/editDisplayNameEditText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@android:color/white"
+                android:hint="Current Name"
+                android:inputType="text"
+                android:textSize="18sp"
+                android:padding="10dp"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/white" />
+        </LinearLayout>
+
+
+        <!-- Bio Section -->
+        <LinearLayout
+            android:id="@+id/editBioSection"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editDisplayNameSection"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="40dp">
+
+            <!-- Bio Label -->
+            <TextView
+                android:id="@+id/editBioTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bio:"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:padding="10dp" />
+
+            <!-- Change Bio -->
+            <EditText
+                android:id="@+id/editBioEditText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@android:color/white"
+                android:hint="Current Bio"
+                android:inputType="textMultiLine"
+                android:maxLength="80"
+                android:maxLines="4"
+                android:textSize="18sp"
+                android:padding="10dp"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/white" />
+
+            <!-- Character Counter -->
+            <TextView
+                android:id="@+id/bioCharCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0/80"
+                android:textColor="#DAD9D9"
+                android:textSize="14sp"
+                android:gravity="end"
+                android:layout_marginStart="4dp"/>
+        </LinearLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

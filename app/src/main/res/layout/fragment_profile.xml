@@ -121,7 +121,7 @@
         <!-- Spotify Button -->
         <Button
             android:id="@+id/buttonProfileSpotify"
-            android:layout_width="0dp"
+            android:layout_width="110dp"
             android:layout_height="40dp"
             android:layout_marginTop="10dp"
             android:backgroundTint="@color/spotify2"
