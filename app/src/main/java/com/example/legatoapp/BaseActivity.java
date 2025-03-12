@@ -7,6 +7,8 @@ import android.os.Build;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import android.os.Bundle;
+import android.util.Log;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 
 
@@ -22,4 +24,16 @@ public class BaseActivity extends AppCompatActivity {
     }
         }
     }
-}      
+
+    FirebaseMessaging{getInstance().getToken()
+        .addOnCompleteListener(task -> {
+            if(!task.isSuccessful()) {
+                Log.w("FCM", "Fetching FCM token failed", task.getException());
+                return;
+            
+            }
+            String token = task.getResult();
+            Log.d("FCM Token", token);
+        });
+    }
+    }
