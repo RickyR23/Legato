@@ -6,7 +6,7 @@
     android:background="@color/purple"
     tools:context=".CreateFragment">
 
-    <!-- Button at the top -->
+    <!-- Search Songs Button at the Top -->
     <Button
         android:id="@+id/btn_open_search"
         android:layout_width="wrap_content"
@@ -15,13 +15,43 @@
         android:layout_marginTop="20dp"
         android:text="Search Songs" />
 
-    <!-- Centered TextView -->
-    <TextView
-        android:layout_width="wrap_content"
+    <!-- Container for Image and Text Fields (Aligned to Bottom) -->
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Create"
-        android:textColor="@color/white"
-        android:textSize="26sp"
-        android:layout_gravity="center"/>
+        android:layout_gravity="bottom"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <ImageView
+            android:id="@+id/selected_song_image"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginBottom="16dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/snoopypfp" />
+
+        <!-- Changed EditText to TextView for Song Name -->
+        <TextView
+            android:id="@+id/selected_song_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Song Name"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <!-- Changed EditText to TextView for Artist Name -->
+        <TextView
+            android:id="@+id/selected_artist_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Song Artist"
+            android:textColor="@android:color/white"
+            android:textSize="16sp" />
+    </LinearLayout>
 
 </FrameLayout>
