@@ -30,13 +30,13 @@
             android:id="@+id/editActivityHeader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="48dp"
             android:text="Edit Profile"
             android:textColor="@color/white"
             android:textSize="30sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.25"
+            app:layout_constraintHorizontal_bias="0.145"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -45,7 +45,7 @@
             android:id="@+id/editProfilePicImageView"
             android:layout_width="110dp"
             android:layout_height="110dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="40dp"
             android:contentDescription="Edit Profile Picture"
             android:src="@drawable/profile_pic_placeholder"
             app:civ_border_color="@color/white"
@@ -55,7 +55,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/editActivityHeader"/>
 
-        <!-- Clickable Edit Profile Picture Text -->
+        <!--*****Clickable Edit Profile Picture Text*****-->
         <TextView
             android:id="@+id/uploadProfilePicButton"
             android:layout_width="wrap_content"
@@ -73,7 +73,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editProfilePicImageView" />
 
-        <!-- Edit Display Name Section -->
+        <!--*****Edit Display Name Section*****-->
         <LinearLayout
             android:id="@+id/editDisplayNameSection"
             android:layout_width="0dp"
@@ -83,7 +83,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/uploadProfilePicButton"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="30dp"
             android:layout_marginStart="25dp"
             android:layout_marginEnd="40dp">
 
@@ -96,8 +96,7 @@
                 android:textColor="@color/white"
                 android:textStyle="bold"
                 android:textSize="18sp"
-                android:padding="10dp"
-/>
+                android:padding="10dp"/>
 
             <!-- Change Display Name -->
             <EditText
@@ -115,7 +114,7 @@
         </LinearLayout>
 
 
-        <!-- Bio Section -->
+        <!--*****Edit Bio Section*****-->
         <LinearLayout
             android:id="@+id/editBioSection"
             android:layout_width="0dp"
@@ -125,7 +124,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/editDisplayNameSection"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="30dp"
             android:layout_marginStart="25dp"
             android:layout_marginEnd="40dp">
 
@@ -166,6 +165,88 @@
                 android:textSize="14sp"
                 android:gravity="end"
                 android:layout_marginStart="4dp"/>
+        </LinearLayout>
+
+        <!--*****Edit Top Songs Section*****-->
+        <LinearLayout
+            android:id="@+id/editTopSongs"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editBioSection"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="40dp">
+
+            <!--Display Top songs Label-->
+            <TextView
+                android:id="@+id/editTopSongsTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Top 3 Songs"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:padding="10dp"/>
+
+            <!--Song 1-->
+            <include
+                android:id="@+id/songCard1"
+                layout="@layout/item_song_card"/>
+
+            <!--Song 2-->
+            <include
+                android:id="@+id/songCard2"
+                layout="@layout/item_song_card"/>
+
+            <!--Song 3-->
+            <include
+                android:id="@+id/songCard3"
+                layout="@layout/item_song_card"/>
+        </LinearLayout>
+
+        <!--*****Edit Top Artists Section*****-->
+        <LinearLayout
+            android:id="@+id/editTopArtists"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editTopSongs"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="40dp">
+
+            <!--Top Artists Label-->
+            <TextView
+                android:id="@+id/editTopArtistsTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Top 3 Artists"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:padding="10dp"/>
+
+            <!--Artist 1-->
+            <include
+                android:id="@+id/artistCard1"
+                layout="@layout/item_artist_card"/>
+
+            <!--Artist 2-->
+            <include
+                android:id="@+id/artistCard2"
+                layout="@layout/item_artist_card"/>
+
+            <!--Artist 3-->
+            <include
+                android:id="@+id/artistCard3"
+                layout="@layout/item_artist_card"/>
         </LinearLayout>
 
 
