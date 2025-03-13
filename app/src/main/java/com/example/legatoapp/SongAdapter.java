@@ -7,14 +7,21 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder> {
 
     private List<Song> songList;
+    private OnItemClickListener onItemClickListener;
 
-    public SongAdapter(List<Song> songList) {
-        this.songList = songList;
+    public interface OnItemClickListener {
+        void onItemClick(Song song);
+    }
+
+    public SongAdapter(List<Song> songList, OnItemClickListener onItemClickListener) {
+        this.songList = songList != null ? songList : new ArrayList<>();
+        this.onItemClickListener = onItemClickListener;
     }
 
     @NonNull
@@ -29,7 +36,14 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
         Song song = songList.get(position);
         holder.songTitle.setText(song.getTitle());
         holder.songArtist.setText(song.getArtist());
-        holder.albumArt.setImageResource(song.getAlbumArt()); // Set album artwork
+        holder.albumArt.setImageResource(song.getAlbumArt());
+
+        // Handle item click event
+        holder.itemView.setOnClickListener(v -> {
+            if (onItemClickListener != null) {
+                onItemClickListener.onItemClick(song);
+            }
+        });
     }
 
     @Override
@@ -37,8 +51,10 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
         return songList.size();
     }
 
+    // Function to update song list dynamically
     public void updateList(List<Song> newList) {
-        songList = newList;
+        songList.clear();
+        songList.addAll(newList);
         notifyDataSetChanged();
     }
 
