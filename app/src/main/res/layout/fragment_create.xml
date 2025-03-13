@@ -1,57 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/purple"
+    android:background="@drawable/background"
     tools:context=".CreateFragment">
 
     <!-- Search Songs Button at the Top -->
     <Button
         android:id="@+id/btn_open_search"
+        android:layout_width="215dp"
+        android:layout_height="65dp"
+        android:layout_marginTop="30dp"
+        android:text="Search Songs"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Centered Song Image -->
+    <ImageView
+        android:id="@+id/selected_song_image"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="124dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/snoopypfp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.538"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Song Name TextView -->
+    <TextView
+        android:id="@+id/selected_song_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="top|center"
-        android:layout_marginTop="20dp"
-        android:text="Search Songs" />
+        android:layout_marginTop="40dp"
+        android:text="Song Name"
+        android:textColor="@android:color/white"
+        android:textSize="24dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.526"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/selected_song_image" />
 
-    <!-- Container for Image and Text Fields (Aligned to Bottom) -->
-    <LinearLayout
-        android:layout_width="match_parent"
+    <!-- Artist Name TextView -->
+    <TextView
+        android:id="@+id/selected_artist_name"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        android:padding="20dp">
+        android:layout_marginTop="32dp"
+        android:text="Song Artist"
+        android:textColor="@android:color/white"
+        android:textSize="22sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.522"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/selected_song_name" />
 
-        <ImageView
-            android:id="@+id/selected_song_image"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_marginBottom="16dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/snoopypfp" />
+    <!-- Caption TextField (Newly Added) -->
+    <EditText
+        android:id="@+id/caption_input"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:hint="Write a caption..."
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        android:background="@android:color/darker_gray"
+        android:padding="12dp"
+        android:maxLength="80"
+        android:imeOptions="actionDone"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/selected_artist_name"
+        app:layout_constraintBottom_toBottomOf="parent"/> <!-- Added constraint to avoid floating -->
 
-        <!-- Changed EditText to TextView for Song Name -->
-        <TextView
-            android:id="@+id/selected_song_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Song Name"
-            android:textColor="@android:color/white"
-            android:textSize="18sp"
-            android:textStyle="bold" />
 
-        <!-- Changed EditText to TextView for Artist Name -->
-        <TextView
-            android:id="@+id/selected_artist_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Song Artist"
-            android:textColor="@android:color/white"
-            android:textSize="16sp" />
-    </LinearLayout>
 
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
