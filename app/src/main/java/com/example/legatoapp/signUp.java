@@ -121,7 +121,7 @@ public class signUp extends AppCompatActivity {
                 editor.apply();
 
                 // Navigate to Home Activity
-                Intent intent = new Intent(signUp.this, userHome.class);
+                Intent intent = new Intent(signUp.this, EditProfileActivity.class);
                 startActivity(intent);
                 finish(); // Prevent user from going back to Sign Up
 

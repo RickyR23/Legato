@@ -1,6 +1,8 @@
 package com.example.legatoapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import android.text.Editable;
@@ -11,19 +13,29 @@ import android.widget.TextView;
 
 
 public class EditProfileActivity extends AppCompatActivity {
-    private EditText editBioEditText;
-    private TextView bioCharCount;
-    private static final int MAX_CHAR_COUNT = 80;
+    private EditText editBioText, editDisplayNameText;
+    private TextView bioCharCount, displayNameTextView;
+    private static final int MAX_CHAR_COUNT = 50;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
 
-        editBioEditText = findViewById(R.id.editBioEditText);
-        bioCharCount = findViewById(R.id.bioCharCount);
+        editBioText = findViewById(R.id.editBioEditText); // To edit the bio
+        bioCharCount = findViewById(R.id.bioCharCount);  // To keep track of char count
+        editDisplayNameText = findViewById(R.id.editDisplayNameEditText); // To edit display name
+
+        // Retrieve the saved displayName from SharedPreferences saved from sign up
+        SharedPreferences sharedPreferences = getSharedPreferences("LegatoPrefs", MODE_PRIVATE);
+        String displayName = sharedPreferences.getString("saved_display_name", "Enter your display name");
+
+        // Set the displayName in the EditText
+        if (!displayName.isEmpty()) {
+            editDisplayNameText.setText(displayName);
+        }
 
         // TextWatcher checks that the bio updates character count
-        editBioEditText.addTextChangedListener(new TextWatcher() {
+        editBioText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
