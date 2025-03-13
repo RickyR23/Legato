@@ -15,8 +15,8 @@ import android.content.Context;
 
 public class CreateFragment extends Fragment {
 
-    private ImageView selectedSongImage;
-    private TextView selectedSongName, selectedArtistName;
+    private ImageView selectedSongImage, testArtistImage;
+    private TextView selectedSongName, selectedArtistName, testArtistSearchResult;
     private EditText captionInput;
 
     public CreateFragment() {
@@ -31,12 +31,22 @@ public class CreateFragment extends Fragment {
         selectedSongImage = view.findViewById(R.id.selected_song_image);
         selectedSongName = view.findViewById(R.id.selected_song_name);
         selectedArtistName = view.findViewById(R.id.selected_artist_name);
+        testArtistImage = view.findViewById(R.id.test_artist_image);
+        testArtistSearchResult = view.findViewById(R.id.test_artist_search_result);
         captionInput = view.findViewById(R.id.caption_input);
 
+        // Song Search Button
         Button searchButton = view.findViewById(R.id.btn_open_search);
         searchButton.setOnClickListener(v -> {
             SongSearchPopup songSearchPopup = new SongSearchPopup(getContext(), this::updateSelectedSong);
             songSearchPopup.showPopup(v);
+        });
+
+        // Artist Search Button
+        Button artistSearchButton = view.findViewById(R.id.btn_open_artist_search);
+        artistSearchButton.setOnClickListener(v -> {
+            ArtistSearchPopup artistSearchPopup = new ArtistSearchPopup(getContext(), this::updateSelectedArtist);
+            artistSearchPopup.showPopup(v);
         });
 
         // Hide keyboard when pressing Enter in the caption input
@@ -58,9 +68,12 @@ public class CreateFragment extends Fragment {
         selectedArtistName.setText(song.getArtist());
     }
 
-    // Method to get the user's caption input
-    public String getCaptionText() {
-        return captionInput.getText().toString();
+    // Updates the UI when an artist is selected
+    public void updateSelectedArtist(String artist) {
+        testArtistSearchResult.setText("Selected Artist: " + artist);
+
+        // Fetch correct artist image from MusicData
+        testArtistImage.setImageResource(MusicData.getArtistImage(artist));
     }
 
     // Function to hide the keyboard

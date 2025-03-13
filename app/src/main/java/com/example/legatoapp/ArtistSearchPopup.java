@@ -14,27 +14,30 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.ArrayList;
 
-public class SongSearchPopup {
+public class ArtistSearchPopup {
 
     private Context context;
     private PopupWindow popupWindow;
     private RecyclerView recyclerView;
     private EditText searchInput;
-    private SongAdapter songAdapter;
-    private List<Song> songList;
-    private OnSongSelectedListener listener;
+    private ArtistAdapter artistAdapter;
+    private List<String> artistList;
+    private Map<String, Integer> artistImages;
+    private OnArtistSelectedListener listener;
 
-    public interface OnSongSelectedListener {
-        void onSongSelected(Song song);
+    public interface OnArtistSelectedListener {
+        void onArtistSelected(String artist);
     }
 
-    public SongSearchPopup(Context context, OnSongSelectedListener listener) {
+    public ArtistSearchPopup(Context context, OnArtistSelectedListener listener) {
         this.context = context;
         this.listener = listener;
-        this.songList = MusicData.getSongs(); // Fetch songs from MusicData
+        this.artistList = new ArrayList<>(MusicData.getArtistNames()); // ✅ Fetch artist names from MusicData
+        this.artistImages = MusicData.getArtistImageMap(); // ✅ Fetch artist images from MusicData
     }
 
     public void showPopup(View anchorView) {
@@ -44,14 +47,15 @@ public class SongSearchPopup {
         recyclerView = popupView.findViewById(R.id.recycler_view_songs);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
-        songAdapter = new SongAdapter(new ArrayList<>(songList), song -> {
+        // Pass both artist names and images to adapter
+        artistAdapter = new ArtistAdapter(new ArrayList<>(artistList), artistImages, artist -> {
             if (listener != null) {
-                listener.onSongSelected(song);
+                listener.onArtistSelected(artist); // ✅ Pass correct artist name to CreateFragment
             }
             popupWindow.dismiss();
         });
 
-        recyclerView.setAdapter(songAdapter);
+        recyclerView.setAdapter(artistAdapter);
 
         // Configure PopupWindow to be centered
         popupWindow = new PopupWindow(
@@ -73,47 +77,47 @@ public class SongSearchPopup {
             }
         }, 200);
 
-        // Filter the song list as user types
+        // ✅ Filter artists as user types
         searchInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                filterSongs(s.toString());
+                filterArtists(s.toString()); // ✅ Keeps list updated in real time
             }
 
             @Override
             public void afterTextChanged(Editable s) {}
         });
 
-        // ✅ Hide keyboard on Enter key press
+        // ✅ Hide keyboard on Enter key press while keeping filtering active
         searchInput.setOnEditorActionListener((v, actionId, event) -> {
-            if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_GO ||
+            if (actionId == EditorInfo.IME_ACTION_DONE ||
                     (event != null && event.getAction() == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
                 hideKeyboard(v);
+                filterArtists(searchInput.getText().toString()); // ✅ Reapply filtering after hiding keyboard
                 return true;
             }
             return false;
         });
     }
 
-    // Function to filter songs dynamically
-    private void filterSongs(String query) {
-        if (query.trim().isEmpty()) {
-            songAdapter.updateList(new ArrayList<>(songList));
-            return;
-        }
+    // ✅ Function to filter artists dynamically
+    private void filterArtists(String query) {
+        List<String> filteredList = new ArrayList<>();
 
-        List<Song> filteredList = new ArrayList<>();
-        for (Song song : songList) {
-            if (song.getTitle().toLowerCase().contains(query.toLowerCase()) ||
-                    song.getArtist().toLowerCase().contains(query.toLowerCase())) {
-                filteredList.add(song);
+        if (query.trim().isEmpty()) {
+            filteredList.addAll(MusicData.getArtistNames()); // ✅ Restore full list if search is cleared
+        } else {
+            for (String artist : MusicData.getArtistNames()) {
+                if (artist.toLowerCase().contains(query.toLowerCase())) {
+                    filteredList.add(artist);
+                }
             }
         }
 
-        songAdapter.updateList(filteredList);
+        artistAdapter.updateList(filteredList);
     }
 
     // ✅ Function to hide the keyboard
