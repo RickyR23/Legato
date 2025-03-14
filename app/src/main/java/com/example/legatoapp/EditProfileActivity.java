@@ -1,9 +1,12 @@
 package com.example.legatoapp;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,11 +14,17 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.github.dhaval2404.imagepicker.ImagePicker;
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class EditProfileActivity extends AppCompatActivity {
     private EditText editBioText, editDisplayNameText;
-    private TextView bioCharCount;
+    private TextView bioCharCount, editProfilePicButton;
     private Button saveChangesButton;
     private static final int MAX_CHAR_COUNT = 50;
+    private CircleImageView editProfilePicImageView;
+    private Uri selectedImageUri;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,11 +35,14 @@ public class EditProfileActivity extends AppCompatActivity {
         bioCharCount = findViewById(R.id.bioCharCount);
         editDisplayNameText = findViewById(R.id.editDisplayNameEditText);
         saveChangesButton = findViewById(R.id.saveButton);
+        editProfilePicImageView = findViewById(R.id.editProfilePicImageView);
+        editProfilePicButton = findViewById(R.id.uploadProfilePicButton);
 
-        // Retrieve saved display name & bio from SharedPreferences
+        // Retrieve saved display name, bio and profile pic from SharedPreferences
         SharedPreferences sharedPreferences = getSharedPreferences("LegatoPrefs", MODE_PRIVATE);
-        String displayName = sharedPreferences.getString("saved_display_name", "Enter your display name");
+        String displayName = sharedPreferences.getString("saved_display_name", "");
         String bio = sharedPreferences.getString("saved_bio", "");
+        String profilePic = sharedPreferences.getString("saved_profile_pic",null);
 
         if (!displayName.isEmpty()) {
             editDisplayNameText.setText(displayName);
@@ -39,6 +51,23 @@ public class EditProfileActivity extends AppCompatActivity {
         if (!bio.isEmpty()) {
             editBioText.setText(bio);
         }
+
+        if (profilePic != null) {
+            Uri imageUri = Uri.parse(profilePic);
+            editProfilePicImageView.setImageURI(imageUri);
+        }
+
+        // When Edit Profile Picture is clicked, launch image picker
+        editProfilePicButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ImagePicker.with(EditProfileActivity.this)
+                        .crop()	    			//Crop image(Optional), Check Customization for more option
+                        .compress(1024)			//Final image size will be less than 1 MB(Optional)
+                        .maxResultSize(1080, 1080)	//Final image resolution will be less than 1080 x 1080(Optional)
+                        .start();
+            }
+        });
 
         // Character count update for bio
         editBioText.addTextChangedListener(new android.text.TextWatcher() {
@@ -79,6 +108,19 @@ public class EditProfileActivity extends AppCompatActivity {
         setupArtistCardClickListener(R.id.artistCard3);
     }
 
+    // ImagePicker used to upload or take a profile picture
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            //Get the selected image URI
+            selectedImageUri = data.getData();
+
+            // Set the image URI to the profile picture
+            editProfilePicImageView.setImageURI(selectedImageUri);
+        }
+    }
+
     // Click listener for song cards
     private void setupSongCardClickListener(int cardId) {
         View songCard = findViewById(cardId);
@@ -115,6 +157,29 @@ public class EditProfileActivity extends AppCompatActivity {
             titleView.setText(selectedSong.getTitle());
             artistView.setText(selectedSong.getArtist());
             albumArtView.setImageResource(selectedSong.getAlbumArt());
+
+
+            //Save song to SharedPreferences
+            SharedPreferences sharedPreferences = getSharedPreferences("LegatoPrefs", MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+
+            //Identify the correct card and save accordingly
+            //Save card 1
+            if (cardView.getId() == R.id.songCard1) {
+                editor.putString("saved_song_1", selectedSong.getTitle());
+                editor.putString("saved_song_1_artist", selectedSong.getArtist());
+            }
+            //Save card 2
+            else if (cardView.getId() == R.id.songCard2) {
+                editor.putString("saved_song_2", selectedSong.getTitle());
+                editor.putString("saved_song_2_artist", selectedSong.getArtist());
+            }
+            //Save card 3
+            else if (cardView.getId() == R.id.songCard3) {
+                editor.putString("saved_song_3", selectedSong.getTitle());
+                editor.putString("saved_song_3_artist", selectedSong.getArtist());
+            }
+            editor.apply();
         }
     }
 
@@ -126,15 +191,50 @@ public class EditProfileActivity extends AppCompatActivity {
         if (artistView != null && artistImageView != null) {
             artistView.setText(artistName);
             artistImageView.setImageResource(MusicData.getArtistImage(artistName));
+
+            //Save artist to SharedPreferences
+            SharedPreferences sharedPreferences = getSharedPreferences("LegatoPrefs", MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+
+            //Identify the correct card and save accordingly
+            //Save card 1
+            if (cardView.getId() == R.id.artistCard1) {
+                editor.putString("saved_artist_1", artistName);
+            }
+            //Save card 2
+            else if (cardView.getId() == R.id.artistCard2) {
+                editor.putString("saved_artist_2", artistName);
+            }
+            //Save card 3
+            else if (cardView.getId() == R.id.artistCard3) {
+                editor.putString("saved_artist_3", artistName);
+            }
+            editor.apply();
         }
     }
 
     // Saves profile changes using SharedPreferences
     private void saveProfileChanges() {
+        String displayName = editDisplayNameText.getText().toString().trim();
+        String bio = editBioText.getText().toString().trim();
+
+        if (displayName.isEmpty()) {
+            editDisplayNameText.setError("Display name cannot be empty");
+            editDisplayNameText.requestFocus();
+            return; // Stop the save process if display name is empty
+        }
+
         SharedPreferences sharedPreferences = getSharedPreferences("LegatoPrefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("saved_display_name", editDisplayNameText.getText().toString().trim());
-        editor.putString("saved_bio", editBioText.getText().toString().trim());
+
+        editor.putString("saved_display_name", displayName); //Saves display name
+        editor.putString("saved_bio", bio); //Saves bio
+
+        //Saves the image URI if available
+        if (selectedImageUri != null) {
+            editor.putString("saved_profile_pic", selectedImageUri.toString());
+        }
+
         editor.apply();
         finish();
     }

@@ -36,8 +36,9 @@
             android:layout_width="110dp"
             android:layout_height="110dp"
             android:layout_marginTop="80dp"
+            android:elevation="4dp"
             android:contentDescription="Profile Picture"
-            android:src="@drawable/profile_pic_example"
+            android:src="@drawable/profile_pic_placeholder"
             app:civ_border_color="@color/white"
             app:civ_border_width="3dp"
             app:layout_constraintHorizontal_bias="0.5"
@@ -261,7 +262,7 @@
             <LinearLayout
                 android:id="@+id/containerTopSongs"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:orientation="vertical"
                 android:padding="12dp">
@@ -291,14 +292,6 @@
                         android:textSize="16sp"
                         android:textColor="@android:color/white"/>
                     <TextView
-                        android:id="@+id/song1Album"
-                        android:layout_height="wrap_content"
-                        android:layout_width="wrap_content"
-                        android:text="Apolo XXI"
-                        android:textStyle="italic"
-                        android:textSize="14sp"
-                        android:textColor="@android:color/white"/>
-                    <TextView
                         android:id="@+id/song1Artist"
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
@@ -325,14 +318,6 @@
                         android:textSize="16sp"
                         android:textColor="@android:color/white"/>
                     <TextView
-                        android:id="@+id/song2Album"
-                        android:layout_height="wrap_content"
-                        android:layout_width="wrap_content"
-                        android:text="DAMN."
-                        android:textStyle="italic"
-                        android:textSize="14sp"
-                        android:textColor="@android:color/white"/>
-                    <TextView
                         android:id="@+id/song2Artist"
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
@@ -357,14 +342,6 @@
                         android:text="Face to Face"
                         android:textStyle="bold"
                         android:textSize="16sp"
-                        android:textColor="@android:color/white"/>
-                    <TextView
-                        android:id="@+id/song3Album"
-                        android:layout_height="wrap_content"
-                        android:layout_width="wrap_content"
-                        android:text="Discovery"
-                        android:textStyle="italic"
-                        android:textSize="14sp"
                         android:textColor="@android:color/white"/>
                     <TextView
                         android:id="@+id/song3Artist"
@@ -409,7 +386,7 @@
                         android:id="@+id/artist1Pic"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:src="@drawable/artist1"
+                        android:src="@drawable/profile_pic_placeholder"
                         app:civ_border_color="@android:color/white"
                         app:civ_border_width="2dp"/>
 
@@ -439,7 +416,7 @@
                         android:id="@+id/artist2Pic"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:src="@drawable/artist2"
+                        android:src="@drawable/profile_pic_placeholder"
                         app:civ_border_color="@android:color/white"
                         app:civ_border_width="2dp"/>
 
@@ -469,7 +446,7 @@
                         android:id="@+id/artist3Pic"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:src="@drawable/artist3"
+                        android:src="@drawable/profile_pic_placeholder"
                         app:civ_border_color="@android:color/white"
                         app:civ_border_width="2dp"/>
 
