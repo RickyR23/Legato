@@ -120,6 +120,8 @@ public class signUp extends AppCompatActivity {
                 editor.putBoolean("isLoggedIn", true);
                 editor.apply();
 
+                saveFormData(); //Save data from form
+
                 // Navigate to Home Activity
                 Intent intent = new Intent(signUp.this, userHome.class);
                 startActivity(intent);

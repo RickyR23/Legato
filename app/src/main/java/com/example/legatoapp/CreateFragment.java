@@ -1,64 +1,69 @@
 package com.example.legatoapp;
 
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.content.Context;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link CreateFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class CreateFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private ImageView selectedSongImage;
+    private TextView selectedSongName, selectedArtistName;
+    private EditText captionInput;
 
     public CreateFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment CreateFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static CreateFragment newInstance(String param1, String param2) {
-        CreateFragment fragment = new CreateFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_create, container, false);
+
+        // Initialize UI components
+        selectedSongImage = view.findViewById(R.id.selected_song_image);
+        selectedSongName = view.findViewById(R.id.selected_song_name);
+        selectedArtistName = view.findViewById(R.id.selected_artist_name);
+        captionInput = view.findViewById(R.id.caption_input);
+
+        // Song Search Button
+        Button searchButton = view.findViewById(R.id.btn_open_search);
+        searchButton.setOnClickListener(v -> {
+            SongSearchPopup songSearchPopup = new SongSearchPopup(getContext(), this::updateSelectedSong);
+            songSearchPopup.showPopup(v);
+        });
+
+        // Hide keyboard when pressing Enter in the caption input
+        captionInput.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_GO) {
+                hideKeyboard(v);
+                return true;
+            }
+            return false;
+        });
+
+        return view;
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+    // Updates the UI when a song is selected
+    public void updateSelectedSong(Song song) {
+        selectedSongImage.setImageResource(song.getAlbumArt());
+        selectedSongName.setText(song.getTitle());
+        selectedArtistName.setText(song.getArtist()); // This updates the artist from the song
+    }
+
+    // Function to hide the keyboard
+    private void hideKeyboard(View view) {
+        InputMethodManager imm = (InputMethodManager) requireContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null) {
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_create, container, false);
     }
 }

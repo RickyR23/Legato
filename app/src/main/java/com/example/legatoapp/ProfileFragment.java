@@ -1,6 +1,9 @@
 package com.example.legatoapp;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -96,11 +99,31 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+        // Find the edit profile button by its ID
+        ImageButton editProfileButton = view.findViewById(R.id.editProfileButton);
+
+        editProfileButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Create an Intent to navigate to EditProfileActivity
+                Intent intent = new Intent(getActivity(), EditProfileActivity.class);
+                startActivity(intent);
+            }
+        });
+
         fetchLastSong();
         fetchProfile();
         return view;
     }
 
+    // Refresh profile data whenever the fragment is resumed
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadProfileData();
+    }
+
+    //*******METHODS*******//
     private void fetchProfile(){
         Disposable disposable = SpotifyProfileDataHelper.fetchSpotifyUserProfile(requireContext())
                 .subscribe(profile -> {
@@ -144,4 +167,21 @@ public class ProfileFragment extends Fragment {
                 });
         compositeDisposable.add(disposable);
     }
+
+    private void loadProfileData() {
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("LegatoPrefs", MODE_PRIVATE);
+
+        //Retrieve display name and bio from shared preferences
+        String displayName = sharedPreferences.getString("saved_display_name", "Default Name");
+        String bio = sharedPreferences.getString("saved_bio", "Add a bio");
+
+        //UI elements
+        TextView displayNameTextView = getView().findViewById(R.id.textViewDisplayName);
+        TextView bioTextView = getView().findViewById(R.id.textViewBio);
+
+        //Update UI elements with retrieved data
+        displayNameTextView.setText(displayName);
+        bioTextView.setText(bio);
+    }
+
 }
