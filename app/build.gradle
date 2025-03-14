@@ -51,6 +51,8 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:4.10.0'
     implementation 'androidx.browser:browser:1.8.0'
 
+    // Image picker
+    implementation 'com.github.dhaval2404:imagepicker:2.1'
 
     // To display image in circular form
     implementation 'de.hdodenhof:circleimageview:3.1.0'

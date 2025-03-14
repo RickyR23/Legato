@@ -210,6 +210,14 @@ public class ProfileFragment extends Fragment {
         String displayName = sharedPreferences.getString("saved_display_name", "Default Name");
         String bio = sharedPreferences.getString("saved_bio", "Add a bio");
 
+        //Retrieve profile pic
+        String profilePic = sharedPreferences.getString("saved_profile_pic",null);
+
+        if (profilePic != null) {
+            Uri imageUri = Uri.parse(profilePic);
+            profilePicImageView.setImageURI(imageUri);
+        }
+
         // Arrays for song data, artist data and UI elements
         String[] songTitles = new String[3];
         String[] songArtists = new String[3];
