@@ -12,7 +12,7 @@
         android:id="@+id/search_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Search songs..."
+        android:hint="Search"
         android:padding="15dp"
         android:background="@android:color/darker_gray"
         android:textColorHint="@android:color/white"
