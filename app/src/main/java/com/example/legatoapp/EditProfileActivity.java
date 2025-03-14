@@ -131,10 +131,19 @@ public class EditProfileActivity extends AppCompatActivity {
 
     // Saves profile changes using SharedPreferences
     private void saveProfileChanges() {
+        String displayName = editDisplayNameText.getText().toString().trim();
+        String bio = editBioText.getText().toString().trim();
+
+        if (displayName.isEmpty()) {
+            editDisplayNameText.setError("Display name cannot be empty");
+            editDisplayNameText.requestFocus();
+            return; // Stop the save process
+        }
+
         SharedPreferences sharedPreferences = getSharedPreferences("LegatoPrefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("saved_display_name", editDisplayNameText.getText().toString().trim());
-        editor.putString("saved_bio", editBioText.getText().toString().trim());
+        editor.putString("saved_display_name", displayName);
+        editor.putString("saved_bio", bio);
         editor.apply();
         finish();
     }
