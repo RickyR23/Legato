@@ -16,6 +16,7 @@
         android:layout_marginTop="30dp"
         android:text="Search Songs"
         android:textSize="20sp"
+        android:backgroundTint="@color/blue_logo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -23,8 +24,8 @@
     <!-- Centered Song Image -->
     <ImageView
         android:id="@+id/selected_song_image"
-        android:layout_width="107dp"
-        android:layout_height="93dp"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
         android:layout_marginTop="124dp"
         android:scaleType="centerCrop"
         android:src="@drawable/snoopypfp"
@@ -34,95 +35,58 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <!-- Song Name TextView -->
-    <TextView
-        android:id="@+id/selected_song_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:text="Song Name"
-        android:textColor="@android:color/white"
-        android:textSize="24dp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.526"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/selected_song_image" />
 
     <!-- Artist Name TextView -->
-    <TextView
-        android:id="@+id/selected_artist_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="Song Artist"
-        android:textColor="@android:color/white"
-        android:textSize="22sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.522"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/selected_song_name" />
 
     <!-- Caption TextField (Newly Added) -->
     <!-- Added constraint to avoid floating -->
 
     <!-- Test TextView for Artist Search -->
 
+    <TextView
+        android:id="@+id/selected_song_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Song Name"
+        android:textColor="@android:color/white"
+        android:textSize="24dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/selected_song_image" />
+
+    <TextView
+        android:id="@+id/selected_artist_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Song Artist"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/selected_song_name" />
+
     <EditText
         android:id="@+id/caption_input"
-        android:layout_width="279dp"
-        android:layout_height="42dp"
+        android:layout_width="275dp"
+        android:layout_height="116dp"
         android:layout_marginTop="24dp"
-        android:background="@android:color/darker_gray"
-        android:hint="Write a caption..."
+        android:background="@color/button_color"
+        android:hint="Write a caption!"
         android:imeOptions="actionDone"
         android:inputType="text"
         android:maxLength="80"
         android:padding="12dp"
         android:textColor="@android:color/white"
+        android:textColorHint="@android:color/white"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/selected_artist_name"
-        app:layout_constraintVertical_bias="0.039" />
-
-    <Button
-        android:id="@+id/btn_open_artist_search"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Search Artist"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.6" />
-
-    <TextView
-        android:id="@+id/test_artist_search_result"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="544dp"
-        android:text="Selected Artist (Test)"
-        android:textColor="@android:color/white"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.705"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/test_artist_image"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="528dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/angelespfp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.102"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintVertical_bias="0.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -15,8 +15,8 @@ import android.content.Context;
 
 public class CreateFragment extends Fragment {
 
-    private ImageView selectedSongImage, testArtistImage;
-    private TextView selectedSongName, selectedArtistName, testArtistSearchResult;
+    private ImageView selectedSongImage;
+    private TextView selectedSongName, selectedArtistName;
     private EditText captionInput;
 
     public CreateFragment() {
@@ -31,8 +31,6 @@ public class CreateFragment extends Fragment {
         selectedSongImage = view.findViewById(R.id.selected_song_image);
         selectedSongName = view.findViewById(R.id.selected_song_name);
         selectedArtistName = view.findViewById(R.id.selected_artist_name);
-        testArtistImage = view.findViewById(R.id.test_artist_image);
-        testArtistSearchResult = view.findViewById(R.id.test_artist_search_result);
         captionInput = view.findViewById(R.id.caption_input);
 
         // Song Search Button
@@ -40,13 +38,6 @@ public class CreateFragment extends Fragment {
         searchButton.setOnClickListener(v -> {
             SongSearchPopup songSearchPopup = new SongSearchPopup(getContext(), this::updateSelectedSong);
             songSearchPopup.showPopup(v);
-        });
-
-        // Artist Search Button
-        Button artistSearchButton = view.findViewById(R.id.btn_open_artist_search);
-        artistSearchButton.setOnClickListener(v -> {
-            ArtistSearchPopup artistSearchPopup = new ArtistSearchPopup(getContext(), this::updateSelectedArtist);
-            artistSearchPopup.showPopup(v);
         });
 
         // Hide keyboard when pressing Enter in the caption input
@@ -65,15 +56,7 @@ public class CreateFragment extends Fragment {
     public void updateSelectedSong(Song song) {
         selectedSongImage.setImageResource(song.getAlbumArt());
         selectedSongName.setText(song.getTitle());
-        selectedArtistName.setText(song.getArtist());
-    }
-
-    // Updates the UI when an artist is selected
-    public void updateSelectedArtist(String artist) {
-        testArtistSearchResult.setText("Selected Artist: " + artist);
-
-        // Fetch correct artist image from MusicData
-        testArtistImage.setImageResource(MusicData.getArtistImage(artist));
+        selectedArtistName.setText(song.getArtist()); // This updates the artist from the song
     }
 
     // Function to hide the keyboard
