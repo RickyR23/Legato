@@ -3,17 +3,13 @@ package com.example.legatoapp;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import android.text.Editable;
-import android.text.TextWatcher;
-
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
-
 
 public class EditProfileActivity extends AppCompatActivity {
     private EditText editBioText, editDisplayNameText;
@@ -21,32 +17,31 @@ public class EditProfileActivity extends AppCompatActivity {
     private Button saveChangesButton;
     private static final int MAX_CHAR_COUNT = 50;
 
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
 
-        editBioText = findViewById(R.id.editBioEditText); // To edit the bio
-        bioCharCount = findViewById(R.id.bioCharCount);  // To keep track of char count
-        editDisplayNameText = findViewById(R.id.editDisplayNameEditText); // To edit display name
-        saveChangesButton = findViewById(R.id.saveButton); // To save changes made
+        editBioText = findViewById(R.id.editBioEditText);
+        bioCharCount = findViewById(R.id.bioCharCount);
+        editDisplayNameText = findViewById(R.id.editDisplayNameEditText);
+        saveChangesButton = findViewById(R.id.saveButton);
 
-        // Retrieve the saved displayName from SharedPreferences saved from sign up
+        // Retrieve saved display name & bio from SharedPreferences
         SharedPreferences sharedPreferences = getSharedPreferences("LegatoPrefs", MODE_PRIVATE);
         String displayName = sharedPreferences.getString("saved_display_name", "Enter your display name");
         String bio = sharedPreferences.getString("saved_bio", "");
 
-        // Set the displayName in the EditText
         if (!displayName.isEmpty()) {
             editDisplayNameText.setText(displayName);
         }
 
-        // Set the bio in the EditText
         if (!bio.isEmpty()) {
             editBioText.setText(bio);
         }
 
-        // TextWatcher checks that the bio updates character count
-        editBioText.addTextChangedListener(new TextWatcher() {
+        // Character count update for bio
+        editBioText.addTextChangedListener(new android.text.TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
@@ -57,40 +52,90 @@ public class EditProfileActivity extends AppCompatActivity {
             }
 
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(android.text.Editable s) {}
         });
 
-        // Inside your Save button's OnClickListener
+        // Save changes button
         saveChangesButton.setOnClickListener(v -> {
             new AlertDialog.Builder(EditProfileActivity.this)
                     .setTitle("Save Changes")
                     .setMessage("Do you want to save the changes made?")
-                    .setPositiveButton("Save", (dialog, which) -> {
-                        // Call save logic here to update the profile
-                        saveProfileChanges();
-                    })
+                    .setPositiveButton("Save", (dialog, which) -> saveProfileChanges())
                     .setNegativeButton("Discard", (dialog, which) -> {
-                        // Discard the changes and close the dialog
                         dialog.dismiss();
                         finish();
                     })
                     .show();
         });
 
+        // Set up song card click listeners
+        setupSongCardClickListener(R.id.songCard1);
+        setupSongCardClickListener(R.id.songCard2);
+        setupSongCardClickListener(R.id.songCard3);
+
+        // Set up artist card click listeners
+        setupArtistCardClickListener(R.id.artistCard1);
+        setupArtistCardClickListener(R.id.artistCard2);
+        setupArtistCardClickListener(R.id.artistCard3);
     }
 
-    //****METHODS****//
-    // This will save any changes made in the Edit Profile activity
+    // Click listener for song cards
+    private void setupSongCardClickListener(int cardId) {
+        View songCard = findViewById(cardId);
+        if (songCard != null) {
+            songCard.setOnClickListener(v -> {
+                SongSearchPopup popup = new SongSearchPopup(this, selectedSong -> {
+                    updateSongCard(songCard, selectedSong);
+                });
+                popup.showPopup(songCard);
+            });
+        }
+    }
+
+    // Click listener for artist cards
+    private void setupArtistCardClickListener(int cardId) {
+        View artistCard = findViewById(cardId);
+        if (artistCard != null) {
+            artistCard.setOnClickListener(v -> {
+                ArtistSearchPopup popup = new ArtistSearchPopup(this, selectedArtist -> {
+                    updateArtistCard(artistCard, selectedArtist);
+                });
+                popup.showPopup(artistCard);
+            });
+        }
+    }
+
+    // Updates song card UI after selection
+    private void updateSongCard(View cardView, Song selectedSong) {
+        TextView titleView = cardView.findViewById(R.id.songTitle);
+        TextView artistView = cardView.findViewById(R.id.songArtist);
+        ImageView albumArtView = cardView.findViewById(R.id.songImage);
+
+        if (titleView != null && artistView != null && albumArtView != null) {
+            titleView.setText(selectedSong.getTitle());
+            artistView.setText(selectedSong.getArtist());
+            albumArtView.setImageResource(selectedSong.getAlbumArt());
+        }
+    }
+
+    // Updates artist card UI after selection
+    private void updateArtistCard(View cardView, String artistName) {
+        TextView artistView = cardView.findViewById(R.id.artistName);
+        ImageView artistImageView = cardView.findViewById(R.id.artistImage);
+
+        if (artistView != null && artistImageView != null) {
+            artistView.setText(artistName);
+            artistImageView.setImageResource(MusicData.getArtistImage(artistName));
+        }
+    }
+
+    // Saves profile changes using SharedPreferences
     private void saveProfileChanges() {
-        // Save changes logic
-        // At the moment we are using SharedPreferences
         SharedPreferences sharedPreferences = getSharedPreferences("LegatoPrefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("saved_display_name", editDisplayNameText.getText().toString().trim());
         editor.putString("saved_bio", editBioText.getText().toString().trim());
-        editor.apply(); // Save the data
-
-        finish(); //Finish activity
+        editor.apply();
+        finish();
     }
-
 }
