@@ -210,13 +210,38 @@ public class ProfileFragment extends Fragment {
         String displayName = sharedPreferences.getString("saved_display_name", "Default Name");
         String bio = sharedPreferences.getString("saved_bio", "Add a bio");
 
-        //UI elements
+        // Arrays for song data, artist data and UI elements
+        String[] songTitles = new String[3];
+        String[] songArtists = new String[3];
+        String[] artistNames = new String[3];
+        int[] songTitleViews = {R.id.song1Title, R.id.song2Title, R.id.song3Title};
+        int[] songArtistViews = {R.id.song1Artist, R.id.song2Artist, R.id.song3Artist};
+        int[] artistNameViews = {R.id.artist1Name, R.id.artist2Name, R.id.artist3Name};
+
+        // Retrieve saved song data and artist
+        for (int i = 0; i < 3; i++) {
+            songTitles[i] = sharedPreferences.getString("saved_song_" + (i + 1), "Select a song");
+            songArtists[i] = sharedPreferences.getString("saved_song_" + (i + 1) + "_artist", "");
+            artistNames[i] = sharedPreferences.getString("saved_artist_" + (i + 1), "Select an artist");
+        }
+
+        //Update UI elements with retrieved data
         TextView displayNameTextView = getView().findViewById(R.id.textViewDisplayName);
         TextView bioTextView = getView().findViewById(R.id.textViewBio);
 
-        //Update UI elements with retrieved data
         displayNameTextView.setText(displayName);
         bioTextView.setText(bio);
+
+        // Update the song and artist UI elements with data saved
+        for (int i = 0; i < 3; i++) {
+            TextView songTitleView = getView().findViewById(songTitleViews[i]);
+            TextView songArtistView = getView().findViewById(songArtistViews[i]);
+            TextView artistNameView = getView().findViewById(artistNameViews[i]);
+
+            songTitleView.setText(songTitles[i]);
+            songArtistView.setText(songArtists[i]);
+            artistNameView.setText(artistNames[i]);
+        }
     }
 
 }
