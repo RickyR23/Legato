@@ -2,12 +2,14 @@ package com.example.legatoapp;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.animation.AnimatorSet;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import android.animation.ObjectAnimator;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +23,7 @@ import com.bumptech.glide.Glide;
 import com.example.legatoapp.Services.helper.SpotifyProfileDataHelper;
 import com.example.legatoapp.models.response.SpotifyUserCurrentTrackResponse;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
 
@@ -44,7 +47,7 @@ public class ProfileFragment extends Fragment {
     private Button spotifyButton;
     private ImageView currentlyPlayingAlbumCover;
     private TextView currentlyPlayingArtist, currentlyPlayingSong;
-
+    private CircleImageView profilePicImageView;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -85,6 +88,7 @@ public class ProfileFragment extends Fragment {
         currentlyPlayingArtist = view.findViewById(R.id.textViewCurrentlyPlayingArtist);
         currentlyPlayingSong = view.findViewById(R.id.textViewCurrentlyPlayingSong);
         spotifyButton = view.findViewById(R.id.buttonProfileSpotify);
+        profilePicImageView = view.findViewById(R.id.profilePicImageView);
 
         // Find the settings button by its ID
         ImageButton settingsButton = view.findViewById(R.id.settingsButton);
@@ -108,6 +112,37 @@ public class ProfileFragment extends Fragment {
                 // Create an Intent to navigate to EditProfileActivity
                 Intent intent = new Intent(getActivity(), EditProfileActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        // Zoom-in and out animation whenever the user clicks the profile picture
+        profilePicImageView.setOnClickListener(new View.OnClickListener() {
+            private boolean isZoomedIn = false;
+
+            @Override
+            public void onClick(View view) {
+// Toggle zoom state
+                isZoomedIn = !isZoomedIn;
+
+                // Define zoom scale factor
+                float scale = isZoomedIn ? 2.5f : 1f;
+
+                // Set pivot point to the center of the screen
+                profilePicImageView.setPivotX(profilePicImageView.getWidth() / 2f);
+                profilePicImageView.setPivotY(profilePicImageView.getHeight() / 2.5f);
+
+                // Create animations for scaling
+                ObjectAnimator scaleX = ObjectAnimator.ofFloat(profilePicImageView, "scaleX", scale);
+                ObjectAnimator scaleY = ObjectAnimator.ofFloat(profilePicImageView, "scaleY", scale);
+
+                // Set animation duration
+                scaleX.setDuration(200);
+                scaleY.setDuration(200);
+
+                // Start animations
+                AnimatorSet animatorSet = new AnimatorSet();
+                animatorSet.playTogether(scaleX, scaleY);
+                animatorSet.start();
             }
         });
 

@@ -29,7 +29,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
         // Retrieve saved display name & bio from SharedPreferences
         SharedPreferences sharedPreferences = getSharedPreferences("LegatoPrefs", MODE_PRIVATE);
-        String displayName = sharedPreferences.getString("saved_display_name", "Enter your display name");
+        String displayName = sharedPreferences.getString("saved_display_name", "");
         String bio = sharedPreferences.getString("saved_bio", "");
 
         if (!displayName.isEmpty()) {

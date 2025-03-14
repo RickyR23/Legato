@@ -36,6 +36,7 @@
             android:layout_width="110dp"
             android:layout_height="110dp"
             android:layout_marginTop="80dp"
+            android:elevation="4dp"
             android:contentDescription="Profile Picture"
             android:src="@drawable/profile_pic_example"
             app:civ_border_color="@color/white"
