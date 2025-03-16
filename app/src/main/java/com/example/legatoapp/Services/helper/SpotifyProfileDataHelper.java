@@ -1,12 +1,15 @@
 package com.example.legatoapp.Services.helper;
 
+import static com.example.legatoapp.Services.helper.SpotifyAuthHelper.isTokenExpired;
+import static com.example.legatoapp.Services.helper.SpotifyAuthHelper.refreshAccessToken;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.example.legatoapp.R;
 import com.example.legatoapp.Services.UserInfoService;
-import com.example.legatoapp.models.response.SpotifyUserCurrentTrackResponse;
+import com.example.legatoapp.models.response.SpotifyUserRecentlyPlayedTracksResponse;
 import com.example.legatoapp.models.response.SpotifyUserProfileResponse;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -38,8 +41,9 @@ public class SpotifyProfileDataHelper {
         SharedPreferences preferences = context.getSharedPreferences("LegatoPrefs", Context.MODE_PRIVATE);
         String accessToken = preferences.getString("spotify_access_token", null);
 
-        if(accessToken == null){
-            return Observable.error(new Throwable("Missing Spotify access token"));
+        if(accessToken == null || isTokenExpired(context)){
+            Log.d("SpotifyProfileDataHelper", "⏳ Token expired or missing. Refreshing...");
+            return refreshAccessToken(context).flatMap(newToken -> fetchSpotifyUserProfile(context));
         }
 
         String authHeader = "Bearer " + accessToken;
@@ -50,12 +54,13 @@ public class SpotifyProfileDataHelper {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public static Observable<SpotifyUserCurrentTrackResponse> fetchSpotifyUserLastTrackPlayed(Context context){
+    public static Observable<SpotifyUserRecentlyPlayedTracksResponse> fetchSpotifyUserLastTrackPlayed(Context context){
         SharedPreferences preferences = context.getSharedPreferences("LegatoPrefs", Context.MODE_PRIVATE);
         String accessToken = preferences.getString("spotify_access_token", null);
 
-        if(accessToken == null){
-            return Observable.error(new Throwable("Missing Spotify access token"));
+        if(accessToken == null || isTokenExpired(context)){
+            Log.d("SpotifyProfileDataHelper", "⏳ Token expired or missing. Refreshing...");
+            return refreshAccessToken(context).flatMap(newToken -> fetchSpotifyUserLastTrackPlayed(context));
         }
 
         String authHeader = "Bearer " + accessToken;

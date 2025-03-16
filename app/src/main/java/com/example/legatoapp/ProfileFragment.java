@@ -21,7 +21,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.legatoapp.Services.helper.SpotifyProfileDataHelper;
-import com.example.legatoapp.models.response.SpotifyUserCurrentTrackResponse;
+import com.example.legatoapp.models.response.SpotifyUserRecentlyPlayedTracksResponse;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
@@ -183,7 +183,7 @@ public class ProfileFragment extends Fragment {
     private void fetchLastSong(){
         Disposable disposable = SpotifyProfileDataHelper.fetchSpotifyUserLastTrackPlayed(requireContext())
                 .subscribe(response -> {
-                    SpotifyUserCurrentTrackResponse.Item item = response.getLastPlayedTrack();
+                    SpotifyUserRecentlyPlayedTracksResponse.Item item = response.getLastPlayedTrack();
 
                     if(item != null){
                         currentlyPlayingSong.setText(item.getTrack().getName());

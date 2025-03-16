@@ -2,11 +2,17 @@ package com.example.legatoapp.models.response;
 
 import java.util.List;
 
-public class SpotifyUserCurrentTrackResponse {
-    private List<Item> items;
+public class SpotifyUserRecentlyPlayedTracksResponse {
+    private Item item;  // Used for currently playing track
+    private List<Item> items; // Used for recently played tracks
+    private boolean is_playing; // Only exists in currently-playing response
 
-    public List<Item> getItems() {
-        return items;
+    public boolean isPlaying() {
+        return is_playing;
+    }
+
+    public Item getCurrentlyPlayingTrack() {
+        return item; // For "/v1/me/player/currently-playing"
     }
 
     public Item getLastPlayedTrack() {

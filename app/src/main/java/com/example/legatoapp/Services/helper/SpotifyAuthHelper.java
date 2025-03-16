@@ -62,8 +62,8 @@ public class SpotifyAuthHelper {
      * @return . . .
      */
     public static Observable<SpotifyAccessTokenResponse> refreshAccessToken(Context context){
-        SharedPreferences prefs = context.getSharedPreferences("spotify_prefs", MODE_PRIVATE);
-        String refreshToken = prefs.getString("refresh_token", null);
+        SharedPreferences prefs = context.getApplicationContext().getSharedPreferences("spotify_prefs", MODE_PRIVATE);
+        String refreshToken = prefs.getString("spotify_refresh_token", null);
 
         if(refreshToken == null){
             Log.w("SpotifyAuthentication", "Refresh token is not stored yet or is null. . .");
@@ -76,23 +76,58 @@ public class SpotifyAuthHelper {
         return getAuthService(context)
                 .refreshAccessToken("refresh_token", refreshToken, authHeader)
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnNext(response -> {
+                    if (response != null) {
+                        storeSpotifyTokens(context, response.getAccess_token(), refreshToken, response.getExpires_in());
+                        Log.d("SpotifyAuthentication", "Token refreshed successfully");
+                    }
+                });
 
     }
 
     // TODO: instead of having a method to store tokens to sharedPreferences in each individual class, create a utilitiy sharedPreferenceClass that can be extended to store
     //  the data where ever that method is inhereted from
-    public static void storeSpotifyTokens(Context context, String accessToken, String refreshToken){
+    public static void storeSpotifyTokens(Context context, String accessToken, String refreshToken, int expiresIn){
 
-        SharedPreferences preferences = context.getSharedPreferences("LegatoPrefs", MODE_PRIVATE);
-        SharedPreferences.Editor editorPref = preferences.edit();
-        editorPref.putString("spotify_access_token", accessToken);
-        editorPref.putString("spotify_refresh_token", refreshToken);
+        if(accessToken == null || refreshToken == null){
+            Log.d("SpotifyAuthentication", "AccessToken or refresh token response from API call was null or unsuccessful. . .");
+            return;
+        }
 
-        SharedPreferences sharedPreferences = context.getSharedPreferences("LegatoPrefs", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
+        long currTime = System.currentTimeMillis();
+        long expirationTime = currTime + (expiresIn  * 1000);
+
+        Log.d("SpotifyAuthentication", "******************* \n Access Token: " + accessToken + "\n Token Expiration Time: " + expirationTime + "\n *******************");
+
+        SharedPreferences preferences = context.getApplicationContext().getSharedPreferences("LegatoPrefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("spotify_access_token", accessToken);
+        editor.putString("spotify_refresh_token", refreshToken);
+        editor.putLong("spotify_token_expiration", expirationTime);
         editor.putBoolean("isSpotifyTokenReceived", true);
-        editor.apply();
+        boolean success = editor.commit();
+
+        if (success) {
+            Log.d("SpotifyAuthentication", "Token Saved to SharedPreferences");
+        } else {
+            Log.e("SpotifyAuthentication", "Error saving token to SharedPreferences");
+        }
     }
+
+     public static boolean isTokenExpired(Context context){
+        SharedPreferences preferences = context.getApplicationContext().getSharedPreferences("LegatoPrefs", MODE_PRIVATE);
+        long expirationTime = preferences.getLong("spotify_token_expiration", 0);
+        long currTime = System.currentTimeMillis();
+
+        if(currTime >= expirationTime){
+            return true;
+            // token would be expired in this case
+        }
+        else{
+            return false;
+            // and token would be still valid in this case
+        }
+     }
 
 }

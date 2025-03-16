@@ -377,7 +377,7 @@ public class signUp extends AppCompatActivity {
     private void exchangeAuthorizationForToken(String code){
         Disposable disposable = SpotifyAuthHelper.fetchAccessToken(context, code)
                 .subscribe(response -> {
-                    SpotifyAuthHelper.storeSpotifyTokens(this, response.getAccess_token(), response.getRefresh_token());
+                    SpotifyAuthHelper.storeSpotifyTokens(this, response.getAccess_token(), response.getRefresh_token(), response.getExpires_in());
                     Log.d("SpotifyAuthService", "Spotify has received token response: \n Access Token: " + response.getAccess_token() + "\n refreshToken: " + response.getRefresh_token());
                 }, error -> Log.e("SpotifyAuthService", "Error has occured . . . : " + error.getMessage()));
         compositeDisposable.add(disposable);
