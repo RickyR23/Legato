@@ -74,8 +74,7 @@ public class CreateFragment extends Fragment {
                     .setTitle("Confirm Post")
                     .setMessage("Are you sure you want to post this?")
                     .setPositiveButton("Post", (dialog, which) -> {
-                        // LOGIC WILL GO HERE
-                        // For now, we just show a pop up confirmation saying that its submitted
+                        submitPost();
                         android.widget.Toast.makeText(getContext(), "Post submitted!", android.widget.Toast.LENGTH_SHORT).show();
                     })
                     .setNegativeButton("Cancel", null)
@@ -98,6 +97,12 @@ public class CreateFragment extends Fragment {
         if (imm != null) {
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
+    }
+
+    private void submitPost() {
+        // LOGIC WILL GO HERE
+        // Temporary confirmation
+        android.widget.Toast.makeText(getContext(), "Post submitted!", android.widget.Toast.LENGTH_SHORT).show();
     }
 
 
