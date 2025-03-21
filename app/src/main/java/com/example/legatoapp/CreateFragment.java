@@ -49,6 +49,39 @@ public class CreateFragment extends Fragment {
             return false;
         });
 
+        Button clearButton = view.findViewById(R.id.btn_clear);
+        Button postButton = view.findViewById(R.id.btn_post);
+
+// Clear button
+        clearButton.setOnClickListener(v -> {
+            new android.app.AlertDialog.Builder(requireContext())
+                    .setTitle("Clear Post")
+                    .setMessage("Are you sure you want to clear everything?")
+                    .setPositiveButton("Clear", (dialog, which) -> {
+                        selectedSongImage.setImageResource(R.drawable.snoopypfp); // default image
+                        selectedSongName.setText("Song Name");
+                        selectedArtistName.setText("Song Artist");
+                        captionInput.setText("");
+                    })
+                    .setNegativeButton("Cancel", null)
+                    .show();
+        });
+
+
+// Post button
+        postButton.setOnClickListener(v -> {
+            new android.app.AlertDialog.Builder(requireContext())
+                    .setTitle("Confirm Post")
+                    .setMessage("Are you sure you want to post this?")
+                    .setPositiveButton("Post", (dialog, which) -> {
+                        // LOGIC WILL GO HERE
+                        // For now, we just show a pop up confirmation saying that its submitted
+                        android.widget.Toast.makeText(getContext(), "Post submitted!", android.widget.Toast.LENGTH_SHORT).show();
+                    })
+                    .setNegativeButton("Cancel", null)
+                    .show();
+        });
+
         return view;
     }
 
@@ -66,4 +99,6 @@ public class CreateFragment extends Fragment {
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
+
+
 }
