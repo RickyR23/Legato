@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="CLIENT_ID">REPLACE THIS WITH ACTUAL CLIENT ID</string>
-    <string name="CLIENT_SECRET">REPLACE THIS WITH ACTUAL CLIENT SECRET</string>
+    <string name="CLIENT_ID">Place Client ID Here</string>
+    <string name="CLIENT_SECRET">Place Client Secret here</string>
     <string name="REDIRECT_URI">com.example.legatoapp://callback</string>
     <string name="SPOTIFY_SCOPES">user-read-playback-state user-read-currently-playing</string>
     <string name="BASE_URL">https://accounts.spotify.com/</string>

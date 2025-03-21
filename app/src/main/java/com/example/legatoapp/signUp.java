@@ -47,6 +47,12 @@ public class signUp extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
+        Uri receivedUri = getIntent().getData();
+        if (receivedUri == null || !receivedUri.toString().startsWith(getString(R.string.REDIRECT_URI))) {
+            clearSavedFormData();
+        }
+
+
         // UI Elements
         ImageButton backToLogInButton = findViewById(R.id.backToLogInButton);
         passwordInput = findViewById(R.id.editTextPassword);
@@ -312,6 +318,7 @@ public class signUp extends AppCompatActivity {
             }
         }
 
+        validateFormAndToggleButton();
     }
     // End of onCreate
 
@@ -420,5 +427,40 @@ public class signUp extends AppCompatActivity {
         verifyPasswordInput.setText("");
     }
 
+    private void clearSavedFormData() {
+        SharedPreferences sharedPreferences = getSharedPreferences("LegatoPrefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove("saved_username");
+        editor.remove("saved_display_name");
+        editor.remove("saved_email");
+        editor.remove("saved_password");
+        editor.remove("saved_verify_password");
+        editor.apply();
+    }
+
+
+    private void validateFormAndToggleButton() {
+        String username = usernameInput.getText().toString().trim();
+        String displayName = displayNameInput.getText().toString().trim();
+        String email = emailInput.getText().toString().trim();
+        String password = passwordInput.getText().toString().trim();
+        String verifyPassword = verifyPasswordInput.getText().toString().trim();
+
+        boolean isValidForm = isValidUsername(username) &&
+                isValidDisplayName(displayName) &&
+                isValidEmail(email) &&
+                isValidPassword(password) &&
+                password.equals(verifyPassword);
+
+        boolean isSpotifyTokenReceived = checkSpotifyTokenReceived();
+
+        if (isValidForm && isSpotifyTokenReceived) {
+            createAccountButton.setAlpha(1.0f); // Fully visible
+            createAccountButton.setEnabled(true);
+        } else {
+            createAccountButton.setAlpha(0.5f); // Semi-transparent
+            createAccountButton.setEnabled(false);
+        }
+    }
 
 }
