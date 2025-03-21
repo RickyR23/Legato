@@ -361,8 +361,6 @@ public class signUp extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         compositeDisposable.clear();
-        clearFormData();
-        clearSavedFormData();
     }
 
 
