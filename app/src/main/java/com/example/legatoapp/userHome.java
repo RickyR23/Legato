@@ -5,11 +5,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
+
 import com.example.legatoapp.databinding.ActivityUserHomeBinding;
 
 public class userHome extends AppCompatActivity {
@@ -25,11 +22,31 @@ public class userHome extends AppCompatActivity {
         // Set Home Fragment by Default
         replaceFragment(new HomeFragment());
 
-
-        // Bottom Navigation Click Listener (Fixed if-else)
+        // Bottom Navigation Click Listener with CreateFragment Exit Confirmation
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
             int id = item.getItemId();
+            Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.frame_layout);
 
+            // If currently in CreateFragment and trying to leave to another fragment
+            if (currentFragment instanceof CreateFragment && id != R.id.create) {
+                new android.app.AlertDialog.Builder(this)
+                        .setTitle("Leave Create Post?")
+                        .setMessage("You have unsaved changes. Are you sure you want to leave this page?")
+                        .setPositiveButton("Yes", (dialog, which) -> {
+                            if (id == R.id.home) {
+                                replaceFragment(new HomeFragment());
+                            } else if (id == R.id.inbox) {
+                                replaceFragment(new InboxFragment());
+                            } else if (id == R.id.profile) {
+                                replaceFragment(new ProfileFragment());
+                            }
+                        })
+                        .setNegativeButton("Cancel", null)
+                        .show();
+                return false;
+            }
+
+            // Normal behavior
             if (id == R.id.home) {
                 replaceFragment(new HomeFragment());
                 return true;
@@ -55,6 +72,4 @@ public class userHome extends AppCompatActivity {
         fragmentTransaction.replace(R.id.frame_layout, fragment);
         fragmentTransaction.commit();
     }
-
-
 }
