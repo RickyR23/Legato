@@ -1,4 +1,4 @@
-package com.example.legatoapp;
+package com.example.legatoapp.Fragment;
 
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
@@ -12,6 +12,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.content.Context;
+
+import com.example.legatoapp.R;
+import com.example.legatoapp.SongSearchPopup;
+import com.example.legatoapp.models.Song;
 
 public class CreateFragment extends Fragment {
 

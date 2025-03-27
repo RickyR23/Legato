@@ -1,4 +1,4 @@
-package com.example.legatoapp;
+package com.example.legatoapp.Adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +7,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.legatoapp.R;
+
 import java.util.List;
 import java.util.Map;
 

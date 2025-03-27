@@ -1,4 +1,4 @@
-package com.example.legatoapp;
+package com.example.legatoapp.Fragment;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -20,6 +20,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.legatoapp.Activity.EditProfileActivity;
+import com.example.legatoapp.Activity.SettingsActivity;
+import com.example.legatoapp.R;
 import com.example.legatoapp.Services.helper.SpotifyProfileDataHelper;
 import com.example.legatoapp.models.response.SpotifyUserCurrentTrackResponse;
 

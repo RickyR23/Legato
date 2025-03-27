@@ -1,4 +1,6 @@
-package com.example.legatoapp;
+package com.example.legatoapp.models;
+
+import com.example.legatoapp.R;
 
 import java.util.HashMap;
 import java.util.List;

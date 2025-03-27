@@ -1,4 +1,4 @@
-package com.example.legatoapp;
+package com.example.legatoapp.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -22,7 +22,7 @@ import java.util.regex.Pattern;
 import android.util.Patterns;
 
 
-
+import com.example.legatoapp.R;
 import com.example.legatoapp.Services.helper.SpotifyAuthHelper;
 
 

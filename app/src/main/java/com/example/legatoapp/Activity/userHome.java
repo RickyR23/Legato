@@ -1,4 +1,4 @@
-package com.example.legatoapp;
+package com.example.legatoapp.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -7,6 +7,11 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 
+import com.example.legatoapp.Fragment.CreateFragment;
+import com.example.legatoapp.Fragment.HomeFragment;
+import com.example.legatoapp.Fragment.InboxFragment;
+import com.example.legatoapp.Fragment.ProfileFragment;
+import com.example.legatoapp.R;
 import com.example.legatoapp.databinding.ActivityUserHomeBinding;
 
 public class userHome extends AppCompatActivity {

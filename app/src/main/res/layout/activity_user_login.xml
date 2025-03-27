@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:paddingBottom="38dp"
         android:fitsSystemWindows="true"
-        tools:context=".userLoginActivity">
+        tools:context=".Activity.userLoginActivity">
 
         <!-- Guideline for Centering -->
         <androidx.constraintlayout.widget.Guideline

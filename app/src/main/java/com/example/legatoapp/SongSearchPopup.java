@@ -14,6 +14,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+
+import com.example.legatoapp.Adapter.SongAdapter;
+import com.example.legatoapp.models.MusicData;
+import com.example.legatoapp.models.Song;
+
 import java.util.ArrayList;
 import java.util.List;
 

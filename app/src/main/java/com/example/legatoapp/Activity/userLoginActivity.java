@@ -1,4 +1,4 @@
-package com.example.legatoapp;
+package com.example.legatoapp.Activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,6 +13,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.legatoapp.R;
 import com.example.legatoapp.databinding.ActivityUserLoginBinding;
 
 public class userLoginActivity extends AppCompatActivity {

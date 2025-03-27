@@ -1,4 +1,4 @@
-package com.example.legatoapp;
+package com.example.legatoapp.Activity;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -14,6 +14,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.legatoapp.ArtistSearchPopup;
+import com.example.legatoapp.models.MusicData;
+import com.example.legatoapp.R;
+import com.example.legatoapp.models.Song;
+import com.example.legatoapp.SongSearchPopup;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import de.hdodenhof.circleimageview.CircleImageView;
 

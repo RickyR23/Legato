@@ -1,4 +1,4 @@
-package com.example.legatoapp;
+package com.example.legatoapp.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.content.Intent;
 import android.view.View;
 import android.widget.ImageButton;
+
+import com.example.legatoapp.R;
 
 public class forgetPassword extends AppCompatActivity {
 

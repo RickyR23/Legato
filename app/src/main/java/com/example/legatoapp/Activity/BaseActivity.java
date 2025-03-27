@@ -1,4 +1,4 @@
-package com.example.legatoapp;
+package com.example.legatoapp.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
