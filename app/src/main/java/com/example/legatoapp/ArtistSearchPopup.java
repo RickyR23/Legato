@@ -4,16 +4,15 @@ import android.content.Context;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
-import android.view.KeyEvent;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.PopupWindow;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import android.text.Editable;
-import android.text.TextWatcher;
+
+import com.example.legatoapp.Adapter.ArtistAdapter;
+import com.example.legatoapp.models.MusicData;
+
 import java.util.List;
 import java.util.Map;
 import java.util.ArrayList;

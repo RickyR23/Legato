@@ -1,4 +1,4 @@
-package com.example.legatoapp;
+package com.example.legatoapp.Fragment;
 
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
@@ -7,6 +7,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.legatoapp.Adapter.NotificationAdapter;
+import com.example.legatoapp.R;
+import com.example.legatoapp.models.NotificationItem;
+
 import java.util.ArrayList;
 import java.util.List;
 

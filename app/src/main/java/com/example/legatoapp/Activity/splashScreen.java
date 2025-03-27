@@ -1,4 +1,4 @@
-package com.example.legatoapp;
+package com.example.legatoapp.Activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.splashscreen.SplashScreen;
+
+import com.example.legatoapp.R;
 
 public class splashScreen extends AppCompatActivity {
 

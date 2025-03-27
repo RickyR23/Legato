@@ -23,18 +23,18 @@
         tools:targetApi="31">
 
         <activity
-            android:name=".forgetPassword"
+            android:name=".Activity.forgetPassword"
             android:exported="false"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".userHome"
+            android:name=".Activity.userHome"
             android:exported="false"
             android:theme="@style/Theme.LegatoApp"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".splashScreen"
+            android:name=".Activity.splashScreen"
             android:exported="true"
             android:theme="@style/Theme.App.SplashScreen">
             android:screenOrientation="portrait">
@@ -46,14 +46,14 @@
         </activity>
 
         <activity
-            android:name=".userLoginActivity"
+            android:name=".Activity.userLoginActivity"
             android:exported="true"
             android:theme="@style/Theme.LegatoApp"
             android:windowSoftInputMode="adjustResize"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".signUp"
+            android:name=".Activity.signUp"
             android:exported="true"
             android:windowSoftInputMode="adjustResize"
             android:screenOrientation="portrait">
@@ -66,13 +66,13 @@
         </activity>
 
         <activity
-            android:name=".SettingsActivity"
+            android:name=".Activity.SettingsActivity"
             android:exported="false"
             android:theme="@style/Theme.LegatoApp"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".EditProfileActivity"
+            android:name=".Activity.EditProfileActivity"
             android:exported="false"
             android:theme="@style/Theme.LegatoApp"
             android:screenOrientation="portrait" />

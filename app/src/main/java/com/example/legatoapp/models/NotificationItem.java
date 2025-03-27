@@ -1,4 +1,4 @@
-package com.example.legatoapp;
+package com.example.legatoapp.models;
 
 public class NotificationItem {
     private int profileImage;
