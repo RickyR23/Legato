@@ -22,12 +22,14 @@ import java.util.regex.Pattern;
 import android.util.Patterns;
 
 
+import com.example.legatoapp.CognitoAuth;
 import com.example.legatoapp.R;
 import com.example.legatoapp.Services.helper.SpotifyAuthHelper;
 
 
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
+import software.amazon.awssdk.services.cognitoidentityprovider.model.CognitoIdentityProviderException;
 
 
 public class signUp extends AppCompatActivity {
@@ -47,6 +49,7 @@ public class signUp extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
+        CognitoAuth.initialize(getApplicationContext());
         Uri receivedUri = getIntent().getData();
         if (receivedUri == null || !receivedUri.toString().startsWith(getString(R.string.REDIRECT_URI))) {
             clearSavedFormData();
@@ -119,21 +122,29 @@ public class signUp extends AppCompatActivity {
                         || !isValidEmail(email) || !isValidDisplayName(displayName)) {
                     return;
                 }
+                try {
+                    Log.d("Signup", "Entered Try for Signup");
+                    //Handles User Signup
+                    CognitoAuth.signUpUser(username, displayName, email, password);
 
-                // Save login state in SharedPreferences
-                SharedPreferences sharedPreferences = getSharedPreferences("LegatoPrefs", MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putBoolean("isLoggedIn", true);
-                editor.apply();
+                    // Save login state in SharedPreferences
+                    SharedPreferences sharedPreferences = getSharedPreferences("LegatoPrefs", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putBoolean("isLoggedIn", true);
+                    editor.apply();
 
-                saveFormData(); //Save data from form
+                    saveFormData(); //Save data from form
 
-                // Navigate to Home Activity
-                Intent intent = new Intent(signUp.this, userHome.class);
-                startActivity(intent);
-                finish(); // Prevent user from going back to Sign Up
+                    // Navigate to Home Activity
+                    Intent intent = new Intent(signUp.this, userHome.class);
+                    startActivity(intent);
+                    finish(); // Prevent user from going back to Sign Up
 
-                clearFormData();
+                    clearFormData();
+                } catch (CognitoIdentityProviderException e) {
+                    System.err.println(e.awsErrorDetails().errorMessage());
+                }
+
             }
         });
 

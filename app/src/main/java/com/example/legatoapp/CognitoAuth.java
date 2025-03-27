@@ -1,40 +1,44 @@
 package com.example.legatoapp;
+import android.content.Context;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import software.amazon.awssdk.services.cognitoidentityprovider.CognitoIdentityProviderClient;
 import software.amazon.awssdk.services.cognitoidentityprovider.model.*;
 
 //This is the file handling all our Cognito functionalities.
 
 //Creates the class for necessary functions of Cognito, like Signup, login etc
+
 public class CognitoAuth {
-    private static final String Client_ID = "5k2eg0nlrv95d5jv5tmiu76dmd";
+    private static String Client_ID;
+    private static String Userpool_ID;
+    private static final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
-    //User Signup Function, needs the users username email and password to authenticate user and create userpool user
+    public static void initialize(Context context) {
+        Client_ID = context.getString(R.string.COGNITO_CLIENT_ID);
+        Userpool_ID = context.getString(R.string.COGNITO_USERPOOL_ID);
+    }
     public static void signUpUser(String username, String displayName, String email, String password) {
-        CognitoIdentityProviderClient client = CognitoService.getCognitoClient();
+        executorService.execute(() -> {
+            CognitoIdentityProviderClient client = CognitoService.getCognitoClient();
+            try {
+                SignUpRequest signUpRequest = SignUpRequest.builder()
+                        .clientId(Client_ID)
+                        .username(username)
+                        .password(password)
+                        .userAttributes(
+                                AttributeType.builder().name("email").value(email).build(),
+                                AttributeType.builder().name("preferred_username").value(displayName).build()
+                        )
+                        .build();
 
-        try {
-            SignUpRequest signUpRequest = SignUpRequest.builder()
-                    .clientId(Client_ID)
-                    .username(username)
-                    .password(password)
-                    .userAttributes(
-                            AttributeType.builder()
-                                    .name("email")
-                                    .value(email)
-                                    .build(),
-                            AttributeType.builder()
-                                    .name("nickname")
-                                    .value(displayName)
-                                    .build()
-                    )
-                    .build();
-            SignUpResponse response = client.signUp(signUpRequest);
-            System.out.println("User signed up: " + response.userConfirmed());
-        } catch (CognitoIdentityProviderException e) {
-            System.err.println(e.awsErrorDetails().errorMessage());
-            //TODO: Handle Errors better
-        }
+                SignUpResponse response = client.signUp(signUpRequest);
+                System.out.println("User signed up: " + response.userConfirmed());
+            } catch (CognitoIdentityProviderException e) {
+                System.err.println("Signup Error: " + e.awsErrorDetails().errorMessage());
+            }
+        });
     }
     //User Login Functionality and gaining Tokens
     public static void signInUser(String username, String password) {
@@ -102,5 +106,28 @@ public class CognitoAuth {
             //TODO: Handle errors better
         }
 
+    }
+
+    public static boolean isUserConfirmed(String username) {
+        CognitoIdentityProviderClient client = CognitoService.getCognitoClient();
+
+        try {
+            AdminGetUserRequest getUserRequest = AdminGetUserRequest.builder()
+                    .userPoolId(Userpool_ID)
+                    .username(username)
+                    .build();
+
+            AdminGetUserResponse getUserResponse = client.adminGetUser(getUserRequest);
+
+            for (AttributeType attribute : getUserResponse.userAttributes()) {
+                if (attribute.name().equals("cognito:user_status")) {
+                    return attribute.value().equals("CONFIRMED");
+                }
+            }
+        } catch (CognitoIdentityProviderException e) {
+            System.err.println("Error checking user status: " + e.awsErrorDetails().errorMessage());
+        }
+
+        return false;
     }
 }
