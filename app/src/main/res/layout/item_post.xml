@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Background image or video -->
+    <ImageView
+        android:id="@+id/post_legato_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/background" />
+
+    <!-- Centered Album Cover -->
+
+    <!-- Bottom-left info -->
+
+
+    <ImageView
+        android:id="@+id/album_cover"
+        android:layout_width="260dp"
+        android:layout_height="260dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="50dp"
+        android:contentDescription="Album Cover Art"
+        android:scaleType="centerCrop"
+        android:src="@drawable/song_example" />
+
+    <LinearLayout
+        android:id="@+id/post_info_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:layout_gravity="bottom|start"
+        android:gravity="start">
+
+        <TextView
+            android:id="@+id/username_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="username"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/caption_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="This is a caption"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:layout_marginTop="4dp" />
+
+        <TextView
+            android:id="@+id/music_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="🎵 Music Title - Artist"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            android:layout_marginTop="4dp" />
+    </LinearLayout>
+
+    <!-- Right side buttons -->
+    <LinearLayout
+        android:id="@+id/post_actions_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|center_vertical"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:paddingEnd="16dp">
+
+        <ImageView
+            android:id="@+id/like_icon"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_heart"
+            android:tint="@android:color/white"
+            android:layout_marginBottom="16dp" />
+
+        <ImageView
+            android:id="@+id/comment_icon"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_comment"
+            android:layout_marginBottom="16dp" />
+
+        <ImageView
+            android:id="@+id/spotify_icon"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/spotifylogo"
+            android:layout_marginBottom="16dp" />
+    </LinearLayout>
+</FrameLayout>

@@ -1,18 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/home_fragment_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/blue_logo"
     tools:context=".Fragment.HomeFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Home"
-        android:textColor="@color/white"
-        android:textSize="26dp"
-        android:layout_gravity="center"/>
+    <!-- Fullscreen post layout -->
+    <include layout="@layout/item_post" />
 
+    <!-- RecyclerView for profiles (overlayed) -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView_profiles"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="72dp"
+        android:clipToPadding="false"
+        android:visibility="visible" />
+
+    <!-- Floating Search Bar -->
+    <EditText
+        android:id="@+id/search_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Search users..."
+        android:padding="12dp"
+        android:background="@drawable/search_bar"
+        android:drawableStart="@android:drawable/ic_menu_search"
+        android:layout_margin="16dp"
+        android:textColor="@android:color/black"
+        android:textColorHint="#888888"
+        android:elevation="8dp"
+        android:layout_gravity="top" />
 </FrameLayout>
