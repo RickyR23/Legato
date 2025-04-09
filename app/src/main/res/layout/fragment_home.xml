@@ -29,13 +29,16 @@
         android:id="@+id/search_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Search users..."
-        android:padding="12dp"
+        android:layout_gravity="top"
+        android:layout_marginTop="40dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:background="@drawable/search_bar"
         android:drawableStart="@android:drawable/ic_menu_search"
-        android:layout_margin="16dp"
-        android:textColor="@android:color/black"
-        android:textColorHint="#888888"
         android:elevation="8dp"
-        android:layout_gravity="top" />
+        android:hint="Search users..."
+        android:padding="12dp"
+        android:textColor="@android:color/black"
+        android:textColorHint="#888888" />
+
 </FrameLayout>

@@ -4,6 +4,8 @@
     android:layout_height="match_parent">
 
     <!-- Background image or video -->
+
+    <!-- Centered Album Cover (moved up slightly) -->
     <ImageView
         android:id="@+id/post_legato_background"
         android:layout_width="match_parent"
@@ -11,21 +13,50 @@
         android:scaleType="centerCrop"
         android:src="@drawable/background" />
 
-    <!-- Centered Album Cover -->
-
-    <!-- Bottom-left info -->
-
-
     <ImageView
         android:id="@+id/album_cover"
-        android:layout_width="260dp"
-        android:layout_height="260dp"
-        android:layout_gravity="center_vertical"
-        android:layout_marginStart="50dp"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="150dp"
         android:contentDescription="Album Cover Art"
         android:scaleType="centerCrop"
         android:src="@drawable/song_example" />
 
+    <!-- Buttons in a horizontal row below the album cover -->
+    <LinearLayout
+        android:id="@+id/post_actions_container"
+        android:layout_width="300dp"
+        android:layout_height="80dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="490dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:padding="8dp">
+
+        <ImageView
+            android:id="@+id/like_icon"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/ic_heart"
+
+            android:layout_marginEnd="50dp" />
+
+        <ImageView
+            android:id="@+id/comment_icon"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/ic_comment"
+            android:layout_marginEnd="50dp" />
+
+        <ImageView
+            android:id="@+id/spotify_icon"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/spotifylogo" />
+    </LinearLayout>
+
+    <!-- Bottom-left info -->
     <LinearLayout
         android:id="@+id/post_info_container"
         android:layout_width="match_parent"
@@ -61,38 +92,5 @@
             android:textColor="@android:color/white"
             android:textSize="14sp"
             android:layout_marginTop="4dp" />
-    </LinearLayout>
-
-    <!-- Right side buttons -->
-    <LinearLayout
-        android:id="@+id/post_actions_container"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|center_vertical"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:paddingEnd="16dp">
-
-        <ImageView
-            android:id="@+id/like_icon"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:src="@drawable/ic_heart"
-            android:tint="@android:color/white"
-            android:layout_marginBottom="16dp" />
-
-        <ImageView
-            android:id="@+id/comment_icon"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:src="@drawable/ic_comment"
-            android:layout_marginBottom="16dp" />
-
-        <ImageView
-            android:id="@+id/spotify_icon"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:src="@drawable/spotifylogo"
-            android:layout_marginBottom="16dp" />
     </LinearLayout>
 </FrameLayout>
