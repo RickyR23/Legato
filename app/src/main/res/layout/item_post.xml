@@ -3,9 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- Background image or video -->
-
-    <!-- Centered Album Cover (moved up slightly) -->
     <ImageView
         android:id="@+id/post_legato_background"
         android:layout_width="match_parent"
@@ -23,7 +20,6 @@
         android:scaleType="centerCrop"
         android:src="@drawable/song_example" />
 
-    <!-- Buttons in a horizontal row below the album cover -->
     <LinearLayout
         android:id="@+id/post_actions_container"
         android:layout_width="300dp"
@@ -36,27 +32,32 @@
 
         <ImageView
             android:id="@+id/like_icon"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginEnd="25dp"
             android:src="@drawable/ic_heart"
-
-            android:layout_marginEnd="50dp" />
+            android:clickable="true"
+            android:focusable="true"
+            android:tint="@android:color/white"/>
 
         <ImageView
             android:id="@+id/comment_icon"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:src="@drawable/ic_comment"
-            android:layout_marginEnd="50dp" />
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginEnd="15dp"
+            android:src="@drawable/comments"
+            android:clickable="true"
+            android:focusable="true" />
 
         <ImageView
             android:id="@+id/spotify_icon"
-            android:layout_width="60dp"
+            android:layout_width="140dp"
             android:layout_height="60dp"
-            android:src="@drawable/spotifylogo" />
+            android:src="@drawable/listenspotify"
+            android:clickable="true"
+            android:focusable="true" />
     </LinearLayout>
 
-    <!-- Bottom-left info -->
     <LinearLayout
         android:id="@+id/post_info_container"
         android:layout_width="match_parent"
