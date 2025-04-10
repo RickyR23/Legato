@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -85,8 +86,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
 
         holder.commentIcon.setOnClickListener(v -> {
-            // blank for now
+            android.content.Context context = v.getContext();
+            android.content.Intent intent = new android.content.Intent(context, com.example.legatoapp.Activity.CommentsActivity.class);
+            context.startActivity(intent);
         });
+
 
         holder.spotifyIcon.setOnClickListener(v -> {
             // Open Spotify
