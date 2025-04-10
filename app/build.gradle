@@ -73,6 +73,7 @@ dependencies {
         exclude group: "org.apache.httpcomponents", module: "httpclient"
     }
     implementation 'software.amazon.awssdk:url-connection-client:2.27.21'
+    implementation 'software.amazon.awssdk:netty-nio-client:2.25.4'
 
     // Firebase dependencies
     implementation platform('com.google.firebase:firebase-bom:32.7.1')

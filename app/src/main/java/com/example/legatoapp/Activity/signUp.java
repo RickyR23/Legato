@@ -1,5 +1,6 @@
 package com.example.legatoapp.Activity;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -36,7 +37,7 @@ public class signUp extends AppCompatActivity {
 
     private EditText passwordInput, verifyPasswordInput, usernameInput, displayNameInput, emailInput;
     private TextView passwordErrorMsg, passwordMismatchMsg, usernameErrorMsg, displayNameErrorMsg, emailErrorMsg;
-    private Button createAccountButton;
+    private Button createAccountButton, verificationButton;
     boolean isPasswordVisible = false;
     boolean isVerifyPasswordVisible = false;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
@@ -69,6 +70,10 @@ public class signUp extends AppCompatActivity {
         displayNameErrorMsg = findViewById(R.id.displayNameErrorText);
         emailErrorMsg = findViewById(R.id.emailErrorText);
         createAccountButton = findViewById(R.id.buttonCreateAccount);
+        verificationButton = findViewById(R.id.show_verificaiton_popup);
+
+        // We want to make this button gone for the case of the user data not currently being obtained on activity startup, we will only display this IF the user has already entered their data to be sent to cognito
+        verificationButton.setVisibility(View.GONE);
 
 // UI Elements for toggling password visibility
         ImageView togglePasswordVisibility = findViewById(R.id.togglePasswordVisibility);
@@ -122,29 +127,33 @@ public class signUp extends AppCompatActivity {
                         || !isValidEmail(email) || !isValidDisplayName(displayName)) {
                     return;
                 }
+
                 try {
                     Log.d("Signup", "Entered Try for Signup");
-                    //Handles User Signup
-                    CognitoAuth.signUpUser(username, displayName, email, password);
 
-                    // Save login state in SharedPreferences
-                    SharedPreferences sharedPreferences = getSharedPreferences("LegatoPrefs", MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putBoolean("isLoggedIn", true);
-                    editor.apply();
+                    // Handles User Signup
+                    CognitoAuth.signUpUser(username, displayName, email, password, new CognitoAuth.Callback() {
+                        @Override
+                        public void onSuccess() {
+                            Log.d("Signup", "Entered OnSuccess");
+                            runOnUiThread(() -> showVerificationPopup(username));
+                        }
 
-                    saveFormData(); //Save data from form
-
-                    // Navigate to Home Activity
-                    Intent intent = new Intent(signUp.this, userHome.class);
-                    startActivity(intent);
-                    finish(); // Prevent user from going back to Sign Up
-
-                    clearFormData();
+                        @Override
+                        public void onFailure(String errorMessage) {
+                            Log.e("SignUpError", "Signup failed: " + errorMessage);
+                        }
+                    });
                 } catch (CognitoIdentityProviderException e) {
-                    System.err.println(e.awsErrorDetails().errorMessage());
+                    Log.e("SignUpError", "Signup failed: " + e.awsErrorDetails().errorMessage());
                 }
+            }
+        });
 
+        verificationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showVerificationPopup("");
             }
         });
 
@@ -472,6 +481,73 @@ public class signUp extends AppCompatActivity {
             createAccountButton.setAlpha(0.5f); // Semi-transparent
             createAccountButton.setEnabled(false);
         }
+    }
+
+    private void showVerificationPopup(String username){
+        View popupInstance = getLayoutInflater().inflate(R.layout.popup_signup_confirmation_code, null);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(popupInstance);
+
+        AlertDialog dialog = builder.create();
+        dialog.setCancelable(false); // currently testing to see wth this does . . . for edge cases . . .
+
+        ImageButton exitBtn = popupInstance.findViewById(R.id.popup_exit_button);
+        EditText verificationCodeInput = popupInstance.findViewById(R.id.popup_text_input);
+        Button verifyBtn = popupInstance.findViewById(R.id.popup_verify_button);
+
+        verificationButton = findViewById(R.id.show_verificaiton_popup);
+
+
+        exitBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+                verificationButton.setVisibility(View.VISIBLE);
+            }
+        });
+
+
+        verifyBtn.setOnClickListener(view -> {
+            String verificationCodeText = verificationCodeInput.getText().toString().trim();
+
+            if (verificationCodeText.isEmpty()) {
+                Log.d("showVerificationPopup", "Empty string in verification code . . . ");
+            } else {
+
+                CognitoAuth.confirmUser(username, verificationCodeText, new CognitoAuth.Callback() {
+                    @Override
+                    public void onSuccess() {
+                        Log.d("SignUpSuccess", "User confirmed successfully!");
+
+
+                        SharedPreferences sharedPreferences = getSharedPreferences("LegatoPrefs", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putBoolean("isLoggedIn", true);
+                        editor.apply();
+
+                        dialog.dismiss();
+                        saveFormData();
+
+
+                        Intent intent = new Intent(signUp.this, userHome.class);
+                        startActivity(intent);
+                        finish();
+
+
+                        clearFormData();
+                    }
+
+                    @Override
+                    public void onFailure(String errorMessage) {
+                        Log.e("SignUpError", "Signup confirmation failed: " + errorMessage);
+                    }
+                });
+            }
+        });
+
+
+        dialog.show();
     }
 
 }

@@ -257,6 +257,18 @@
             app:layout_constraintTop_toBottomOf="@id/buttonConnectSpotify"
             app:layout_constraintWidth_percent="0.7" />
 
+        <Button
+            android:id="@+id/show_verificaiton_popup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="72dp"
+            android:background="@android:color/transparent"
+            android:gravity="center"
+            android:text="Already have a code? Verify it!"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/buttonCreateAccount" />
+
         <ImageView
             android:id="@+id/togglePasswordVisibility"
             android:layout_width="33dp"
