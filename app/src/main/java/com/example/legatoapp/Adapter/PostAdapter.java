@@ -93,8 +93,12 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
 
         holder.spotifyIcon.setOnClickListener(v -> {
-            // Open Spotify
+            String spotifyUrl = "https://open.spotify.com";
+            android.content.Intent intent = new android.content.Intent(android.content.Intent.ACTION_VIEW);
+            intent.setData(android.net.Uri.parse(spotifyUrl));
+            v.getContext().startActivity(intent);
         });
+
 
     }
 
