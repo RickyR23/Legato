@@ -109,5 +109,14 @@ public class CreateFragment extends Fragment {
         android.widget.Toast.makeText(getContext(), "Post submitted!", android.widget.Toast.LENGTH_SHORT).show();
     }
 
+    public boolean hasUnsavedChanges() {
+        String caption = captionInput.getText().toString().trim();
+        boolean isCaptionEntered = !caption.isEmpty();
+        boolean isSongSelected = !selectedSongName.getText().toString().equals("Song Name") &&
+                !selectedArtistName.getText().toString().equals("Song Artist");
+        return isCaptionEntered || isSongSelected;
+    }
+
+
 
 }
