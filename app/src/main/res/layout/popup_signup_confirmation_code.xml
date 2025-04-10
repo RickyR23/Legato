@@ -42,7 +42,8 @@
             android:layout_gravity="center"
             android:paddingTop="15dp"
             android:inputType="text"
-            android:text="Code" />
+            android:hint="Code"
+            android:textColor="@android:color/black"/>
 
         <Button
             android:id="@+id/popup_verify_button"
