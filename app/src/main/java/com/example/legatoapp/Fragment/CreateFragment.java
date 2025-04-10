@@ -12,6 +12,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.content.Context;
+import com.example.legatoapp.Fragment.HomeFragment;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+
+
+import androidx.core.content.ContextCompat;
 
 import com.example.legatoapp.R;
 import com.example.legatoapp.SongSearchPopup;
@@ -22,6 +28,7 @@ public class CreateFragment extends Fragment {
     private ImageView selectedSongImage;
     private TextView selectedSongName, selectedArtistName;
     private EditText captionInput;
+    private Button postButton;
 
     public CreateFragment() {
         // Required empty public constructor
@@ -36,6 +43,11 @@ public class CreateFragment extends Fragment {
         selectedSongName = view.findViewById(R.id.selected_song_name);
         selectedArtistName = view.findViewById(R.id.selected_artist_name);
         captionInput = view.findViewById(R.id.caption_input);
+        postButton = view.findViewById(R.id.btn_post);
+
+        // Disable Post button by default and set white background
+        postButton.setEnabled(false);
+        postButton.setBackgroundTintList(ContextCompat.getColorStateList(requireContext(), R.color.grey));
 
         // Song Search Button
         Button searchButton = view.findViewById(R.id.btn_open_search);
@@ -54,9 +66,8 @@ public class CreateFragment extends Fragment {
         });
 
         Button clearButton = view.findViewById(R.id.btn_clear);
-        Button postButton = view.findViewById(R.id.btn_post);
 
-// Clear button
+        // Clear button
         clearButton.setOnClickListener(v -> {
             new android.app.AlertDialog.Builder(requireContext())
                     .setTitle("Clear Post")
@@ -66,21 +77,24 @@ public class CreateFragment extends Fragment {
                         selectedSongName.setText("Song Name");
                         selectedArtistName.setText("Song Artist");
                         captionInput.setText("");
+
+                        // Disable and reset post button color
+                        postButton.setEnabled(false);
+                        postButton.setBackgroundTintList(ContextCompat.getColorStateList(requireContext(), android.R.color.white));
                     })
                     .setNegativeButton("Cancel", null)
                     .show();
         });
 
-
-// Post button
+        // Post button
         postButton.setOnClickListener(v -> {
             new android.app.AlertDialog.Builder(requireContext())
                     .setTitle("Confirm Post")
                     .setMessage("Are you sure you want to post this?")
                     .setPositiveButton("Post", (dialog, which) -> {
                         submitPost();
-                        android.widget.Toast.makeText(getContext(), "Post submitted!", android.widget.Toast.LENGTH_SHORT).show();
                     })
+
                     .setNegativeButton("Cancel", null)
                     .show();
         });
@@ -92,7 +106,11 @@ public class CreateFragment extends Fragment {
     public void updateSelectedSong(Song song) {
         selectedSongImage.setImageResource(song.getAlbumArt());
         selectedSongName.setText(song.getTitle());
-        selectedArtistName.setText(song.getArtist()); // This updates the artist from the song
+        selectedArtistName.setText(song.getArtist());
+
+        // Enable and color the post button
+        postButton.setEnabled(true);
+        postButton.setBackgroundTintList(ContextCompat.getColorStateList(requireContext(), R.color.blue_logo));
     }
 
     // Function to hide the keyboard
@@ -104,10 +122,22 @@ public class CreateFragment extends Fragment {
     }
 
     private void submitPost() {
-        // LOGIC WILL GO HERE
-        // Temporary confirmation
         android.widget.Toast.makeText(getContext(), "Post submitted!", android.widget.Toast.LENGTH_SHORT).show();
+
+        requireActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.frame_layout, new HomeFragment())
+                .commit();
+
+        // Call helper method to safely update bottom nav
+        if (requireActivity() instanceof com.example.legatoapp.Activity.userHome) {
+            ((com.example.legatoapp.Activity.userHome) requireActivity()).switchToHomeTab();
+        }
     }
+
+
+
+
 
     public boolean hasUnsavedChanges() {
         String caption = captionInput.getText().toString().trim();
@@ -116,7 +146,4 @@ public class CreateFragment extends Fragment {
                 !selectedArtistName.getText().toString().equals("Song Artist");
         return isCaptionEntered || isSongSelected;
     }
-
-
-
 }

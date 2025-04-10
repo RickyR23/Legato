@@ -90,4 +90,11 @@ public class userHome extends AppCompatActivity {
         fragmentTransaction.replace(R.id.frame_layout, fragment);
         fragmentTransaction.commit();
     }
+
+    public void switchToHomeTab() {
+        binding.bottomNavigationView.setOnItemSelectedListener(null); // Disable listener
+        binding.bottomNavigationView.setSelectedItemId(R.id.home);    // Switch tab
+        binding.bottomNavigationView.setOnItemSelectedListener(navListener); // Re-enable
+    }
+
 }
