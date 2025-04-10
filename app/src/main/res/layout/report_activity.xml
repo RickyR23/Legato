@@ -44,7 +44,7 @@
             android:id="@+id/reportHeader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="120dp"
+            android:layout_marginTop="10dp"
             android:text="Report technical problem"
             android:textColor="@color/white"
             android:textSize="23sp"
@@ -54,66 +54,126 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/backToSettings" />
 
-        <!--Report Message Section-->
+        <!--Report Instructions and info-->
+        <TextView
+            android:id="@+id/messageToUser"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Did you encounter a problem? Report the issue and help us fix it faster.
+                \n\n- Enter a title that best describes the problem.\n- Describe the issue in the Comments field.
+                \n- Your report will be sent to our support team, who will respond as quickly as possible to resolve the issue."
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:layout_marginTop="30dp"
+            android:lineSpacingExtra="4dp"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/reportHeader"
+            app:layout_constraintWidth_percent="0.9"/>
+
+        <!--Report Problem Container-->
         <LinearLayout
             android:id="@+id/reportContainer"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="80dp"
-            android:padding="16dp"
+            android:layout_marginTop="40dp"
+            android:padding="14dp"
             android:orientation="vertical"
-            android:gravity="center"
+            android:background="@drawable/rounded_textbox"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/reportHeader"
-            app:layout_constraintWidth_percent="0.8">
+            app:layout_constraintTop_toBottomOf="@+id/messageToUser"
+            app:layout_constraintWidth_percent="0.93">
 
-            <!-- Report Message Header-->
-            <EditText
-                android:id="@+id/reportMessageHeader"
+            <!-- Problem Row -->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Problem Title"
-                android:padding="10dp"
-                android:maxLength="50"
-                android:backgroundTint="@android:color/white"
-                android:textColor="@android:color/white"
-                android:textColorHint="@color/white"
-                android:textSize="18sp"
-                android:textStyle="bold"/>
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="16dp">
 
-            <!-- Report Message Body-->
-            <EditText
-                android:id="@+id/reportMessage"
+                <!-- Problem Header-->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Problem: "
+                    android:textSize="17sp"
+                    android:textColor="@android:color/black"
+                    android:layout_marginEnd="10dp"
+                    android:textStyle="bold"/>
+
+                <!-- Problem input Header-->
+                <EditText
+                    android:id="@+id/reportMessageHeader"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="Enter a short title"
+                    android:padding="10dp"
+                    android:maxLength="50"
+                    android:background="@drawable/rounded_edittext"
+                    android:textColor="@android:color/black"
+                    android:textColorHint="#888888"
+                    android:textSize="17sp" />
+            </LinearLayout>
+            <!-- Problem Row ENDS -->
+
+
+            <!-- Comments Row -->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginTop="50dp"
-                android:backgroundTint="@android:color/white"
-                android:hint="Briefly explain the problem"
-                android:inputType="textMultiLine"
-                android:maxLength="200"
-                android:maxLines="8"
-                android:textSize="16sp"
-                android:padding="10dp"
-                android:textColor="@android:color/white"
-                android:textColorHint="@android:color/white"
-                app:layout_constraintTop_toBottomOf="@id/reportMessageHeader" />
+                android:orientation="horizontal"
+                android:gravity="start"
+                android:layout_marginBottom="16dp">
 
-            <!-- Submit Button -->
-            <Button
-                android:id="@+id/submitButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="80dp"
-                android:backgroundTint="#C9FBFBFB"
-                android:text="Submit"
-                android:textColor="@android:color/black"
-                android:textSize="14sp"
-                app:layout_constraintHorizontal_bias="0.5"
-                />
+                <!-- Comments Header-->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Comments: "
+                    android:textSize="14sp"
+                    android:textColor="@android:color/black"
+                    android:layout_marginEnd="10dp"
+                    android:textStyle="bold"/>
+
+                <!-- Report Message Body-->
+                <EditText
+                    android:id="@+id/reportMessage"
+                    android:layout_width="0dp"
+                    android:layout_height="170dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounded_edittext"
+                    android:hint="Briefly explain the problem"
+                    android:inputType="textMultiLine"
+                    android:gravity="top|start"
+                    android:maxLength="200"
+                    android:maxLines="8"
+                    android:textSize="14sp"
+                    android:padding="10dp"
+                    android:textColor="@android:color/black"
+                    android:textColorHint="#888888" />
+            </LinearLayout>
+            <!-- Comments Row ENDS -->
 
         </LinearLayout>
+
+        <!-- Submit Button -->
+        <Button
+            android:id="@+id/submitButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:backgroundTint="#C9FBFBFB"
+            android:text="Submit"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/reportContainer"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
