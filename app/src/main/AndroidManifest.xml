@@ -7,8 +7,8 @@
         android:required="false" />
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application
@@ -21,80 +21,76 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LegatoApp"
         tools:targetApi="31">
-
+        <activity
+            android:name=".Activity.CommentsActivity"
+            android:exported="false" />
         <activity
             android:name=".Activity.forgetPassword"
             android:exported="false"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".Activity.userHome"
             android:exported="false"
-            android:theme="@style/Theme.LegatoApp"
-            android:screenOrientation="portrait" />
-
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.LegatoApp" />
         <activity
             android:name=".Activity.splashScreen"
             android:exported="true"
             android:theme="@style/Theme.App.SplashScreen">
             android:screenOrientation="portrait">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".Activity.userLoginActivity"
             android:exported="true"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.LegatoApp"
-            android:windowSoftInputMode="adjustResize"
-            android:screenOrientation="portrait" />
-
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".Activity.signUp"
             android:exported="true"
-            android:windowSoftInputMode="adjustResize"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="com.example.legatoapp" android:host="callback" />
+
+                <data
+                    android:host="callback"
+                    android:scheme="com.example.legatoapp" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".Activity.SettingsActivity"
             android:exported="false"
-            android:theme="@style/Theme.LegatoApp"
-            android:screenOrientation="portrait" />
-
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.LegatoApp" />
         <activity
             android:name=".Activity.ReportActivity"
             android:exported="false"
-            android:theme="@style/Theme.LegatoApp"
-            android:screenOrientation="portrait" />
-
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.LegatoApp" />
         <activity
             android:name=".Activity.ResetPasswordActivity"
             android:exported="false"
-            android:theme="@style/Theme.LegatoApp"
-            android:screenOrientation="portrait" />
-
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.LegatoApp" />
         <activity
             android:name=".Activity.FAQActivity"
             android:exported="false"
-            android:theme="@style/Theme.LegatoApp"
-            android:screenOrientation="portrait" />
-
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.LegatoApp" />
         <activity
             android:name=".Activity.EditProfileActivity"
             android:exported="false"
-            android:theme="@style/Theme.LegatoApp"
-            android:screenOrientation="portrait" />
-
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.LegatoApp" />
     </application>
 
 </manifest>

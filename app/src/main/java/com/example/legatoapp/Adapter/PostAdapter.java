@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -48,7 +49,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     public PostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_post, parent, false);
-        view.getLayoutParams().height = parent.getHeight(); // fullscreen swipe
+
         return new PostViewHolder(view);
     }
 
@@ -85,12 +86,19 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
 
         holder.commentIcon.setOnClickListener(v -> {
-            // blank for now
+            android.content.Context context = v.getContext();
+            android.content.Intent intent = new android.content.Intent(context, com.example.legatoapp.Activity.CommentsActivity.class);
+            context.startActivity(intent);
         });
 
+
         holder.spotifyIcon.setOnClickListener(v -> {
-            // Open Spotify
+            String spotifyUrl = "https://open.spotify.com";
+            android.content.Intent intent = new android.content.Intent(android.content.Intent.ACTION_VIEW);
+            intent.setData(android.net.Uri.parse(spotifyUrl));
+            v.getContext().startActivity(intent);
         });
+
 
     }
 
