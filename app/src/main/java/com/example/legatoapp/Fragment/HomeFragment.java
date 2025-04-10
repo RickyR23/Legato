@@ -21,6 +21,7 @@ import com.example.legatoapp.R;
 import com.example.legatoapp.models.Profile;
 import com.example.legatoapp.Adapter.ProfileAdapter;
 import com.example.legatoapp.Adapter.PostAdapter;
+import androidx.viewpager2.widget.ViewPager2;
 
 import java.util.Arrays;
 import java.util.List;
@@ -31,13 +32,14 @@ public class HomeFragment extends Fragment {
     private PostAdapter postAdapter;
     private ProfileAdapter profileAdapter;
     private EditText searchBar;
+    private ViewPager2 viewPagerPosts;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        recyclerViewPosts = view.findViewById(R.id.recyclerView_posts);
+
         recyclerViewProfiles = view.findViewById(R.id.recyclerView_profiles);
         searchBar = view.findViewById(R.id.search_bar);
 
@@ -89,11 +91,11 @@ public class HomeFragment extends Fragment {
 
 
 
-        // === Post feed setup ===
+        viewPagerPosts = view.findViewById(R.id.viewPager_posts);
         List<String> captions = Arrays.asList("Caption 1", "Caption 2", "Caption 3");
-        postAdapter = new PostAdapter(captions); // item_post.xml is used for each item
-        recyclerViewPosts.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerViewPosts.setAdapter(postAdapter);
+        postAdapter = new PostAdapter(captions);
+        viewPagerPosts.setAdapter(postAdapter);
+
 
         // === Profile search setup ===
         List<Profile> profiles = Arrays.asList(

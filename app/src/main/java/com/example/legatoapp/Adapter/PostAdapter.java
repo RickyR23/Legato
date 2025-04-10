@@ -48,7 +48,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     public PostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_post, parent, false);
-        view.getLayoutParams().height = parent.getHeight(); // fullscreen swipe
+
         return new PostViewHolder(view);
     }
 

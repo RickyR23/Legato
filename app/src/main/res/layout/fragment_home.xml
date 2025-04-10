@@ -7,9 +7,9 @@
     android:focusableInTouchMode="true"
     tools:context=".Fragment.HomeFragment">
 
-    <!-- Fullscreen vertical post feed (bottom layer) -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView_posts"
+    <!-- TikTok-style vertical swipe ViewPager2 -->
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager_posts"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -23,7 +23,7 @@
         android:background="@android:color/transparent"
         android:visibility="gone" />
 
-    <!-- Floating Search Bar (top layer) -->
+    <!-- Floating Search Bar -->
     <EditText
         android:id="@+id/search_bar"
         android:layout_width="match_parent"
@@ -41,7 +41,7 @@
         android:textColor="@android:color/black"
         android:textColorHint="#888888" />
 
-    <!-- Floating Search Results (card views) under search bar -->
+    <!-- Search Results -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView_profiles"
         android:layout_width="match_parent"
