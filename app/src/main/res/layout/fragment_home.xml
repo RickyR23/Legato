@@ -3,9 +3,11 @@
     android:id="@+id/home_fragment_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:clickable="true"
+    android:focusableInTouchMode="true"
     tools:context=".Fragment.HomeFragment">
 
-    <!-- Fullscreen vertical post feed -->
+    <!-- Fullscreen vertical post feed (bottom layer) -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView_posts"
         android:layout_width="match_parent"
@@ -13,23 +15,19 @@
         android:orientation="vertical"
         android:overScrollMode="never" />
 
-    <!-- Search results (card views) -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView_profiles"
+    <!-- Invisible overlay to detect outside taps -->
+    <View
+        android:id="@+id/touch_overlay"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_gravity="top"
-        android:layout_marginTop="72dp"
-        android:clipToPadding="false"
-        android:background="@android:color/white"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"
         android:visibility="gone" />
 
-    <!-- Floating Search Bar -->
+    <!-- Floating Search Bar (top layer) -->
     <EditText
         android:id="@+id/search_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="top"
         android:layout_marginTop="40dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
@@ -38,7 +36,21 @@
         android:elevation="8dp"
         android:hint="Search users..."
         android:padding="12dp"
+        android:inputType="text"
+        android:imeOptions="actionDone"
         android:textColor="@android:color/black"
         android:textColorHint="#888888" />
 
+    <!-- Floating Search Results (card views) under search bar -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView_profiles"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_marginTop="98dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/rounded_textbox"
+        android:elevation="9dp"
+        android:clipToPadding="false"
+        android:visibility="gone" />
 </FrameLayout>
