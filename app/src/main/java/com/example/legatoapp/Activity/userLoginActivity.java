@@ -95,6 +95,10 @@ public class userLoginActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(String errorMessage) {
+                    runOnUiThread(() -> {
+                        Toast.makeText(userLoginActivity.this, "Invalid credentials. Please try again.", Toast.LENGTH_SHORT).show();
+                    });
+
                     // Handle actions that will cause the login to fail here, like maybe a pop up if we want to
                     Log.e("SignInError", "Login failed: " + errorMessage);
                 }
