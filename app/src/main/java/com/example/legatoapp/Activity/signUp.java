@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.EditText;
 import java.util.regex.Pattern;
 import android.util.Patterns;
+import android.widget.Toast;
 
 
 import com.example.legatoapp.CognitoAuth;
@@ -141,6 +142,9 @@ public class signUp extends AppCompatActivity {
 
                         @Override
                         public void onFailure(String errorMessage) {
+                            runOnUiThread(() -> {
+                                Toast.makeText(signUp.this, "Invalid credentials.", Toast.LENGTH_SHORT).show();
+                            });
                             Log.e("SignUpError", "Signup failed: " + errorMessage);
                         }
                     });
