@@ -14,8 +14,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.legatoapp.CognitoAuth;
 import com.example.legatoapp.R;
 import com.example.legatoapp.databinding.ActivityUserLoginBinding;
+
+import software.amazon.awssdk.services.cognitoidentityprovider.model.CognitoIdentityProviderException;
+import software.amazon.awssdk.services.cognitoidentityprovider.CognitoIdentityProviderAsyncClient;
 
 public class userLoginActivity extends AppCompatActivity {
 
@@ -68,27 +72,33 @@ public class userLoginActivity extends AppCompatActivity {
         });
 
         // Handle login button click
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                userInputString = usernameInput.getText().toString().trim();
-                passwordInputString = passwordInput.getText().toString().trim();
+        loginButton.setOnClickListener(v -> {
+            String userInputString = usernameInput.getText().toString().trim();
+            String passwordInputString = passwordInput.getText().toString().trim();
 
-                if (!validateInputs(userInputString, passwordInputString)) {
-                    return;
-                }
-
-                boolean checkLoginValidity = checkLogin(userInputString, passwordInputString);
-                Log.d("checkLoginValidity", "is true?: " + checkLoginValidity);
-
-                if (checkLoginValidity) {
-                    saveLoginState();
-                    launchHomeActivity();
-                    finish();
-                } else {
-                    Toast.makeText(userLoginActivity.this, "Invalid credentials. Try again!", Toast.LENGTH_LONG).show();
-                }
+            if (!validateInputs(userInputString, passwordInputString)) {
+                return;
             }
+
+            Log.d("SignIn", "Attempting to sign in...");
+
+            // Call signInUser to initiate login
+            CognitoAuth.signInUser(userInputString, passwordInputString, new CognitoAuth.Callback() {
+                @Override
+                public void onSuccess() {
+                    // This is when the login is successful, right now it just takes us to homepage
+                    runOnUiThread(() -> {
+                        launchHomeActivity();
+                        finish();
+                    });
+                }
+
+                @Override
+                public void onFailure(String errorMessage) {
+                    // Handle actions that will cause the login to fail here, like maybe a pop up if we want to
+                    Log.e("SignInError", "Login failed: " + errorMessage);
+                }
+            });
         });
 
         // Handle sign-up button click
@@ -116,13 +126,6 @@ public class userLoginActivity extends AppCompatActivity {
             return false;
         }
         return true;
-    }
-
-    private boolean checkLogin(String username, String password) {
-        String mockUsername = "admin";
-        String mockPassword = "password";
-
-        return username.equals(mockUsername) && password.equals(mockPassword);
     }
 
     private void launchHomeActivity() {

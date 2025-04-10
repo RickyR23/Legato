@@ -127,25 +127,33 @@ public class signUp extends AppCompatActivity {
                         || !isValidEmail(email) || !isValidDisplayName(displayName)) {
                     return;
                 }
+
                 try {
                     Log.d("Signup", "Entered Try for Signup");
-                    //Handles User Signup
-                    CognitoAuth.signUpUser(username, displayName, email, password);
 
-                    showVerificationPopup();
+                    // Handles User Signup
+                    CognitoAuth.signUpUser(username, displayName, email, password, new CognitoAuth.Callback() {
+                        @Override
+                        public void onSuccess() {
+                            Log.d("Signup", "Entered OnSuccess");
+                            runOnUiThread(() -> showVerificationPopup(username));
+                        }
 
-
+                        @Override
+                        public void onFailure(String errorMessage) {
+                            Log.e("SignUpError", "Signup failed: " + errorMessage);
+                        }
+                    });
                 } catch (CognitoIdentityProviderException e) {
-                    System.err.println(e.awsErrorDetails().errorMessage());
+                    Log.e("SignUpError", "Signup failed: " + e.awsErrorDetails().errorMessage());
                 }
-
             }
         });
 
         verificationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showVerificationPopup();
+                showVerificationPopup("");
             }
         });
 
@@ -475,7 +483,7 @@ public class signUp extends AppCompatActivity {
         }
     }
 
-    private void showVerificationPopup(){
+    private void showVerificationPopup(String username){
         View popupInstance = getLayoutInflater().inflate(R.layout.popup_signup_confirmation_code, null);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -503,34 +511,41 @@ public class signUp extends AppCompatActivity {
         verifyBtn.setOnClickListener(view -> {
             String verificationCodeText = verificationCodeInput.getText().toString().trim();
 
-            if(verificationCodeText.isEmpty()){
+            if (verificationCodeText.isEmpty()) {
                 Log.d("showVerificationPopup", "Empty string in verification code . . . ");
-            }
-            else{
-                /**
-                 * COGNITO CODE CAN GO IN HERE
-                 *
-                 * You can pass in the string ' verificationCodeText ' that is obtained after
-                 * the user clicks the verify button which can be passed into cognito for code verify
-                 */
+            } else {
+
+                CognitoAuth.confirmUser(username, verificationCodeText, new CognitoAuth.Callback() {
+                    @Override
+                    public void onSuccess() {
+                        Log.d("SignUpSuccess", "User confirmed successfully!");
 
 
-                SharedPreferences sharedPreferences = getSharedPreferences("LegatoPrefs", MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putBoolean("isLoggedIn", true);
-                editor.apply();
+                        SharedPreferences sharedPreferences = getSharedPreferences("LegatoPrefs", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putBoolean("isLoggedIn", true);
+                        editor.apply();
 
-                saveFormData(); //Save data from form
+                        dialog.dismiss();
+                        saveFormData();
 
-                // Navigate to Home Activity
-                Intent intent = new Intent(signUp.this, userHome.class);
-                startActivity(intent);
-                finish(); // Prevent user from going back to Sign Up
 
-                clearFormData();
-                dialog.dismiss();
+                        Intent intent = new Intent(signUp.this, userHome.class);
+                        startActivity(intent);
+                        finish();
+
+
+                        clearFormData();
+                    }
+
+                    @Override
+                    public void onFailure(String errorMessage) {
+                        Log.e("SignUpError", "Signup confirmation failed: " + errorMessage);
+                    }
+                });
             }
         });
+
 
         dialog.show();
     }
