@@ -17,10 +17,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.legatoapp.Activity.EditProfileActivity;
+import com.example.legatoapp.Activity.FollowersListActivity;
+import com.example.legatoapp.Activity.FollowingListActivity;
 import com.example.legatoapp.Activity.SettingsActivity;
 import com.example.legatoapp.R;
 import com.example.legatoapp.Services.helper.SpotifyProfileDataHelper;
@@ -124,7 +127,7 @@ public class ProfileFragment extends Fragment {
 
             @Override
             public void onClick(View view) {
-// Toggle zoom state
+                // Toggle zoom state
                 isZoomedIn = !isZoomedIn;
 
                 // Define zoom scale factor
@@ -147,6 +150,22 @@ public class ProfileFragment extends Fragment {
                 animatorSet.playTogether(scaleX, scaleY);
                 animatorSet.start();
             }
+        });
+
+        // Follower and following
+        LinearLayout followersContainer = view.findViewById(R.id.followersContainer);
+        LinearLayout followingContainer = view.findViewById(R.id.followingContainer);
+
+        // OnClickListener when followers is clicked
+        followersContainer.setOnClickListener(view1 -> {
+            Intent intent = new Intent(getContext(), FollowersListActivity.class);
+            startActivity(intent);
+        });
+
+        // OnClickListener when following is clicked
+        followingContainer.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), FollowingListActivity.class);
+            startActivity(intent);
         });
 
         fetchLastSong();
