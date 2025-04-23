@@ -121,20 +121,70 @@ public class forgetPassword extends AppCompatActivity {
                 return;
             }
 
-            // ToDo: Here we can implement how the password would be updated once the user clicks reset password
+            //RESET PASSWORD LOGIC BACKEND
+            resetPasswordLogic();
 
         });
 
         //**** Set an OnClickListener on the SEND VERIFICATION CODE button ****
         sendCodeButton.setOnClickListener(view -> {
-            // ToDo: Delete this after pop up is implemented, I just added it to make sure the button works
-            Toast.makeText(view.getContext(), "Send code button works :p", Toast.LENGTH_SHORT).show();
+            String email = emailInput.getText().toString().trim();
 
-            /* ToDo: Here we can add how the confirmation code pop up comes up and so on
-            *   After the code has been verified enable the input fields and visibility toggle buttons and also
-            *   maybe disable the 'Send verification code' button and display a message like 'Email has been verified'*/
+            // Check if email is empty or invalid
+            if (email.isEmpty() || !isValidEmail(email)) {
+                emailErrorMsg.setVisibility(View.VISIBLE);
+                return; // stop here, don’t open popup
+            } else {
+                emailErrorMsg.setVisibility(View.GONE);
+            }
 
+            // Inflate the popup layout
+            View popupView = getLayoutInflater().inflate(R.layout.popup_password_confirmation_code, null);
+
+            // Create a dialog
+            android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(forgetPassword.this);
+            builder.setView(popupView);
+            android.app.AlertDialog popupDialog = builder.create();
+
+            // Exit button inside popup
+            ImageButton exitButton = popupView.findViewById(R.id.popup_exit_button);
+            exitButton.setOnClickListener(v -> popupDialog.dismiss());
+
+            // Verify button logic
+            Button verifyButton = popupView.findViewById(R.id.popup_verify_button);
+            verifyButton.setOnClickListener(v -> {
+
+
+                //VERIFY PASSWORD LOGIC BACKEND
+                verifyButtonLogic();
+
+                //PASSWORD FIELDS ARE ENABLED
+                newPasswordInput.setAlpha(1.0f);
+                newPasswordInput.setEnabled(true);
+                togglePasswordVisibility.setEnabled(true);
+
+                verifyNewPasswordInput.setAlpha(1.0f);
+                verifyNewPasswordInput.setEnabled(true);
+                toggleVerifyPasswordVisibility.setEnabled(true);
+
+                //SEND CODE BUTTON IS CHANGED AND CHANGED TO GREEN
+                sendCodeButton.setEnabled(false);
+                sendCodeButton.setText("Email verified");
+                sendCodeButton.setTextColor(getResources().getColor(R.color.spotify1));
+
+                //DISABLES EMAIL TEXT BOX
+                emailInput.setEnabled(false);
+                emailInput.setAlpha(0.5f);
+
+                //CLOSES POPUP
+                popupDialog.dismiss();
+            });
+
+
+            // SHOWS POPUP
+            popupDialog.show();
         });
+
 
         //**** FocusChange to validate email ****
         emailInput.setOnFocusChangeListener((v, hasFocus) -> {
@@ -249,5 +299,15 @@ public class forgetPassword extends AppCompatActivity {
         String passwordPattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{5,16}$";
         return Pattern.matches(passwordPattern, password);
     }
+
+    private void verifyButtonLogic() {
+        // TODO: Add AWS backend logic here (VEDI)
+    }
+
+    private void resetPasswordLogic() {
+        // TODO: Add AWS backend logic here (VEDI)
+    }
+
+
 
 }
