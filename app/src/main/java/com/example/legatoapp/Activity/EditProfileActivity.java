@@ -29,6 +29,9 @@ public class EditProfileActivity extends AppCompatActivity {
     private static final int MAX_CHAR_COUNT = 50;
     private CircleImageView editProfilePicImageView;
     private Uri selectedImageUri;
+    private Song selectedSong1, selectedSong2, selectedSong3;
+    private String selectedArtist1, selectedArtist2, selectedArtist3;
+    private int selectedArtist1Image, selectedArtist2Image, selectedArtist3Image;
 
 
     @Override
@@ -164,32 +167,15 @@ public class EditProfileActivity extends AppCompatActivity {
             albumArtView.setImageResource(selectedSong.getAlbumArt());
 
 
-            //Save song to SharedPreferences
-            SharedPreferences sharedPreferences = getSharedPreferences("LegatoPrefs", MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
+            // Temporarily store selected song in local variables, to save later
 
-            int albumArtRes = selectedSong.getAlbumArt();
-
-            //Identify the correct card and save accordingly
-            //Save card 1
             if (cardView.getId() == R.id.songCard1) {
-                editor.putString("saved_song_1", selectedSong.getTitle());
-                editor.putString("saved_song_1_artist", selectedSong.getArtist());
-                editor.putInt("saved_song_1_image", albumArtRes);
+                selectedSong1 = selectedSong;  // Store in a variable
+            } else if (cardView.getId() == R.id.songCard2) {
+                selectedSong2 = selectedSong;
+            } else if (cardView.getId() == R.id.songCard3) {
+                selectedSong3 = selectedSong;
             }
-            //Save card 2
-            else if (cardView.getId() == R.id.songCard2) {
-                editor.putString("saved_song_2", selectedSong.getTitle());
-                editor.putString("saved_song_2_artist", selectedSong.getArtist());
-                editor.putInt("saved_song_2_image", albumArtRes);
-            }
-            //Save card 3
-            else if (cardView.getId() == R.id.songCard3) {
-                editor.putString("saved_song_3", selectedSong.getTitle());
-                editor.putString("saved_song_3_artist", selectedSong.getArtist());
-                editor.putInt("saved_song_3_image", albumArtRes);
-            }
-            editor.apply();
         }
     }
 
@@ -204,27 +190,17 @@ public class EditProfileActivity extends AppCompatActivity {
             int artistImageRes = MusicData.getArtistImage(artistName);
             artistImageView.setImageResource(artistImageRes);
 
-            //Save artist to SharedPreferences
-            SharedPreferences sharedPreferences = getSharedPreferences("LegatoPrefs", MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-
-            //Identify the correct card and save accordingly
-            //Save card 1
+            // Temporarily store selected artist in local variables, to save later
             if (cardView.getId() == R.id.artistCard1) {
-                editor.putString("saved_artist_1", artistName);
-                editor.putInt("saved_artist_1_image", artistImageRes);
+                selectedArtist1 = artistName;
+                selectedArtist1Image = artistImageRes;
+            } else if (cardView.getId() == R.id.artistCard2) {
+                selectedArtist2 = artistName;
+                selectedArtist2Image = artistImageRes;
+            } else if (cardView.getId() == R.id.artistCard3) {
+                selectedArtist3 = artistName;
+                selectedArtist3Image = artistImageRes;
             }
-            //Save card 2
-            else if (cardView.getId() == R.id.artistCard2) {
-                editor.putString("saved_artist_2", artistName);
-                editor.putInt("saved_artist_2_image", artistImageRes);
-            }
-            //Save card 3
-            else if (cardView.getId() == R.id.artistCard3) {
-                editor.putString("saved_artist_3", artistName);
-                editor.putInt("saved_artist_3_image", artistImageRes);
-            }
-            editor.apply();
         }
     }
 
@@ -242,14 +218,47 @@ public class EditProfileActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("LegatoPrefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        editor.putString("saved_display_name", displayName); //Saves display name
-        editor.putString("saved_bio", bio); //Saves bio
+        //Save display name and bio
+        editor.putString("saved_display_name", displayName);
+        editor.putString("saved_bio", bio);
 
-        //Saves the image URI if available
+        //Saves profile image URI if available
         if (selectedImageUri != null) {
             editor.putString("saved_profile_pic", selectedImageUri.toString());
         }
 
+        // Save the selected songs if they were changed
+        if (selectedSong1 != null) {
+            editor.putString("saved_song_1", selectedSong1.getTitle());
+            editor.putString("saved_song_1_artist", selectedSong1.getArtist());
+            editor.putInt("saved_song_1_image", selectedSong1.getAlbumArt());
+        }
+        if (selectedSong2 != null) {
+            editor.putString("saved_song_2", selectedSong2.getTitle());
+            editor.putString("saved_song_2_artist", selectedSong2.getArtist());
+            editor.putInt("saved_song_2_image", selectedSong2.getAlbumArt());
+        }
+        if (selectedSong3 != null) {
+            editor.putString("saved_song_3", selectedSong3.getTitle());
+            editor.putString("saved_song_3_artist", selectedSong3.getArtist());
+            editor.putInt("saved_song_3_image", selectedSong3.getAlbumArt());
+        }
+
+        // Save the selected artists if they were changed
+        if (selectedArtist1 != null) {
+            editor.putString("saved_artist_1", selectedArtist1);
+            editor.putInt("saved_artist_1_image", selectedArtist1Image);
+        }
+        if (selectedArtist2 != null) {
+            editor.putString("saved_artist_2", selectedArtist2);
+            editor.putInt("saved_artist_2_image", selectedArtist2Image);
+        }
+        if (selectedArtist3 != null) {
+            editor.putString("saved_artist_3", selectedArtist3);
+            editor.putInt("saved_artist_3_image", selectedArtist3Image);
+        }
+
+        // Apply changes
         editor.apply();
         finish();
     }
