@@ -170,7 +170,7 @@ public class EditProfileActivity extends AppCompatActivity {
             // Temporarily store selected song in local variables, to save later
 
             if (cardView.getId() == R.id.songCard1) {
-                selectedSong1 = selectedSong;  // Store in a variable
+                selectedSong1 = selectedSong;
             } else if (cardView.getId() == R.id.songCard2) {
                 selectedSong2 = selectedSong;
             } else if (cardView.getId() == R.id.songCard3) {
