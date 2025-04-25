@@ -51,6 +51,7 @@ public class EditProfileActivity extends AppCompatActivity {
         String displayName = sharedPreferences.getString("saved_display_name", "");
         String bio = sharedPreferences.getString("saved_bio", "");
         String profilePic = sharedPreferences.getString("saved_profile_pic",null);
+        loadSavedData();
 
         if (!displayName.isEmpty()) {
             editDisplayNameText.setText(displayName);
@@ -262,4 +263,67 @@ public class EditProfileActivity extends AppCompatActivity {
         editor.apply();
         finish();
     }
+
+    private void loadSavedData() {
+        SharedPreferences sharedPreferences = getSharedPreferences("LegatoPrefs", MODE_PRIVATE);
+
+        // Retrieve data of songs from sharedPreferences
+        String song1Title = sharedPreferences.getString("saved_song_1", null);
+        String song1Artist = sharedPreferences.getString("saved_song_1_artist", null);
+        int song1Image = sharedPreferences.getInt("saved_song_1_image", -1);
+
+        String song2Title = sharedPreferences.getString("saved_song_2", null);
+        String song2Artist = sharedPreferences.getString("saved_song_2", null);
+        int song2Image = sharedPreferences.getInt("saved_song_2_image", -1);
+
+        String song3Title = sharedPreferences.getString("saved_song_3", null);
+        String song3Artist = sharedPreferences.getString("saved_song_3", null);
+        int song3Image = sharedPreferences.getInt("saved_song_3_image", -1);
+
+        //Retrieve data of artists from sharedPreferences
+        String artist1Name = sharedPreferences.getString("saved_artist_1", null);
+        int artist1Image = sharedPreferences.getInt("saved_artist_1_image", -1);
+
+        String artist2Name = sharedPreferences.getString("saved_artist_2", null);
+        int artist2Image = sharedPreferences.getInt("saved_artist_2_image", -1);
+
+        String artist3Name = sharedPreferences.getString("saved_artist_3", null);
+        int artist3Image = sharedPreferences.getInt("saved_artist_3_image", -1);
+
+        // Set the song data in the corresponding card views
+        setSongCardData(R.id.songCard1, song1Title, song1Artist, song1Image);
+        setSongCardData(R.id.songCard2, song2Title, song2Artist, song2Image);
+        setSongCardData(R.id.songCard3, song3Title, song3Artist, song3Image);
+
+        // Set the artist data in the corresponding card views
+        setArtistCardData(R.id.artistCard1, artist1Name, artist1Image);
+        setArtistCardData(R.id.artistCard2, artist2Name, artist2Image);
+        setArtistCardData(R.id.artistCard3, artist3Name, artist3Image);
+    }
+
+
+    private void setSongCardData(int cardId, String songName, String songArtist, int songImageRes) {
+        if (songName != null && songArtist != null && songImageRes != -1) {
+            View songCard = findViewById(cardId);
+            TextView songTitleView = songCard.findViewById(R.id.songTitle);
+            TextView songArtistView = songCard.findViewById(R.id.songArtist);
+            ImageView songImageView = songCard.findViewById(R.id.songImage);
+
+            songTitleView.setText(songName);
+            songArtistView.setText(songArtist);
+            songImageView.setImageResource(songImageRes);
+        }
+    }
+
+    private void setArtistCardData(int cardId, String artistName, int artistImageRes) {
+        if (artistName != null && artistImageRes != -1) {
+            View artistCard = findViewById(cardId);
+            TextView artistNameView = artistCard.findViewById(R.id.artistName);
+            ImageView artistImageView = artistCard.findViewById(R.id.artistImage);
+
+            artistNameView.setText(artistName);
+            artistImageView.setImageResource(artistImageRes);
+        }
+    }
+
 }
