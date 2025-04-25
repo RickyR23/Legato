@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import android.animation.ObjectAnimator;
 
@@ -240,20 +241,82 @@ public class ProfileFragment extends Fragment {
             profilePicImageView.setImageURI(imageUri);
         }
 
-        // Arrays for song data, artist data and UI elements
-        String[] songTitles = new String[3];
-        String[] songArtists = new String[3];
-        String[] artistNames = new String[3];
-        int[] songTitleViews = {R.id.song1Title, R.id.song2Title, R.id.song3Title};
-        int[] songArtistViews = {R.id.song1Artist, R.id.song2Artist, R.id.song3Artist};
-        int[] artistNameViews = {R.id.artist1Name, R.id.artist2Name, R.id.artist3Name};
+        // ToDo: Later replace this with the logic to retrieve the data from database
+        /// ****** START ******
+        // Retrieve data of songs from sharedPreferences
+        String song1Title = sharedPreferences.getString("saved_song_1", "Default Song 1");
+        String song1Artist = sharedPreferences.getString("saved_song_1_artist", "Default Artist 1");
+        int song1Image = sharedPreferences.getInt("saved_song_1_image", R.drawable.album_cover_placeholder);
 
-        // Retrieve saved song data and artist
-        for (int i = 0; i < 3; i++) {
-            songTitles[i] = sharedPreferences.getString("saved_song_" + (i + 1), "Select a song");
-            songArtists[i] = sharedPreferences.getString("saved_song_" + (i + 1) + "_artist", "");
-            artistNames[i] = sharedPreferences.getString("saved_artist_" + (i + 1), "Select an artist");
-        }
+        String song2Title = sharedPreferences.getString("saved_song_2", "Default Song 2");
+        String song2Artist = sharedPreferences.getString("saved_song_2", "Default Artist 2");
+        int song2Image = sharedPreferences.getInt("saved_song_2_image", R.drawable.album_cover_placeholder);
+
+        String song3Title = sharedPreferences.getString("saved_song_3", "Default Song 3");
+        String song3Artist = sharedPreferences.getString("saved_song_3", "Default Artist 3");
+        int song3Image = sharedPreferences.getInt("saved_song_3_image", R.drawable.album_cover_placeholder);
+
+        //Retrieve data of artists from sharedPreferences
+        String artist1Name = sharedPreferences.getString("saved_artist_1", "Default Artist 1");
+        int artist1Image = sharedPreferences.getInt("saved_artist_1_image", R.drawable.profile_pic_placeholder);
+
+        String artist2Name = sharedPreferences.getString("saved_artist_2", "Default Artist 2");
+        int artist2Image = sharedPreferences.getInt("saved_artist_2_image", R.drawable.profile_pic_placeholder);
+
+        String artist3Name = sharedPreferences.getString("saved_artist_3", "Default Artist 3");
+        int artist3Image = sharedPreferences.getInt("saved_artist_3_image", R.drawable.profile_pic_placeholder);
+
+        // Get UI references to song cards
+        TextView songTitle1 = getView().findViewById(R.id.songCard1).findViewById(R.id.songTitle);
+        TextView songArtist1 = getView().findViewById(R.id.songCard1).findViewById(R.id.songArtist);
+        ImageView songImage1 = getView().findViewById(R.id.songCard1).findViewById(R.id.songImage);
+
+        TextView songTitle2 = getView().findViewById(R.id.songCard2).findViewById(R.id.songTitle);
+        TextView songArtist2 = getView().findViewById(R.id.songCard2).findViewById(R.id.songArtist);
+        ImageView songImage2 = getView().findViewById(R.id.songCard2).findViewById(R.id.songImage);
+
+        TextView songTitle3 = getView().findViewById(R.id.songCard3).findViewById(R.id.songTitle);
+        TextView songArtist3 = getView().findViewById(R.id.songCard3).findViewById(R.id.songArtist);
+        ImageView songImage3 = getView().findViewById(R.id.songCard3).findViewById(R.id.songImage);
+
+        //Set data for Song Card 1
+        songTitle1.setText(song1Title);
+        songArtist1.setText(song1Artist);
+        songImage1.setImageResource(song1Image);
+
+        //Set data for Song Card 2
+        songTitle2.setText(song2Title);
+        songArtist2.setText(song2Artist);
+        songImage2.setImageResource(song2Image);
+
+        //Set data for Song Card 3
+        songTitle3.setText(song3Title);
+        songArtist3.setText(song3Artist);
+        songImage3.setImageResource(song3Image);
+
+        // Get UI references to artist cards
+        TextView artistName1 = getView().findViewById(R.id.artistCard1).findViewById(R.id.text_artist_name);
+        ImageView artistImage1 = getView().findViewById(R.id.artistCard1).findViewById(R.id.image_artist);
+
+        TextView artistName2 = getView().findViewById(R.id.artistCard2).findViewById(R.id.text_artist_name);
+        ImageView artistImage2 = getView().findViewById(R.id.artistCard2).findViewById(R.id.image_artist);
+
+        TextView artistName3 = getView().findViewById(R.id.artistCard3).findViewById(R.id.text_artist_name);
+        ImageView artistImage3 = getView().findViewById(R.id.artistCard3).findViewById(R.id.image_artist);
+
+        //Set data for Artist Card 1
+        artistName1.setText(artist1Name);
+        artistImage1.setImageResource(artist1Image);
+
+        //Set data for Artist Card 2
+        artistName2.setText(artist2Name);
+        artistImage2.setImageResource(artist2Image);
+
+        //Set data for Artist Card 3
+        artistName3.setText(artist3Name);
+        artistImage3.setImageResource(artist3Image);
+
+        /// ****** END ******
 
         //Update UI elements with retrieved data
         TextView displayNameTextView = getView().findViewById(R.id.textViewDisplayName);
@@ -262,16 +325,7 @@ public class ProfileFragment extends Fragment {
         displayNameTextView.setText(displayName);
         bioTextView.setText(bio);
 
-        // Update the song and artist UI elements with data saved
-        for (int i = 0; i < 3; i++) {
-            TextView songTitleView = getView().findViewById(songTitleViews[i]);
-            TextView songArtistView = getView().findViewById(songArtistViews[i]);
-            TextView artistNameView = getView().findViewById(artistNameViews[i]);
 
-            songTitleView.setText(songTitles[i]);
-            songArtistView.setText(songArtists[i]);
-            artistNameView.setText(artistNames[i]);
-        }
     }
 
 }

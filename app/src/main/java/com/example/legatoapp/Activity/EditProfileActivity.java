@@ -168,21 +168,26 @@ public class EditProfileActivity extends AppCompatActivity {
             SharedPreferences sharedPreferences = getSharedPreferences("LegatoPrefs", MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
 
+            int albumArtRes = selectedSong.getAlbumArt();
+
             //Identify the correct card and save accordingly
             //Save card 1
             if (cardView.getId() == R.id.songCard1) {
                 editor.putString("saved_song_1", selectedSong.getTitle());
                 editor.putString("saved_song_1_artist", selectedSong.getArtist());
+                editor.putInt("saved_song_1_image", albumArtRes);
             }
             //Save card 2
             else if (cardView.getId() == R.id.songCard2) {
                 editor.putString("saved_song_2", selectedSong.getTitle());
                 editor.putString("saved_song_2_artist", selectedSong.getArtist());
+                editor.putInt("saved_song_2_image", albumArtRes);
             }
             //Save card 3
             else if (cardView.getId() == R.id.songCard3) {
                 editor.putString("saved_song_3", selectedSong.getTitle());
                 editor.putString("saved_song_3_artist", selectedSong.getArtist());
+                editor.putInt("saved_song_3_image", albumArtRes);
             }
             editor.apply();
         }
@@ -195,7 +200,9 @@ public class EditProfileActivity extends AppCompatActivity {
 
         if (artistView != null && artistImageView != null) {
             artistView.setText(artistName);
-            artistImageView.setImageResource(MusicData.getArtistImage(artistName));
+
+            int artistImageRes = MusicData.getArtistImage(artistName);
+            artistImageView.setImageResource(artistImageRes);
 
             //Save artist to SharedPreferences
             SharedPreferences sharedPreferences = getSharedPreferences("LegatoPrefs", MODE_PRIVATE);
@@ -205,14 +212,17 @@ public class EditProfileActivity extends AppCompatActivity {
             //Save card 1
             if (cardView.getId() == R.id.artistCard1) {
                 editor.putString("saved_artist_1", artistName);
+                editor.putInt("saved_artist_1_image", artistImageRes);
             }
             //Save card 2
             else if (cardView.getId() == R.id.artistCard2) {
                 editor.putString("saved_artist_2", artistName);
+                editor.putInt("saved_artist_2_image", artistImageRes);
             }
             //Save card 3
             else if (cardView.getId() == R.id.artistCard3) {
                 editor.putString("saved_artist_3", artistName);
+                editor.putInt("saved_artist_3_image", artistImageRes);
             }
             editor.apply();
         }
