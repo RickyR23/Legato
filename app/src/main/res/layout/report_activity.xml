@@ -100,7 +100,7 @@
                     android:layout_height="wrap_content"
                     android:text="Problem: "
                     android:textSize="17sp"
-                    android:textColor="@android:color/black"
+                    android:textColor="@color/report1"
                     android:layout_marginEnd="10dp"
                     android:textStyle="bold"/>
 
@@ -114,8 +114,8 @@
                     android:padding="10dp"
                     android:maxLength="50"
                     android:background="@drawable/rounded_edittext"
-                    android:textColor="@android:color/black"
-                    android:textColorHint="#888888"
+                    android:textColor="@color/report1"
+                    android:textColorHint="@color/report2"
                     android:textSize="17sp" />
             </LinearLayout>
             <!-- Problem Row ENDS -->
@@ -135,7 +135,7 @@
                     android:layout_height="wrap_content"
                     android:text="Comments: "
                     android:textSize="14sp"
-                    android:textColor="@android:color/black"
+                    android:textColor="@color/report1"
                     android:layout_marginEnd="10dp"
                     android:textStyle="bold"/>
 
@@ -153,8 +153,8 @@
                     android:maxLines="8"
                     android:textSize="14sp"
                     android:padding="10dp"
-                    android:textColor="@android:color/black"
-                    android:textColorHint="#888888" />
+                    android:textColor="@color/report1"
+                    android:textColorHint="@color/report2" />
             </LinearLayout>
             <!-- Comments Row ENDS -->
 

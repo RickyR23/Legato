@@ -35,8 +35,7 @@
                 android:layout_height="wrap_content"
                 android:text="Song Title"
                 android:textSize="16sp"
-                android:textStyle="bold"
-                android:textColor="@android:color/black"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/song_artist"
