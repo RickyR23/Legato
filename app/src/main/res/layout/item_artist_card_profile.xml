@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="100dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="8dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/image_artist"
+        android:layout_width="62dp"
+        android:layout_height="62dp"
+        android:src="@drawable/profile_pic_placeholder"
+        android:layout_marginBottom="4dp" />
+
+    <TextView
+        android:id="@+id/text_artist_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="2"
+        android:ellipsize="none"
+        android:text="Artist Name"
+        android:textSize="14sp"
+        android:textStyle="italic"
+        android:layout_marginTop="2dp"
+        android:textColor="@android:color/white"
+        android:gravity="center" />
+</LinearLayout>
