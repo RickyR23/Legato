@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -49,6 +50,10 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ProfileV
         holder.displayName.setText(profile.getDisplayName());
         holder.username.setText("@" + profile.getUsername());
         holder.profileImage.setImageResource(profile.getProfileImageResId());
+        holder.itemView.setOnClickListener(v -> {
+            Toast.makeText(v.getContext(), "Clicking works", Toast.LENGTH_SHORT).show();
+            // REDIRECTS TO PROFILE PAGE HERE
+        });
     }
 
     @Override
