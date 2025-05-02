@@ -13,11 +13,12 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import com.example.legatoapp.R;
 
 public class SettingsActivity extends AppCompatActivity {
-    private ToggleButton notificationsButton;
+    private ToggleButton notificationsButton, nightThemeButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +52,21 @@ public class SettingsActivity extends AppCompatActivity {
                 Intent intent = new Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS);
                 intent.putExtra(Settings.EXTRA_APP_PACKAGE, getPackageName());
                 startActivity(intent);
+            }
+        });
+
+        // THEME TOGGLE BUTTON
+        nightThemeButton = findViewById(R.id.nightThemeToggle);
+        updateThemeToggleState();
+
+        // Handle the toggle button change to change themes
+        nightThemeButton.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                // Enable Dark Mode
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            } else {
+                // Enable Light Mode
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             }
         });
 
@@ -89,6 +105,13 @@ public class SettingsActivity extends AppCompatActivity {
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         boolean systemNotificationsEnabled = notificationManager.areNotificationsEnabled();
         notificationsButton.setChecked(systemNotificationsEnabled);
+    }
+
+    // Update the theme toggle button state based on current mode
+    private void updateThemeToggleState() {
+        int currentNightMode = AppCompatDelegate.getDefaultNightMode();
+        // Set the toggle button based on the current mode
+        nightThemeButton.setChecked(currentNightMode == AppCompatDelegate.MODE_NIGHT_YES);
     }
 
     // Logout User
