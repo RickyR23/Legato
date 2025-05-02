@@ -57,11 +57,22 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             default:
                 holder.notificationIcon.setVisibility(View.GONE);
                 return; // Exit early if no valid icon is found
+
         }
 
         // Apply the icon and make it visible
         holder.notificationIcon.setImageResource(iconRes);
         holder.notificationIcon.setVisibility(View.VISIBLE);
+
+        holder.itemView.setOnClickListener(v -> {
+            android.widget.Toast.makeText(
+                    v.getContext(),
+                    "Clicking works",
+                    android.widget.Toast.LENGTH_SHORT
+            ).show();
+        });
+
+
     }
 
     @Override

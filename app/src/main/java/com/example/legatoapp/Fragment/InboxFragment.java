@@ -14,6 +14,10 @@ import com.example.legatoapp.models.NotificationItem;
 
 import java.util.ArrayList;
 import java.util.List;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.RecyclerView;
+
+
 
 public class InboxFragment extends Fragment {
 
@@ -42,7 +46,22 @@ public class InboxFragment extends Fragment {
 
         adapter = new NotificationAdapter(notificationList);
         recyclerView.setAdapter(adapter);
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false;
+            }
 
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                int position = viewHolder.getAdapterPosition();
+                notificationList.remove(position);
+                adapter.notifyItemRemoved(position);
+
+            }
+        });
+
+        itemTouchHelper.attachToRecyclerView(recyclerView);
         return view;
     }
 }

@@ -80,7 +80,8 @@ public class CreateFragment extends Fragment {
 
                         // Disable and reset post button color
                         postButton.setEnabled(false);
-                        postButton.setBackgroundTintList(ContextCompat.getColorStateList(requireContext(), android.R.color.white));
+                        postButton.setBackgroundTintList(ContextCompat.getColorStateList(requireContext(), R.color.grey));
+
                     })
                     .setNegativeButton("Cancel", null)
                     .show();
