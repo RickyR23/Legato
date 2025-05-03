@@ -102,6 +102,11 @@
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.LegatoApp" />
+        <activity
+            android:name=".Activity.OtherUserProfileActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.LegatoApp" />
     </application>
 
 </manifest>
