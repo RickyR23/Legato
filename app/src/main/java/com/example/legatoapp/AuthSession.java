@@ -1,20 +1,18 @@
 package com.example.legatoapp;
 
-
-//This file allows the Tokens created in CognitoAuth Sign-in to be used globally
-public class    AuthSession {
+public class AuthSession {
     private static String accessToken;
     private static String idToken;
     private static String refreshToken;
 
-    // Set the tokens
-    public static void setTokens(String accessToken, String idToken, String refreshToken) {
-        AuthSession.accessToken = accessToken;
-        AuthSession.idToken = idToken;
-        AuthSession.refreshToken = refreshToken;
+    public static final String CLIENT_ID = CognitoAuth.Client_ID;
+
+    public static void setTokens(String access, String id, String refresh) {
+        accessToken = access;
+        idToken = id;
+        refreshToken = refresh;
     }
 
-    // Get the tokens
     public static String getAccessToken() {
         return accessToken;
     }

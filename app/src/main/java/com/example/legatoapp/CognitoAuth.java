@@ -15,8 +15,8 @@ import java.util.concurrent.ExecutionException;
 //Creates the class for necessary functions of Cognito, like Signup, login etc
 
 public class CognitoAuth {
-    private static String Client_ID;
-    private static String Userpool_ID;
+    public static String Client_ID;
+    public static String Userpool_ID;
     private static final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     public interface Callback {

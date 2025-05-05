@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import com.example.legatoapp.CognitoAuth;
 import com.example.legatoapp.R;
+import com.example.legatoapp.Services.api.UserService;
 import com.example.legatoapp.Services.helper.SpotifyAuthHelper;
 
 
@@ -523,8 +524,10 @@ public class signUp extends AppCompatActivity {
                     @Override
                     public void onSuccess() {
                         Log.d("SignUpSuccess", "User confirmed successfully!");
-
-
+                        //CALL API HERE
+                        UserService userService = new UserService();
+                        userService.signupUser("my.email.com", "myusername", "spotify_123");
+                        //------------
                         SharedPreferences sharedPreferences = getSharedPreferences("LegatoPrefs", MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putBoolean("isLoggedIn", true);
