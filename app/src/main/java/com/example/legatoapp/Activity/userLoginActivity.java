@@ -83,9 +83,9 @@ public class userLoginActivity extends AppCompatActivity {
             Log.d("SignIn", "Attempting to sign in...");
 
             // Call signInUser to initiate login
-            CognitoAuth.signInUser(userInputString, passwordInputString, new CognitoAuth.Callback() {
+            CognitoAuth.signInUser(userInputString, passwordInputString, new CognitoAuth.SignInCallback() {
                 @Override
-                public void onSuccess() {
+                public void onSuccess(String accessToken, String idToken, String refreshToken) {
                     // This is when the login is successful, right now it just takes us to homepage
                     runOnUiThread(() -> {
                         launchHomeActivity();

@@ -23,6 +23,10 @@ public class CognitoAuth {
         void onSuccess();
         void onFailure(String errorMessage);
     }
+    public interface SignInCallback {
+        void onSuccess(String accessToken, String idToken, String refreshToken);
+        void onFailure(String errorMessage);
+    }
     public static void initialize(Context context) {
         Client_ID = context.getString(R.string.COGNITO_CLIENT_ID);
         Userpool_ID = context.getString(R.string.COGNITO_USERPOOL_ID);
@@ -64,7 +68,7 @@ public class CognitoAuth {
     }
     //User Login Functionality and gaining Tokens
 
-    public static void signInUser(String username, String password, Callback callback) {
+    public static void signInUser(String username, String password, SignInCallback callback) {
         CognitoIdentityProviderAsyncClient client = CognitoService.getCognitoClient();
         InitiateAuthRequest authRequest = InitiateAuthRequest.builder()
                 .clientId(Client_ID)
@@ -95,7 +99,7 @@ public class CognitoAuth {
                     response.authenticationResult().refreshToken()
             );
 
-            callback.onSuccess();
+            callback.onSuccess(response.authenticationResult().accessToken(), response.authenticationResult().idToken(), response.authenticationResult().refreshToken());
         });
     }
 

@@ -8,12 +8,6 @@ import retrofit2.http.*;
 
 public interface ApiService {
     // GET request example
-    @GET("your-endpoint/{id}")
-    Call<RequestModel> getItem(@Path("id") String id);
-
-    // POST request example
-    @POST("your-endpoint")
-    Call<RequestModel> createItem(@Body RequestModel request);
 
     // User endpoints
     @POST("api/signup")

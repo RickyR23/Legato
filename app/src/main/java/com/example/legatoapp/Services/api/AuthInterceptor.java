@@ -1,8 +1,8 @@
 package com.example.legatoapp.Services.api;
 
 import android.util.Log;
+
 import com.example.legatoapp.TokenManager;
-import com.example.legatoapp.AuthSession;
 
 import java.io.IOException;
 
@@ -14,9 +14,8 @@ public class AuthInterceptor implements Interceptor {
 
     private String idToken;
     private String refreshToken;
-    private TokenManager.TokenRefreshCallback tokenRefreshCallback;
+    private final TokenManager.TokenRefreshCallback tokenRefreshCallback;
 
-    // Constructor to initialize with tokens and callback
     public AuthInterceptor(String idToken, String refreshToken, TokenManager.TokenRefreshCallback tokenRefreshCallback) {
         this.idToken = idToken;
         this.refreshToken = refreshToken;
@@ -26,46 +25,48 @@ public class AuthInterceptor implements Interceptor {
     @Override
     public Response intercept(Chain chain) throws IOException {
         Request original = chain.request();
+
+        // Attach the initial token
         Request request = original.newBuilder()
                 .header("Authorization", "Bearer " + idToken)
                 .method(original.method(), original.body())
                 .build();
 
+        Log.d("AuthInterceptor", "Sending request to: " + request.url());
+
         Response response = chain.proceed(request);
 
         if (response.code() == 401 && refreshToken != null) {
-            response.close();  // Close the failed response
+            Log.w("AuthInterceptor", "401 Unauthorized - attempting to refresh token");
 
-            final Response[] finalResponse = {response};  // Wrap in an array to make it effectively final
+            response.close(); // Always close the first response
 
-            TokenManager.refreshSession(refreshToken, new TokenManager.Callback() {
-                @Override
-                public void onSuccess() {
-                    String newIdToken = AuthSession.getIdToken(); // Update with the new token
-                    if (newIdToken != null) {
-                        // Retry the original request with the new token
-                        Request newRequest = original.newBuilder()
-                                .header("Authorization", "Bearer " + newIdToken)
-                                .method(original.method(), original.body())
-                                .build();
+            try {
+                // Synchronously refresh token
+                String newIdToken = TokenManager.refreshTokensBlocking(refreshToken);
+                if (newIdToken != null) {
+                    Log.d("AuthInterceptor", "Token refreshed successfully");
 
-                        try {
-                            // Proceed with the retried request
-                            finalResponse[0] = chain.proceed(newRequest);  // Update the response
-                        } catch (IOException e) {
-                            Log.e("AuthInterceptor", "Retrying request failed: " + e.getMessage());
-                        }
+                    this.idToken = newIdToken;
+
+                    // Notify callback (if used to update ApiClient or storage)
+                    if (tokenRefreshCallback != null) {
+                        tokenRefreshCallback.refreshTokens(newIdToken);
                     }
-                }
 
-                @Override
-                public void onFailure(String errorMessage) {
-                    Log.e("AuthInterceptor", "Token refresh failed: " + errorMessage);
-                }
-            });
+                    // Retry request with new token
+                    Request newRequest = original.newBuilder()
+                            .header("Authorization", "Bearer " + newIdToken)
+                            .method(original.method(), original.body())
+                            .build();
 
-            // Return the response after retry
-            return finalResponse[0];  // Return the updated response after retrying
+                    return chain.proceed(newRequest);
+                } else {
+                    Log.e("AuthInterceptor", "Failed to refresh token: null returned");
+                }
+            } catch (Exception e) {
+                Log.e("AuthInterceptor", "Token refresh error", e);
+            }
         }
 
         return response;

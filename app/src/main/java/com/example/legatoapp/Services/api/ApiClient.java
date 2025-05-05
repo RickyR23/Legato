@@ -24,7 +24,7 @@ public class ApiClient {
 
         // Create logging interceptor
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.NONE);
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
         // Create auth interceptor with Cognito token refresh
         AuthInterceptor authInterceptor = new AuthInterceptor(
@@ -54,7 +54,7 @@ public class ApiClient {
 
         // Create Retrofit instance
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://amldpl9cw3.execute-api.us-west-1.amazonaws.com/")
+                .baseUrl("https://amldpl9cw3.execute-api.us-west-1.amazonaws.com/default/")
                 .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();

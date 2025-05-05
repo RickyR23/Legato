@@ -24,6 +24,7 @@ import android.util.Patterns;
 import android.widget.Toast;
 
 
+import com.example.legatoapp.AuthSession;
 import com.example.legatoapp.CognitoAuth;
 import com.example.legatoapp.R;
 import com.example.legatoapp.Services.api.UserService;
@@ -138,7 +139,7 @@ public class signUp extends AppCompatActivity {
                         @Override
                         public void onSuccess() {
                             Log.d("Signup", "Entered OnSuccess");
-                            runOnUiThread(() -> showVerificationPopup(username));
+                            runOnUiThread(() -> showVerificationPopup(username, password));
                         }
 
                         @Override
@@ -158,7 +159,7 @@ public class signUp extends AppCompatActivity {
         verificationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showVerificationPopup("");
+                showVerificationPopup("", "");
             }
         });
 
@@ -488,7 +489,7 @@ public class signUp extends AppCompatActivity {
         }
     }
 
-    private void showVerificationPopup(String username){
+    private void showVerificationPopup(String username, String password){
         View popupInstance = getLayoutInflater().inflate(R.layout.popup_signup_confirmation_code, null);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -519,30 +520,42 @@ public class signUp extends AppCompatActivity {
             if (verificationCodeText.isEmpty()) {
                 Log.d("showVerificationPopup", "Empty string in verification code . . . ");
             } else {
-
                 CognitoAuth.confirmUser(username, verificationCodeText, new CognitoAuth.Callback() {
                     @Override
                     public void onSuccess() {
                         Log.d("SignUpSuccess", "User confirmed successfully!");
-                        //CALL API HERE
-                        UserService userService = new UserService();
-                        userService.signupUser("my.email.com", "myusername", "spotify_123");
-                        //------------
-                        SharedPreferences sharedPreferences = getSharedPreferences("LegatoPrefs", MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putBoolean("isLoggedIn", true);
-                        editor.apply();
 
-                        dialog.dismiss();
-                        saveFormData();
+                        // Sign in to get tokens
+                        CognitoAuth.signInUser(username, password, new CognitoAuth.SignInCallback() {
+                            @Override
+                            public void onSuccess(String accessToken, String idToken, String refreshToken) {
+                                AuthSession.setTokens(accessToken, idToken, refreshToken);
+                                Log.d("LoginSuccess", "Tokens set, calling API for Signup...");
 
+                                // Calling Api
+                                UserService userService = new UserService();
+                                userService.signupUser("my.email.com", "myusername", "spotify_123");
+                                //-----------
+                                SharedPreferences sharedPreferences = getSharedPreferences("LegatoPrefs", MODE_PRIVATE);
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.putBoolean("isLoggedIn", true);
+                                editor.apply();
 
-                        Intent intent = new Intent(signUp.this, userHome.class);
-                        startActivity(intent);
-                        finish();
+                                dialog.dismiss();
+                                saveFormData();
 
+                                Intent intent = new Intent(signUp.this, userHome.class);
+                                startActivity(intent);
+                                finish();
 
-                        clearFormData();
+                                clearFormData();
+                            }
+
+                            @Override
+                            public void onFailure(String errorMessage) {
+                                Log.e("LoginError", "Login failed after confirmation: " + errorMessage);
+                            }
+                        });
                     }
 
                     @Override
