@@ -4,6 +4,7 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import com.example.legatoapp.R;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -68,6 +70,25 @@ public class OtherUserProfileActivity extends AppCompatActivity {
             }
         });
 
+        // Follow button changes when clicked on
+        Button followButton = findViewById(R.id.followButton);
+        followButton.setOnClickListener(new View.OnClickListener() {
+            private boolean isFollowing = false;
+            // ToDo: Retrieve if the user follows this other user, and also implement the logic so it is added or removed from following list
+
+            @Override
+            public void onClick(View view) {
+                isFollowing = !isFollowing;
+
+                if (isFollowing) {
+                    followButton.setText("Following");
+                    followButton.setBackgroundTintList(ContextCompat.getColorStateList(OtherUserProfileActivity.this, android.R.color.darker_gray));
+                } else {
+                    followButton.setText("Follow");
+                    followButton.setBackgroundTintList(ContextCompat.getColorStateList(OtherUserProfileActivity.this, android.R.color.white));
+                }
+            }
+        });
         // Back button logic
         ImageButton backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(v -> finish());
