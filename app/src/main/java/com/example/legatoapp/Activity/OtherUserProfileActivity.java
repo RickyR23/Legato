@@ -1,12 +1,17 @@
 package com.example.legatoapp.Activity;
 
+import static java.security.AccessController.getContext;
+
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.legatoapp.R;
@@ -32,7 +37,7 @@ public class OtherUserProfileActivity extends AppCompatActivity {
         String displayName = getIntent().getStringExtra("DISPLAY_NAME");
         int profileImageResId = getIntent().getIntExtra("PROFILE_IMAGE_RES_ID", R.drawable.profile_pic_placeholder);
 
-        // Bind datac
+        // Bind data
         TextView displayNameText = findViewById(R.id.textViewDisplayName);
         ImageView profileImage = findViewById(R.id.profilePicImageView);
 
@@ -89,6 +94,25 @@ public class OtherUserProfileActivity extends AppCompatActivity {
                 }
             }
         });
+
+        // Follower and following
+        LinearLayout followersContainer = findViewById(R.id.followersContainer);
+        LinearLayout followingContainer = findViewById(R.id.followingContainer);
+
+        // OnClickListener when followers is clicked
+        followersContainer.setOnClickListener(v -> {
+            Context context = v.getContext();
+            Intent intent = new Intent(context, FollowersListActivity.class);
+            startActivity(intent);
+        });
+
+        // OnClickListener when following is clicked
+        followingContainer.setOnClickListener(v -> {
+            Context context = v.getContext();
+            Intent intent = new Intent(context, FollowingListActivity.class);
+            startActivity(intent);
+        });
+
         // Back button logic
         ImageButton backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(v -> finish());
