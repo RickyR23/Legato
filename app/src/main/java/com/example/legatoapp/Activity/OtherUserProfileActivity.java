@@ -2,6 +2,7 @@ package com.example.legatoapp.Activity;
 
 import android.os.Bundle;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.legatoapp.R;
@@ -14,16 +15,19 @@ public class OtherUserProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.other_user_profile);
 
+        // ToDo: Implement the logic to retrieve the rest of the data from db like top songs, artists, bio, followers, following, etc
+
         // Get data from Intent
-        String displayName = getIntent().getStringExtra("displayName");
-        String username = getIntent().getStringExtra("username");
+        String username = getIntent().getStringExtra("USERNAME");
+        String displayName = getIntent().getStringExtra("DISPLAY_NAME");
+        int profileImageResId = getIntent().getIntExtra("PROFILE_IMAGE_RES_ID", R.drawable.profile_pic_placeholder);
 
-        // Bind data to views
-        TextView nameTextView = findViewById(R.id.textViewDisplayName);
-        TextView bioTextView = findViewById(R.id.textViewBio);
+        // Bind data
+        TextView displayNameText = findViewById(R.id.textViewDisplayName);
+        ImageView profileImage = findViewById(R.id.profilePicImageView);
 
-        nameTextView.setText(displayName);
-        bioTextView.setText("@" + username); // Placeholder if no bio
+        displayNameText.setText(displayName);
+        profileImage.setImageResource(profileImageResId);
 
         // Back button logic
         ImageButton backButton = findViewById(R.id.backButton);
