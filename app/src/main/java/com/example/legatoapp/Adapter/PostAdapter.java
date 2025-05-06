@@ -1,5 +1,7 @@
 package com.example.legatoapp.Adapter;
 
+import android.content.Context;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.view.LayoutInflater;
@@ -13,6 +15,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.legatoapp.Activity.OtherUserProfileActivity;
 import com.example.legatoapp.R;
 
 import java.util.List;
@@ -99,6 +102,15 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             v.getContext().startActivity(intent);
         });
 
+        // When username is clicked redirect them to their profile
+        View.OnClickListener profileClickListener = v -> {
+            Context context = v.getContext();
+            Intent intent = new Intent(context, OtherUserProfileActivity.class);
+            // ToDo: Here pass the username or something to retrieve user data for their profile
+            context.startActivity(intent);
+        };
+
+        holder.usernameText.setOnClickListener(profileClickListener);
 
     }
 
