@@ -1,4 +1,6 @@
 package com.example.legatoapp.Adapter;
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.legatoapp.Activity.OtherUserProfileActivity;
 import com.example.legatoapp.R;
 import com.example.legatoapp.models.Comment; // assuming you will create this
 import java.util.List;
@@ -47,6 +50,17 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
         holder.username.setText(comment.getUsername());
         holder.commentText.setText(comment.getText());
         holder.timestamp.setText(comment.getTimestamp());
+
+        View.OnClickListener profileClickListener = v -> {
+            Context context = v.getContext();
+            Intent intent = new Intent(context, OtherUserProfileActivity.class);
+            intent.putExtra("USERNAME", comment.getUsername());
+            intent.putExtra("PROFILE_IMAGE_RES_ID", comment.getImageResId());
+            context.startActivity(intent);
+        };
+
+        holder.userImage.setOnClickListener(profileClickListener);
+        holder.username.setOnClickListener(profileClickListener);
     }
 
     @Override

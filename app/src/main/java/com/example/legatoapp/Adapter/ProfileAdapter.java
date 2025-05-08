@@ -1,5 +1,7 @@
 package com.example.legatoapp.Adapter;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.legatoapp.Activity.OtherUserProfileActivity;
 import com.example.legatoapp.R;
 import com.example.legatoapp.models.Profile;
 
@@ -51,8 +54,13 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ProfileV
         holder.username.setText("@" + profile.getUsername());
         holder.profileImage.setImageResource(profile.getProfileImageResId());
         holder.itemView.setOnClickListener(v -> {
-            Toast.makeText(v.getContext(), "Clicking works", Toast.LENGTH_SHORT).show();
-            // REDIRECTS TO PROFILE PAGE HERE
+            Context context = v.getContext();
+            Intent intent = new Intent(context, OtherUserProfileActivity.class);
+            intent.putExtra("USERNAME", profile.getUsername());
+            intent.putExtra("DISPLAY_NAME", profile.getDisplayName());
+            intent.putExtra("PROFILE_IMAGE_RES_ID", profile.getProfileImageResId());
+            context.startActivity(intent); // REDIRECTS TO PROFILE PAGE HERE
+            // ToDo: Here i think it should use the username as unique id to retrieve more data like the top artists, songs, bio, etc
         });
     }
 
