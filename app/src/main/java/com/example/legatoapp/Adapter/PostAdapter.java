@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,17 +17,18 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.legatoapp.Activity.OtherUserProfileActivity;
+import com.example.legatoapp.Post;
 import com.example.legatoapp.R;
 
 import java.util.List;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder> {
 
-    private List<String> posts;
-
-    public PostAdapter(List<String> posts) {
+    private List<Post> posts;
+    public PostAdapter(List<Post> posts) {
         this.posts = posts;
     }
+
 
     public static class PostViewHolder extends RecyclerView.ViewHolder {
         ImageView legatoBackground, albumCover;
@@ -58,11 +60,13 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull PostViewHolder holder, int position) {
-        String post = posts.get(position);
-        holder.usernameText.setText("@user" + (position + 1));
-        holder.captionText.setText(post);
-        holder.musicText.setText("🎵 Track " + (position + 1));
-        holder.albumCover.setImageResource(R.drawable.song_example); // Replace with dynamic later
+        Post post = posts.get(position);
+
+        holder.usernameText.setText("@" + post.getUsername());
+        holder.captionText.setText(post.getCaption());
+        holder.musicText.setText("🎵 " + post.getMusicTrack());
+        holder.albumCover.setImageResource(post.getAlbumResId());
+
 
         // === CLICK HANDLERS ===
         // Set initial tint ON
@@ -96,11 +100,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
 
         holder.spotifyIcon.setOnClickListener(v -> {
-            String spotifyUrl = "https://open.spotify.com";
-            android.content.Intent intent = new android.content.Intent(android.content.Intent.ACTION_VIEW);
-            intent.setData(android.net.Uri.parse(spotifyUrl));
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(post.getSpotifyUrl()));
             v.getContext().startActivity(intent);
         });
+
 
         // When username is clicked redirect them to their profile
         View.OnClickListener profileClickListener = v -> {
