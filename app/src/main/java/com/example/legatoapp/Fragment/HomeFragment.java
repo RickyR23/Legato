@@ -99,9 +99,11 @@ public class HomeFragment extends Fragment {
 
         // === Profile search setup ===
         List<Profile> profiles = Arrays.asList(
-                new Profile("Alice Smith", "alice123", R.drawable.angelespfp),
-                new Profile("Bob Johnson", "bobbyj", R.drawable.artist1),
-                new Profile("Carla Diaz", "cdiaz", R.drawable.artist3)
+                new Profile("angelito", "angel.vitamins", R.drawable.profile10),
+                new Profile("nate", "8atedog", R.drawable.profile11),
+                new Profile("dino", "dinoatemyusername", R.drawable.profile12),
+                new Profile("carlos", "ilovemoney", R.drawable.profile13),
+                new Profile("Bell", "imnotbella", R.drawable.profile14)
         );
         profileAdapter = new ProfileAdapter(profiles);
         recyclerViewProfiles.setLayoutManager(new LinearLayoutManager(getContext()));
