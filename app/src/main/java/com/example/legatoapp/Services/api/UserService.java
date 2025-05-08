@@ -12,7 +12,7 @@ import retrofit2.Response;
 
 public class UserService {
     private final ApiService apiService;
-
+    private String userId = "";
     public UserService() {
         // Get the API client instance
         this.apiService = ApiClient.getInstance().getApiService();
@@ -33,6 +33,9 @@ public class UserService {
             public void onResponse(Call<UserModel> call, Response<UserModel> response) {
                 if (response.isSuccessful()) {
                     Log.d("UserService", "User created: " + response.body());
+                    assert response.body() != null;
+                    userId = response.body().getUserId();
+
                 } else {
                     Log.e("UserService", "Signup failed: " + response.code());
                 }
@@ -43,6 +46,9 @@ public class UserService {
                 Log.e("UserService", "Network error", t);
             }
         });
+    }
+    public String getId() {
+        return userId;
     }
 }
 

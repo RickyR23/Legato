@@ -139,7 +139,7 @@ public class signUp extends AppCompatActivity {
                         @Override
                         public void onSuccess() {
                             Log.d("Signup", "Entered OnSuccess");
-                            runOnUiThread(() -> showVerificationPopup(username, password));
+                            runOnUiThread(() -> showVerificationPopup(username, password, email));
                         }
 
                         @Override
@@ -159,7 +159,7 @@ public class signUp extends AppCompatActivity {
         verificationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showVerificationPopup("", "");
+                showVerificationPopup("", "", "");
             }
         });
 
@@ -489,7 +489,7 @@ public class signUp extends AppCompatActivity {
         }
     }
 
-    private void showVerificationPopup(String username, String password){
+    private void showVerificationPopup(String username, String password, String email){
         View popupInstance = getLayoutInflater().inflate(R.layout.popup_signup_confirmation_code, null);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -534,7 +534,7 @@ public class signUp extends AppCompatActivity {
 
                                 // Calling Api
                                 UserService userService = new UserService();
-                                userService.signupUser("my.email.com", "myusername", "spotify_123");
+                                userService.signupUser(email, username, "spotify_123");
                                 //-----------
                                 SharedPreferences sharedPreferences = getSharedPreferences("LegatoPrefs", MODE_PRIVATE);
                                 SharedPreferences.Editor editor = sharedPreferences.edit();

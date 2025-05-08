@@ -1,6 +1,9 @@
 package com.example.legatoapp.Services.api.models;
 
+import com.google.gson.annotations.SerializedName;
 public class UserModel {
+    @SerializedName("userId")
+    private String userId;
     private String email;
     private String username;
     private String spotify_ID;
@@ -13,6 +16,7 @@ public class UserModel {
         this.spotify_ID = spotify_ID;
     }
 
+    public String getUserId() { return userId; }
     public String getEmail() {
         return email;
     }
@@ -43,6 +47,7 @@ public class UserModel {
                 "email='" + email + '\'' +
                 ", username='" + username + '\'' +
                 ", spotify_ID='" + spotify_ID + '\'' +
+                ", userId='" + userId + '\'' +
                 '}';
     }
 }

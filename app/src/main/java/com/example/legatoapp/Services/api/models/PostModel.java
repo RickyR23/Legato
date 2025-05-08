@@ -1,19 +1,30 @@
 package com.example.legatoapp.Services.api.models;
 
 public class PostModel {
+
+
+    private String user_ID;
     private String song_ID;
-    private String description;
+    private String caption;
 
     // Default constructor
     public PostModel() {
     }
 
     // Parameterized constructor
-    public PostModel(String song_ID, String description) {
+    public PostModel(String user_ID, String song_ID, String caption) {
+        this.user_ID = user_ID;
         this.song_ID = song_ID;
-        this.description = description;
+        this.caption = caption;
     }
 
+    public String getUser_ID() {
+        return user_ID;
+    }
+
+    public void setUser_ID(String user_ID) {
+        this.user_ID = user_ID;
+    }
     // Getters and Setters
     public String getSong_ID() {
         return song_ID;
@@ -24,18 +35,19 @@ public class PostModel {
     }
 
     public String getDescription() {
-        return description;
+        return caption;
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        this.caption = description;
     }
 
     @Override
     public String toString() {
         return "Post{" +
-                "song_ID='" + song_ID + '\'' +
-                ", description='" + description + '\'' +
+                "user_ID='" + user_ID + '\'' +
+                ", song_ID='" + song_ID + '\'' +
+                ", description='" + caption + '\'' +
                 '}';
     }
 }
