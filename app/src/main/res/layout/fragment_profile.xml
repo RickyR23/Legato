@@ -210,7 +210,7 @@
                     android:id="@+id/textViewSongOfTheDayArtist"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
-                    android:text="Mac Miller"
+                    android:text="Artist Name"
                     android:textSize="14sp"
                     android:textColor="@android:color/white"
                     android:gravity="center"/>
@@ -218,7 +218,7 @@
                     android:id="@+id/textViewSongOfTheDaySong"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
-                    android:text="Jet Fuel"
+                    android:text="Song Title"
                     android:textSize="14sp"
                     android:textColor="@android:color/white"
                     android:gravity="center"/>
@@ -229,7 +229,7 @@
                 android:id="@+id/songOfTheDayAlbumCover"
                 android:layout_width="55dp"
                 android:layout_height="55dp"
-                android:src="@drawable/song_example"
+                android:src="@drawable/album_cover_placeholder"
                 android:layout_gravity="center_vertical"
                 android:layout_marginRight="20dp"/>
         </LinearLayout>
@@ -268,14 +268,14 @@
                     android:id="@+id/textViewCurrentlyPlayingArtist"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
-                    android:text="Feid"
+                    android:text="Artist Name"
                     android:textSize="14sp"
                     android:textColor="@android:color/white"/>
                 <TextView
                     android:id="@+id/textViewCurrentlyPlayingSong"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
-                    android:text="FELIZ CUMPLEAÑOS FERXXO"
+                    android:text="Song Title"
                     android:textSize="14sp"
                     android:textColor="@android:color/white"/>
             </LinearLayout>
@@ -285,7 +285,7 @@
                 android:id="@+id/currentlyPlayingAlbumCover"
                 android:layout_width="55dp"
                 android:layout_height="55dp"
-                android:src="@drawable/currently_example"
+                android:src="@drawable/album_cover_placeholder"
                 android:layout_gravity="center_vertical"
                 android:layout_marginRight="20dp"/>
         </LinearLayout>

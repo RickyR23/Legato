@@ -170,6 +170,7 @@ public class ProfileFragment extends Fragment {
         });
 
         fetchLastSong();
+        setCustomCurrentlyPlaying();
         fetchProfile();
         return view;
     }
@@ -225,6 +226,14 @@ public class ProfileFragment extends Fragment {
                 });
         compositeDisposable.add(disposable);
     }
+
+    private void setCustomCurrentlyPlaying() {
+        currentlyPlayingSong.setText("Come on Over");
+        currentlyPlayingArtist.setText("Royal Blood");
+
+        currentlyPlayingAlbumCover.setImageResource(R.drawable.currently_example);
+    }
+
 
     private void loadProfileData() {
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("LegatoPrefs", MODE_PRIVATE);
