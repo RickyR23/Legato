@@ -77,12 +77,13 @@ public class SettingsActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        /*
         // RESET PASSWORD BUTTON directs to Reset Password Activity when clicked
         Button resetPasswordButton = findViewById(R.id.resetPasswordButton);
         resetPasswordButton.setOnClickListener(view -> {
             Intent intent = new Intent(SettingsActivity.this, ResetPasswordActivity.class);
             startActivity(intent);
-        });
+        }); */
 
         // FAQ BUTTON directs to FAQ Activity when clicked
         Button faqButton = findViewById(R.id.faqButton);
