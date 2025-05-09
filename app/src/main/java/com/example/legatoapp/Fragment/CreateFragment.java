@@ -1,5 +1,9 @@
 package com.example.legatoapp.Fragment;
 
+import static android.content.Context.MODE_PRIVATE;
+
+
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
@@ -44,6 +48,9 @@ public class CreateFragment extends Fragment {
         selectedArtistName = view.findViewById(R.id.selected_artist_name);
         captionInput = view.findViewById(R.id.caption_input);
         postButton = view.findViewById(R.id.btn_post);
+
+        // Load previously selected song if any
+        loadSavedSongSelection();
 
         // Disable Post button by default and set white background
         postButton.setEnabled(false);
@@ -108,6 +115,7 @@ public class CreateFragment extends Fragment {
         selectedSongImage.setImageResource(song.getAlbumArt());
         selectedSongName.setText(song.getTitle());
         selectedArtistName.setText(song.getArtist());
+        selectedSongImage.setTag(song.getAlbumArt());
 
         // Enable and color the post button
         postButton.setEnabled(true);
@@ -123,6 +131,19 @@ public class CreateFragment extends Fragment {
     }
 
     private void submitPost() {
+        String songTitle = selectedSongName.getText().toString();
+        String artistName = selectedArtistName.getText().toString();
+        int imageResId = (Integer) selectedSongImage.getTag();
+
+        // Save to shared preferences
+        SharedPreferences sharedPreferences = requireContext().getSharedPreferences("LegatoPrefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putString("song_of_day_title", songTitle);
+        editor.putString("song_of_day_artist", artistName);
+        editor.putInt("song_of_day_image_url", imageResId);
+        editor.apply();
+
         android.widget.Toast.makeText(getContext(), "Post submitted!", android.widget.Toast.LENGTH_SHORT).show();
 
         requireActivity().getSupportFragmentManager()
@@ -137,7 +158,23 @@ public class CreateFragment extends Fragment {
     }
 
 
+    private void loadSavedSongSelection() {
+        SharedPreferences sharedPreferences = requireContext().getSharedPreferences("LegatoPrefs", Context.MODE_PRIVATE);
 
+        String title = sharedPreferences.getString("song_of_day_title", null);
+        String artist = sharedPreferences.getString("song_of_day_artist", null);
+        int imageResId = sharedPreferences.getInt("song_of_day_image_url", -1);
+
+        if (title != null && artist != null && imageResId != -1) {
+            selectedSongName.setText(title);
+            selectedArtistName.setText(artist);
+            selectedSongImage.setImageResource(imageResId);
+            selectedSongImage.setTag(imageResId);
+
+            postButton.setEnabled(true);
+            postButton.setBackgroundTintList(ContextCompat.getColorStateList(requireContext(), R.color.blue_logo));
+        }
+    }
 
 
     public boolean hasUnsavedChanges() {
