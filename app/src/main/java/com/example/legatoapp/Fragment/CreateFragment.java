@@ -133,6 +133,7 @@ public class CreateFragment extends Fragment {
     private void submitPost() {
         String songTitle = selectedSongName.getText().toString();
         String artistName = selectedArtistName.getText().toString();
+        String caption = captionInput.getText().toString();
         int imageResId = (Integer) selectedSongImage.getTag();
 
         // Save to shared preferences
@@ -142,6 +143,7 @@ public class CreateFragment extends Fragment {
         editor.putString("song_of_day_title", songTitle);
         editor.putString("song_of_day_artist", artistName);
         editor.putInt("song_of_day_image_url", imageResId);
+        editor.putString("song_of_day_caption", caption);
         editor.apply();
 
         android.widget.Toast.makeText(getContext(), "Post submitted!", android.widget.Toast.LENGTH_SHORT).show();
@@ -163,6 +165,7 @@ public class CreateFragment extends Fragment {
 
         String title = sharedPreferences.getString("song_of_day_title", null);
         String artist = sharedPreferences.getString("song_of_day_artist", null);
+        String caption = sharedPreferences.getString("song_of_day_caption", null);
         int imageResId = sharedPreferences.getInt("song_of_day_image_url", -1);
 
         if (title != null && artist != null && imageResId != -1) {
@@ -170,6 +173,7 @@ public class CreateFragment extends Fragment {
             selectedArtistName.setText(artist);
             selectedSongImage.setImageResource(imageResId);
             selectedSongImage.setTag(imageResId);
+            captionInput.setText(caption);
 
             postButton.setEnabled(true);
             postButton.setBackgroundTintList(ContextCompat.getColorStateList(requireContext(), R.color.blue_logo));
