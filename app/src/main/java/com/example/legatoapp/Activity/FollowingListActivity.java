@@ -35,9 +35,8 @@ public class FollowingListActivity extends AppCompatActivity {
 
         followinglist = new ArrayList<>();
         // ToDo: Replace this hardcoded examples from info from db or api
-        followinglist.add(new Profile("DisplayName1", "username1", R.drawable.profile_pic_placeholder));
-        followinglist.add(new Profile("DisplayName2", "username2", R.drawable.profile_pic_placeholder));
-        followinglist.add(new Profile("DisplayName3", "username3", R.drawable.profile_pic_placeholder));
+        followinglist.add(new Profile("Bell", "imnotbella", R.drawable.profile14));
+        followinglist.add(new Profile("carlos", "ilovemoney", R.drawable.profile13));
 
         adapter = new ProfileAdapter(followinglist);
         recyclerView.setAdapter(adapter);

@@ -69,7 +69,7 @@
             android:id="@+id/textViewBio"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="bio goes here"
+            android:text="hello there"
             android:textSize="12sp"
             android:textColor="@android:color/white"
             android:gravity="center"
@@ -215,7 +215,7 @@
                     android:id="@+id/textViewSongOfTheDayArtist"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
-                    android:text="Artist Name"
+                    android:text="Drake"
                     android:textSize="14sp"
                     android:textColor="@android:color/white"
                     android:gravity="center"/>
@@ -223,7 +223,7 @@
                     android:id="@+id/textViewSongOfTheDaySong"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
-                    android:text="Song Title"
+                    android:text="All Me"
                     android:textSize="14sp"
                     android:textColor="@android:color/white"
                     android:gravity="center"/>
@@ -234,7 +234,7 @@
                 android:id="@+id/songOfTheDayAlbumCover"
                 android:layout_width="55dp"
                 android:layout_height="55dp"
-                android:src="@drawable/album_cover_placeholder"
+                android:src="@drawable/songof"
                 android:layout_gravity="center_vertical"
                 android:layout_marginRight="20dp"/>
         </LinearLayout>
@@ -273,14 +273,14 @@
                     android:id="@+id/textViewCurrentlyPlayingArtist"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
-                    android:text="Artist Name"
+                    android:text="Phoenix"
                     android:textSize="14sp"
                     android:textColor="@android:color/white"/>
                 <TextView
                     android:id="@+id/textViewCurrentlyPlayingSong"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
-                    android:text="Song Title"
+                    android:text="1901"
                     android:textSize="14sp"
                     android:textColor="@android:color/white"/>
             </LinearLayout>
@@ -290,7 +290,7 @@
                 android:id="@+id/currentlyPlayingAlbumCover"
                 android:layout_width="55dp"
                 android:layout_height="55dp"
-                android:src="@drawable/album_cover_placeholder"
+                android:src="@drawable/currentlyplaying2"
                 android:layout_gravity="center_vertical"
                 android:layout_marginRight="20dp"/>
         </LinearLayout>

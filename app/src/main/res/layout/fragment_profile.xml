@@ -117,7 +117,7 @@
                     android:id="@+id/followersCount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0"
+                    android:text="3"
                     android:textStyle="bold"
                     android:textSize="18sp"
                     android:textColor="@android:color/white" />
@@ -147,7 +147,7 @@
                     android:id="@+id/followingCount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0"
+                    android:text="2"
                     android:textStyle="bold"
                     android:textSize="18sp"
                     android:textColor="@android:color/white" />
