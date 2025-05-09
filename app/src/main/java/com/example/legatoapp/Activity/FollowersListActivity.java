@@ -35,9 +35,9 @@ public class FollowersListActivity extends AppCompatActivity {
 
         followersList = new ArrayList<>();
         // ToDo: Replace this hardcoded examples from info from db or api
-        followersList.add(new Profile("DisplayName1", "username1", R.drawable.profile_pic_placeholder));
-        followersList.add(new Profile("DisplayName2", "username2", R.drawable.profile_pic_placeholder));
-        followersList.add(new Profile("DisplayName3", "username3", R.drawable.profile_pic_placeholder));
+        followersList.add(new Profile("angelito", "angel.vitamins", R.drawable.profile10));
+        followersList.add(new Profile("nate", "n8dog", R.drawable.profile11));
+        followersList.add(new Profile("dino", "dinoatemyusername", R.drawable.profile12));
 
         adapter = new ProfileAdapter(followersList);
         recyclerView.setAdapter(adapter);

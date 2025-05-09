@@ -170,6 +170,7 @@ public class ProfileFragment extends Fragment {
         });
 
         fetchLastSong();
+        setCustomCurrentlyPlaying();
         fetchProfile();
         return view;
     }
@@ -226,6 +227,14 @@ public class ProfileFragment extends Fragment {
         compositeDisposable.add(disposable);
     }
 
+    private void setCustomCurrentlyPlaying() {
+        currentlyPlayingSong.setText("Come on Over");
+        currentlyPlayingArtist.setText("Royal Blood");
+
+        currentlyPlayingAlbumCover.setImageResource(R.drawable.currently_example);
+    }
+
+
     private void loadProfileData() {
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("LegatoPrefs", MODE_PRIVATE);
 
@@ -243,17 +252,32 @@ public class ProfileFragment extends Fragment {
 
         // ToDo: Later replace this with the logic to retrieve the data from database
         /// ****** START ******
+        // Retrieve data for song of the day
+        String songOfDayTitle = sharedPreferences.getString("song_of_day_title", "No Song Set");
+        String songOfDayArtist = sharedPreferences.getString("song_of_day_artist", "Unknown Artist");
+        int songOfDayImage = sharedPreferences.getInt("song_of_day_image_url", R.drawable.album_cover_placeholder);
+
+        // UI for song of the day
+        TextView songOfDayTitleView = getView().findViewById(R.id.textViewSongOfTheDaySong);
+        TextView songOfDayArtistView = getView().findViewById(R.id.textViewSongOfTheDayArtist);
+        ImageView songOfDayImageView = getView().findViewById(R.id.songOfTheDayAlbumCover);
+
+        // Set data for song of the day
+        songOfDayTitleView.setText(songOfDayTitle);
+        songOfDayArtistView.setText(songOfDayArtist);
+        songOfDayImageView.setImageResource(songOfDayImage);
+
         // Retrieve data of songs from sharedPreferences
         String song1Title = sharedPreferences.getString("saved_song_1", "Default Song 1");
         String song1Artist = sharedPreferences.getString("saved_song_1_artist", "Default Artist 1");
         int song1Image = sharedPreferences.getInt("saved_song_1_image", R.drawable.album_cover_placeholder);
 
         String song2Title = sharedPreferences.getString("saved_song_2", "Default Song 2");
-        String song2Artist = sharedPreferences.getString("saved_song_2", "Default Artist 2");
+        String song2Artist = sharedPreferences.getString("saved_song_2_artist", "Default Artist 2");
         int song2Image = sharedPreferences.getInt("saved_song_2_image", R.drawable.album_cover_placeholder);
 
         String song3Title = sharedPreferences.getString("saved_song_3", "Default Song 3");
-        String song3Artist = sharedPreferences.getString("saved_song_3", "Default Artist 3");
+        String song3Artist = sharedPreferences.getString("saved_song_3_artist", "Default Artist 3");
         int song3Image = sharedPreferences.getInt("saved_song_3_image", R.drawable.album_cover_placeholder);
 
         //Retrieve data of artists from sharedPreferences

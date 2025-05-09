@@ -6,6 +6,8 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -23,6 +25,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class OtherUserProfileActivity extends AppCompatActivity {
     private CircleImageView profilePicImageView;
+    private TextView currentlyPlayingArtist, currentlyPlayingSong;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +46,8 @@ public class OtherUserProfileActivity extends AppCompatActivity {
 
         displayNameText.setText(displayName);
         profileImage.setImageResource(profileImageResId);
+
+        loadProfileData();
 
         // Zoom-in and out animation whenever the user clicks the profile picture
         profilePicImageView.setOnClickListener(new View.OnClickListener() {
@@ -117,4 +122,67 @@ public class OtherUserProfileActivity extends AppCompatActivity {
         ImageButton backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(v -> finish());
     }
+
+
+    private void loadProfileData() {
+        // Get UI references to song cards
+        TextView songTitle1 = findViewById(R.id.songCard1).findViewById(R.id.songTitle);
+        TextView songArtist1 = findViewById(R.id.songCard1).findViewById(R.id.songArtist);
+        ImageView songImage1 = findViewById(R.id.songCard1).findViewById(R.id.songImage);
+
+        TextView songTitle2 = findViewById(R.id.songCard2).findViewById(R.id.songTitle);
+        TextView songArtist2 = findViewById(R.id.songCard2).findViewById(R.id.songArtist);
+        ImageView songImage2 = findViewById(R.id.songCard2).findViewById(R.id.songImage);
+
+        TextView songTitle3 = findViewById(R.id.songCard3).findViewById(R.id.songTitle);
+        TextView songArtist3 = findViewById(R.id.songCard3).findViewById(R.id.songArtist);
+        ImageView songImage3 = findViewById(R.id.songCard3).findViewById(R.id.songImage);
+
+        //Set data for Song Card 1
+        songTitle1.setText("Sober");
+        songArtist1.setText("Childish Gambino");
+        int song1 = R.drawable.song14;
+        songImage1.setImageResource(song1);
+
+        //Set data for Song Card 2
+        songTitle2.setText("505");
+        songArtist2.setText("Arctic Monkeys");
+        int song2 = R.drawable.song13;
+        songImage2.setImageResource(song2);
+
+        //Set data for Song Card 3
+        songTitle3.setText("Just");
+        songArtist3.setText("Radiohead");
+        int song3 = R.drawable.song16;
+        songImage3.setImageResource(song3);
+
+        // Get UI references to artist cards
+        TextView artistName1 = findViewById(R.id.artistCard1).findViewById(R.id.text_artist_name);
+        ImageView artistImage1 = findViewById(R.id.artistCard1).findViewById(R.id.image_artist);
+
+        TextView artistName2 = findViewById(R.id.artistCard2).findViewById(R.id.text_artist_name);
+        ImageView artistImage2 = findViewById(R.id.artistCard2).findViewById(R.id.image_artist);
+
+        TextView artistName3 = findViewById(R.id.artistCard3).findViewById(R.id.text_artist_name);
+        ImageView artistImage3 = findViewById(R.id.artistCard3).findViewById(R.id.image_artist);
+
+        //Set data for Artist Card 1
+        artistName1.setText("Frank Ocean");
+        int artist1 = R.drawable.artist11;
+        artistImage1.setImageResource(artist1);
+
+        //Set data for Artist Card 2
+        artistName2.setText("Mac DeMarco");
+        int artist2 = R.drawable.artist15;
+        artistImage2.setImageResource(artist2);
+
+        //Set data for Artist Card 3
+        artistName3.setText("Queen");
+        int artist3 = R.drawable.artist13;
+        artistImage3.setImageResource(artist3);
+
+        /// ****** END ******
+
+    }
+
 }
