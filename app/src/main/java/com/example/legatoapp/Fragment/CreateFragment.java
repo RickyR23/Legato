@@ -73,7 +73,7 @@ public class CreateFragment extends Fragment {
                     .setTitle("Clear Post")
                     .setMessage("Are you sure you want to clear everything?")
                     .setPositiveButton("Clear", (dialog, which) -> {
-                        selectedSongImage.setImageResource(R.drawable.snoopypfp); // default image
+                        selectedSongImage.setImageResource(R.drawable.album_cover_placeholder); // default image
                         selectedSongName.setText("Song Name");
                         selectedArtistName.setText("Song Artist");
                         captionInput.setText("");

@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.legatoapp.Post;
 import com.example.legatoapp.R;
 import com.example.legatoapp.models.Profile;
 import com.example.legatoapp.Adapter.ProfileAdapter;
@@ -90,18 +91,32 @@ public class HomeFragment extends Fragment {
 
 
 
-
         viewPagerPosts = view.findViewById(R.id.viewPager_posts);
-        List<String> captions = Arrays.asList("Caption 1", "Caption 2", "Caption 3");
-        postAdapter = new PostAdapter(captions);
+
+
+
+        List<Post> posts = Arrays.asList(
+                new Post("dino", "Summer coming up 🙏", "Sober - Childish Gambino", R.drawable.song14, "https://open.spotify.com/track/2VrkwoZrSpGG9I865zqZQi?si=f32e2c4f995a416f"),
+                new Post("angel.vitamins", "I need to see them in Austin omg", "Take It or Leave It", R.drawable.song12, "https://open.spotify.com/track/0seTertVGvHrEJu7hlIWRq?si=d83b533cb2114356"),
+                new Post("imnotbella", "Playing this all day next saturday :p", "Fancy - Drake", R.drawable.song15, "https://open.spotify.com/")
+        );
+        postAdapter = new PostAdapter(posts);
+
+
+
+
+
+
         viewPagerPosts.setAdapter(postAdapter);
 
 
         // === Profile search setup ===
         List<Profile> profiles = Arrays.asList(
-                new Profile("Alice Smith", "alice123", R.drawable.angelespfp),
-                new Profile("Bob Johnson", "bobbyj", R.drawable.artist1),
-                new Profile("Carla Diaz", "cdiaz", R.drawable.artist3)
+                new Profile("angelito", "angel.vitamins", R.drawable.profile10),
+                new Profile("nate", "n8dog", R.drawable.profile11),
+                new Profile("dino", "dinoatemyusername", R.drawable.profile12),
+                new Profile("carlos", "ilovemoney", R.drawable.profile13),
+                new Profile("Bell", "imnotbella", R.drawable.profile14)
         );
         profileAdapter = new ProfileAdapter(profiles);
         recyclerViewProfiles.setLayoutManager(new LinearLayoutManager(getContext()));
